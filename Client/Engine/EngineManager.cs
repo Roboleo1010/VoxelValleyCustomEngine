@@ -39,12 +39,12 @@ namespace VoxelValley.Client.Engine
 
         public static void OnTick(float deltaTime)
         {
-            GameObjectManager.OnTick(deltaTime);
+            GameObjectManager.OnUpdateOrTick(deltaTime, false);
         }
 
         public static void OnUpdate(float deltaTime)
         {
-            GameObjectManager.OnUpdate(deltaTime);
+            GameObjectManager.OnUpdateOrTick(deltaTime, true);
             ThreadManager.OnUpdate(deltaTime);
         }
     }

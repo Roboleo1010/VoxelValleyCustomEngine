@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using VoxelValley.Client.Engine.Graphics;
-using VoxelValley.Common.SceneGraph.Components;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Common.SceneGraph
@@ -17,74 +15,29 @@ namespace VoxelValley.Common.SceneGraph
         }
 
         #region OnUpdate & OnTick
-        public static void OnUpdate(float deltaTime)
+        public static void OnUpdateOrTick(float deltaTime, bool isUpdate)
         {
             foreach (GameObject gameObject in gameObjects)
-                OnUpdateChildren(gameObject, deltaTime);
+                OnUpdateOrTickChildren(gameObject, deltaTime, isUpdate);
         }
 
-        static void OnUpdateChildren(GameObject gameObject, float deltaTime)
+        static void OnUpdateOrTickChildren(GameObject gameObject, float deltaTime, bool isUpdate)
         {
-            gameObject.Update(deltaTime);
+            if (isUpdate)
+                gameObject.Update(deltaTime);
+            else
+                gameObject.Tick(deltaTime);
 
             foreach (GameObject child in gameObject.Children)
                 if (child.IsActive)
                 {
-                    child.Update(deltaTime);
-                    OnUpdateChildren(child, deltaTime);
+                    if (isUpdate)
+                        child.Update(deltaTime);
+                    else
+                        child.Tick(deltaTime);
+
+                    OnUpdateOrTickChildren(child, deltaTime, isUpdate);
                 }
-        }
-
-        public static void OnTick(float deltaTime)
-        {
-            foreach (GameObject gameObject in gameObjects)
-                OnTickChildren(gameObject, deltaTime);
-        }
-
-        static void OnTickChildren(GameObject gameObject, float deltaTime)
-        {
-            gameObject.Tick(deltaTime);
-
-            foreach (GameObject child in gameObject.Children)
-                if (child.IsActive)
-                {
-                    child.Tick(deltaTime);
-                    OnTickChildren(child, deltaTime);
-                }
-        }
-        #endregion
-
-        #region  GetMeshes
-        internal static Mesh[] GetMeshes()
-        {
-            List<Mesh> meshes = new List<Mesh>();
-
-            foreach (GameObject gameObject in gameObjects)
-                meshes.AddRange(GetChildMehes(gameObject));
-
-            return meshes.ToArray();
-        }
-
-        static List<Mesh> GetChildMehes(GameObject gameObject)
-        {
-            List<Mesh> meshes = new List<Mesh>();
-
-            MeshRenderer meshRendererParent = gameObject.GetComponent<MeshRenderer>();
-            if (meshRendererParent != null && meshRendererParent.IsActive && meshRendererParent.Mesh != null)
-                meshes.Add(meshRendererParent.Mesh);
-
-
-            foreach (GameObject child in gameObject.Children)
-                if (child.IsActive)
-                {
-                    MeshRenderer meshRendererChild = child.GetComponent<MeshRenderer>();
-                    if (meshRendererChild != null && meshRendererChild.IsActive && meshRendererChild.Mesh != null)
-                        meshes.Add(meshRendererChild.Mesh);
-
-                    meshes.AddRange(GetChildMehes(child));
-                }
-
-            return meshes;
         }
         #endregion
 
