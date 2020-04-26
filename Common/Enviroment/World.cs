@@ -1,25 +1,26 @@
 using System;
 using System.Collections.Generic;
-using VoxelValley.Engine.Core.ComponentSystem;
-using VoxelValley.Engine.Core.ComponentSystem.Components;
-using VoxelValley.Engine.Core.Helper;
-using VoxelValley.Engine.Graphics.Rendering;
-using VoxelValley.Engine.Graphics.Shading;
-using VoxelValley.Game.Helper;
+using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine.Graphics.Rendering;
+using VoxelValley.Client.Game;
+using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.ComponentSystem.Components;
+using VoxelValley.Common.Helper;
+using VoxelValley.Game;
 
-namespace VoxelValley.Game.Enviroment
+namespace VoxelValley.Common.Enviroment
 {
     public class World : GameObject
     {
         Type type = typeof(World);
-        Dictionary<Vector3Int, Chunk> chunks;
+        Dictionary<Vector3i, Chunk> chunks;
 
         RenderBuffer renderBufferVoxel;
         List<MeshRenderer> meshRenderersInVoxelRenderBuffer;
 
         public World(string name, GameObject parent) : base(name, parent)
         {
-            chunks = new Dictionary<Vector3Int, Chunk>();
+            chunks = new Dictionary<Vector3i, Chunk>();
 
             renderBufferVoxel = RenderBufferManager.AddBuffer("Voxel", "voxel");
             meshRenderersInVoxelRenderBuffer = new List<MeshRenderer>();
@@ -27,15 +28,18 @@ namespace VoxelValley.Game.Enviroment
 
         protected override void OnTick(float deltaTime)
         {
-            CreateChunk(new Vector3Int(0, 0, 0));
+            CreateChunk(new Vector3i(0, 0, 0));
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            CreateAround(CoordinateHelper.ConvertFromWorldSpaceToChunkSpace(new Vector3Int(ReferencePointer.Player.Transform.Position)));
+            CreateAround(CoordinateHelper.ConvertFromWorldSpaceToChunkSpace(new Vector3i(
+                (int)ReferencePointer.Player.Transform.Position.X,
+                (int)ReferencePointer.Player.Transform.Position.Y,
+                (int)ReferencePointer.Player.Transform.Position.Z)));
         }
 
-        private Chunk CreateChunk(Vector3Int positionInChunkSpace)
+        private Chunk CreateChunk(Vector3i positionInChunkSpace)
         {
             Chunk chunk = GetChunk(positionInChunkSpace);
             if (chunk == null)
@@ -46,21 +50,21 @@ namespace VoxelValley.Game.Enviroment
             return chunk;
         }
 
-        private void CreateAround(Vector3Int position)
+        private void CreateAround(Vector3i position)
         {
             for (int x = -Constants.Game.ViewDistance; x < Constants.Game.ViewDistance; x++)
                 for (int z = -Constants.Game.ViewDistance; z < Constants.Game.ViewDistance; z++)
-                    CreateChunk(new Vector3Int(position.X + x, 0, position.Z + z));
+                    CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
         }
 
-        public Chunk GetChunk(Vector3Int positionInChunkSpace)
+        public Chunk GetChunk(Vector3i positionInChunkSpace)
         {
             if (chunks.TryGetValue(positionInChunkSpace, out Chunk chunk))
                 return chunk;
             return null;
         }
 
-        void RemoveChunk(Vector3Int positionInChunkSpace)
+        void RemoveChunk(Vector3i positionInChunkSpace)
         {
             Chunk chunk = GetChunk(positionInChunkSpace);
 

@@ -1,4 +1,4 @@
-namespace VoxelValley.Engine
+namespace VoxelValley.Client.Engine
 {
     public static class Constants
     {

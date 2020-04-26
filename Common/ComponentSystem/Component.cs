@@ -1,4 +1,4 @@
-namespace VoxelValley.Engine.Core.ComponentSystem
+namespace VoxelValley.Common.ComponentSystem
 {
     public abstract class Component
     {

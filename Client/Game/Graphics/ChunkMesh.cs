@@ -1,9 +1,9 @@
-using System;
-using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Graphics;
 using System.Collections.Generic;
+using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Common.Enviroment;
 
-namespace VoxelValley.Game.Enviroment
+namespace VoxelValley.Client.Game.Enviroment
 {
     public class ChunkMesh : Mesh
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Graphics.Shading;
 using OpenToolkit.Graphics.OpenGL;
-using VoxelValley.Game;
+using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Client.Game;
 
-namespace VoxelValley.Engine.Graphics.Rendering
+namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public class RenderBuffer
     {

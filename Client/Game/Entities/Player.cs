@@ -1,17 +1,12 @@
 using System;
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem;
-using VoxelValley.Engine.Core.ComponentSystem.Components;
-using VoxelValley.Engine.Core.Diagnostics;
-using VoxelValley.Engine.Graphics;
-using VoxelValley.Game.Input;
+using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Common.ComponentSystem;
 
-namespace VoxelValley.Game.Entities
+namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
-        public InputManager input;
-
         float moveSpeed = 2f;
         float mouseSensitivity = 0.0025f;
         Camera camera;
@@ -22,13 +17,6 @@ namespace VoxelValley.Game.Entities
 
             camera = new Camera("Main Camera", this.gameObject);
             AddChild(camera);
-
-            input = new InputManager(this);
-        }
-
-        protected override void OnUpdate(float deltaTime)
-        {
-            input.ProcessInput();
         }
 
         public void Move(float x, float y, float z)

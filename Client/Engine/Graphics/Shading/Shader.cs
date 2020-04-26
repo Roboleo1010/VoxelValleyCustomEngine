@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using OpenToolkit.Graphics.OpenGL;
 
-namespace VoxelValley.Engine.Graphics.Shading
+namespace VoxelValley.Client.Engine.Graphics.Shading
 {
     public class Shader
     {

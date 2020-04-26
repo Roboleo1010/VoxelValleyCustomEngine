@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace VoxelValley.Engine.Core.Helper
+namespace VoxelValley.Common.Helper
 {
     public static class FileHelper
     {

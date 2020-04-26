@@ -1,6 +1,8 @@
-using VoxelValley.Engine.Core.Helper;
 
-namespace VoxelValley.Game.Helper
+using OpenToolkit.Mathematics;
+using VoxelValley.Game;
+
+namespace VoxelValley.Common.Helper
 {
     public static class CoordinateHelper
     {
@@ -9,9 +11,9 @@ namespace VoxelValley.Game.Helper
         /// </summary>
         /// <param name="chunkSpacePosition">Position in ChunkSpace</param>
         /// <returns></returns>
-        public static Vector3Int ConvertFromChunkSpaceToWorldSpace(Vector3Int chunkSpacePosition)
+        public static Vector3i ConvertFromChunkSpaceToWorldSpace(Vector3i chunkSpacePosition)
         {
-            return new Vector3Int(
+            return new Vector3i(
                         chunkSpacePosition.X * Constants.World.chunkSize.X,
                         chunkSpacePosition.Y * Constants.World.chunkSize.Y,
                         chunkSpacePosition.Z * Constants.World.chunkSize.Z);
@@ -22,9 +24,9 @@ namespace VoxelValley.Game.Helper
         /// </summary>
         /// <param name="worldSpacePosition">Position in WorldSpace</param>
         /// <returns></returns>
-        public static Vector3Int ConvertFromWorldSpaceToChunkSpace(Vector3Int worldSpacePosition)
+        public static Vector3i ConvertFromWorldSpaceToChunkSpace(Vector3i worldSpacePosition)
         {
-            return new Vector3Int(
+            return new Vector3i(
                        worldSpacePosition.X / Constants.World.chunkSize.X,
                        worldSpacePosition.Y / Constants.World.chunkSize.Y,
                        worldSpacePosition.Z / Constants.World.chunkSize.Z);

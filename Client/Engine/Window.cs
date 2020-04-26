@@ -1,14 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using VoxelValley.Engine.Core;
-using VoxelValley.Engine.Graphics.Rendering;
 using OpenToolkit.Graphics.OpenGL;
-using VoxelValley.Engine.Graphics.Shading;
 using OpenToolkit.Windowing.Desktop;
 using OpenToolkit.Windowing.Common;
+using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Client.Engine.Graphics.Rendering;
 
-namespace VoxelValley.Engine.Graphics
+namespace VoxelValley.Client.Engine
 {
     public class Window : GameWindow
     {

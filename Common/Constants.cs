@@ -1,4 +1,4 @@
-using VoxelValley.Engine.Core.Helper;
+using OpenToolkit.Mathematics;
 
 namespace VoxelValley.Game
 {
@@ -11,7 +11,7 @@ namespace VoxelValley.Game
         }
         public static class World
         {
-            public static readonly Vector3Int chunkSize = new Vector3Int(128,32,128);
+            public static readonly Vector3i chunkSize = new Vector3i(128, 32, 128);
         }
     }
 }

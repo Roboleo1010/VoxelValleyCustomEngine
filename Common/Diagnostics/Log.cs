@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace VoxelValley.Engine.Core.Diagnostics
+namespace VoxelValley.Common.Diagnostics
 {
   public static class Log
     {
@@ -16,7 +16,7 @@ namespace VoxelValley.Engine.Core.Diagnostics
         static Log()
         {
             ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("Engine/Assets/Configuration/log4net.config"));
+            XmlConfigurator.Configure(logRepository, new FileInfo("Common/Assets/Configuration/log4net.config"));
         }
 
         private static ILog GetLogger(Type source)

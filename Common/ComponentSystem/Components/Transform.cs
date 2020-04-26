@@ -1,12 +1,11 @@
 using System;
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Engine.Core.ComponentSystem.Components
+namespace VoxelValley.Common.ComponentSystem.Components
 {
     public class Transform : Component
     {
         #region  Position
-        public Action<Transform> OnPositionChanged;
         Vector3 _position;
         public Vector3 Position
         {
@@ -24,15 +23,12 @@ namespace VoxelValley.Engine.Core.ComponentSystem.Components
             set
             {
                 _position = value;
-                if (OnPositionChanged != null)
-                    OnPositionChanged(this);
             }
         }
         #endregion
 
         #region Rotation
-        public Action<Transform> OnRotationChanged;
-        Vector3 _rotation;
+                Vector3 _rotation;
         public Vector3 Rotation
         {
             get
@@ -49,14 +45,11 @@ namespace VoxelValley.Engine.Core.ComponentSystem.Components
             set
             {
                 _rotation = value;
-                if (OnRotationChanged != null)
-                    OnRotationChanged(this);
             }
         }
         #endregion
 
         #region  Scale
-        public Action<Transform> OnScaleChanged;
         Vector3 _scale;
         public Vector3 Scale
         {
@@ -74,8 +67,6 @@ namespace VoxelValley.Engine.Core.ComponentSystem.Components
             set
             {
                 _scale = value;
-                if (OnScaleChanged != null)
-                    OnScaleChanged(this);
             }
         }
         #endregion

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using VoxelValley.Engine.Core.Diagnostics;
-using VoxelValley.Engine.Core.Helper;
+using VoxelValley.Common.Diagnostics;
+using VoxelValley.Common.Helper;
 
-namespace VoxelValley.Engine.Graphics.Shading
+namespace VoxelValley.Client.Engine.Graphics.Shading
 {
     public static class ShaderManager
     {

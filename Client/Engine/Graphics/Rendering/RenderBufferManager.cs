@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using VoxelValley.Engine.Graphics.Shading;
+using VoxelValley.Client.Engine.Graphics.Shading;
 
-namespace VoxelValley.Engine.Graphics.Rendering
+namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public static class RenderBufferManager
     {

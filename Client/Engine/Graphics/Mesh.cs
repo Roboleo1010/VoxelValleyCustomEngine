@@ -1,8 +1,8 @@
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem;
-using VoxelValley.Engine.Core.Diagnostics;
+using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.Diagnostics;
 
-namespace VoxelValley.Engine.Graphics
+namespace VoxelValley.Client.Engine.Graphics
 {
     public abstract class Mesh
     {

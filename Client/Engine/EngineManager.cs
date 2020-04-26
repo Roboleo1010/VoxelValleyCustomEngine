@@ -1,13 +1,12 @@
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem;
-using VoxelValley.Engine.Core.Threading;
-using VoxelValley.Engine.Graphics;
-using VoxelValley.Game;
-using Window = VoxelValley.Engine.Graphics.Window;
 using OpenToolkit.Windowing.Desktop;
 using OpenToolkit.Windowing.Common;
+using VoxelValley.Client.Game;
+using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.Threading;
+using VoxelValley.Client.Engine.Graphics;
 
-namespace VoxelValley.Engine.Core
+namespace VoxelValley.Client.Engine
 {
     public static class EngineManager
     {

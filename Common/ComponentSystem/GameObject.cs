@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem.Components;
+using VoxelValley.Common.ComponentSystem.Components;
 
-namespace VoxelValley.Engine.Core.ComponentSystem
+namespace VoxelValley.Common.ComponentSystem
 {
     public class GameObject
     {

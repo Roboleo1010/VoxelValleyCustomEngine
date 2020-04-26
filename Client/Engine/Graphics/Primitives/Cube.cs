@@ -1,7 +1,7 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Engine.Graphics.Primitives
+namespace VoxelValley.Client.Engine.Graphics.Primitives
 {
     public class Cube : Mesh
     {

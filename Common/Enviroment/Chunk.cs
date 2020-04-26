@@ -1,24 +1,26 @@
 using System;
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem;
-using VoxelValley.Engine.Core.ComponentSystem.Components;
-using VoxelValley.Engine.Core.Threading;
-using VoxelValley.Engine.Core.Helper;
-using VoxelValley.Game.Enviroment.Generation;
-using VoxelValley.Game.Helper;
+using VoxelValley.Client.Game;
+using VoxelValley.Client.Game.Enviroment;
+using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.ComponentSystem.Components;
+using VoxelValley.Common.Enviroment.Generation;
+using VoxelValley.Common.Helper;
+using VoxelValley.Common.Threading;
+using VoxelValley.Game;
 
-namespace VoxelValley.Game.Enviroment
+namespace VoxelValley.Common.Enviroment
 {
     public class Chunk : GameObject
     {
         Type type = typeof(Chunk);
-        Vector3Int positionInChunkSpace;
-        Vector3Int positionInWorldSpace;
+        Vector3i positionInChunkSpace;
+        Vector3i positionInWorldSpace;
 
         public Voxel[,,] voxels = new Voxel[Constants.World.chunkSize.X, Constants.World.chunkSize.Y, Constants.World.chunkSize.Z];
         public bool KeepAlive = true;
 
-        public Chunk(string name, GameObject parent, Vector3Int positionInChunkSpace) : base(name, parent)
+        public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {
             this.positionInChunkSpace = positionInChunkSpace;
             positionInWorldSpace = CoordinateHelper.ConvertFromChunkSpaceToWorldSpace(positionInChunkSpace);

@@ -15,6 +15,6 @@
   <!-- Copy to output directory -->
   <ItemGroup>
     <None Include="Client\Engine\Assets\**" CopyToOutputDirectory="Always" />
-    <None Include="Client\Game\Assets\**" CopyToOutputDirectory="Always" />
+    <None Include="Common\Assets\**" CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>

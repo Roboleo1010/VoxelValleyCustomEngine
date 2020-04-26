@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace VoxelValley.Engine.Core.Diagnostics
+namespace VoxelValley.Common.Diagnostics
 {
     public static class ConsoleTree
     {

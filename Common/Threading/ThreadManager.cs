@@ -2,9 +2,10 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
-using VoxelValley.Engine.Core.Diagnostics;
+using VoxelValley.Client.Engine;
+using VoxelValley.Common.Diagnostics;
 
-namespace VoxelValley.Engine.Core.Threading
+namespace VoxelValley.Common.Threading
 {
     public static class ThreadManager
     {

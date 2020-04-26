@@ -1,6 +1,6 @@
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Engine.Graphics
+namespace VoxelValley.Client.Engine.Graphics
 {
     public class Light
     {

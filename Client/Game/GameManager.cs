@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem;
-using VoxelValley.Engine.Core.ComponentSystem.Components;
-using VoxelValley.Engine.Core.Diagnostics;
-using VoxelValley.Engine.Graphics;
-using VoxelValley.Game.Entities;
-using VoxelValley.Game.Enviroment;
-using VoxelValley.Game.Input;
+using VoxelValley.Client.Game.Entities;
+using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.Enviroment;
+using VoxelValley.Game;
 
-
-namespace VoxelValley.Game
+namespace VoxelValley.Client.Game
 {
     public class GameManager : GameObject
     {

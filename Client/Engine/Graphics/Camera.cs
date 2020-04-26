@@ -1,10 +1,10 @@
 using System;
 using OpenToolkit.Mathematics;
-using VoxelValley.Engine.Core.ComponentSystem;
+using VoxelValley.Common.ComponentSystem;
 
-namespace VoxelValley.Engine.Graphics
+namespace VoxelValley.Client.Engine.Graphics
 {
-    public class Camera : GameObject
+    public class Camera : GameObject //TODO As Componetn
     {
         public float NearClippingPane { get; private set; }
         public float FarClippingPane { get; private set; }

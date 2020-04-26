@@ -1,8 +1,7 @@
-using VoxelValley.Game.Entities;
-using VoxelValley.Game.Enviroment;
-using VoxelValley.Game.Input;
+using VoxelValley.Client.Game.Entities;
+using VoxelValley.Common.Enviroment;
 
-namespace VoxelValley.Game
+namespace VoxelValley.Client.Game
 {
     public static class ReferencePointer
     {

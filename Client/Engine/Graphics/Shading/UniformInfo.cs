@@ -1,6 +1,6 @@
 using OpenToolkit.Graphics.OpenGL;
 
-namespace VoxelValley.Engine.Graphics.Shading
+namespace VoxelValley.Client.Engine.Graphics.Shading
 {
     public class UniformInfo
     {

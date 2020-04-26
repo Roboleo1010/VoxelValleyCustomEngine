@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace VoxelValley.Engine.Core.Diagnostics
+namespace VoxelValley.Common.Diagnostics
 {
     public class ConsoleTreeNode
     {
