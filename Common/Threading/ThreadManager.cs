@@ -13,51 +13,48 @@ namespace VoxelValley.Common.Threading
         static int currentRunningThreads = 0;
 
         static ConcurrentDictionary<Guid, Thread> threads;
-        static Queue<Guid> queuedThreadsLow;
+        static Queue<Guid> queuedThreadsLowest;
+        static Queue<Guid> queuedThreadsBelowNormal;
         static Queue<Guid> queuedThreadsNormal;
-        static Queue<Guid> queuedThreadsHigh;
-        static Queue<Guid> queuedThreadsUrgent;
-
-        public enum ThreadPriority
-        {
-            LOW,
-            NORMAL,
-            HIGH,
-            URGENT
-        }
+        static Queue<Guid> queuedThreadsAboveNormal;
+        static Queue<Guid> queuedThreadsHighest;
 
         static ThreadManager()
         {
             threads = new ConcurrentDictionary<Guid, Thread>();
 
-            queuedThreadsLow = new Queue<Guid>();
+            queuedThreadsLowest = new Queue<Guid>();
+            queuedThreadsBelowNormal = new Queue<Guid>();
             queuedThreadsNormal = new Queue<Guid>();
-            queuedThreadsHigh = new Queue<Guid>();
-            queuedThreadsUrgent = new Queue<Guid>();
+            queuedThreadsAboveNormal = new Queue<Guid>();
+            queuedThreadsHighest = new Queue<Guid>();
         }
 
         internal static void OnUpdate(float deltaTime)
         {
-            while (currentRunningThreads < ClientConstants.Threading.MaxThreads && (queuedThreadsLow.Count > 0 || queuedThreadsNormal.Count > 0 || queuedThreadsHigh.Count > 0 || queuedThreadsUrgent.Count > 0))
+            while (currentRunningThreads < ClientConstants.Threading.MaxThreads && (queuedThreadsLowest.Count > 0 || queuedThreadsBelowNormal.Count > 0 || queuedThreadsNormal.Count > 0 || queuedThreadsAboveNormal.Count > 0 || queuedThreadsHighest.Count > 0))
             {
-                if (queuedThreadsUrgent.Count > 0)
-                    StartThread(queuedThreadsUrgent.Dequeue());
-                else if (queuedThreadsHigh.Count > 0)
-                    StartThread(queuedThreadsHigh.Dequeue());
+                if (queuedThreadsHighest.Count > 0)
+                    StartThread(queuedThreadsHighest.Dequeue(), ThreadPriority.Highest);
+                if (queuedThreadsAboveNormal.Count > 0)
+                    StartThread(queuedThreadsAboveNormal.Dequeue(), ThreadPriority.AboveNormal);
                 else if (queuedThreadsNormal.Count > 0)
-                    StartThread(queuedThreadsNormal.Dequeue());
-                else if (queuedThreadsLow.Count > 0)
-                    StartThread(queuedThreadsLow.Dequeue());
+                    StartThread(queuedThreadsNormal.Dequeue(), ThreadPriority.Normal);
+                else if (queuedThreadsBelowNormal.Count > 0)
+                    StartThread(queuedThreadsBelowNormal.Dequeue(), ThreadPriority.BelowNormal);
+                else if (queuedThreadsLowest.Count > 0)
+                    StartThread(queuedThreadsLowest.Dequeue(), ThreadPriority.Lowest);
             }
 
             if (currentRunningThreads == ClientConstants.Threading.MaxThreads)
                 Log.Warn(type, "Reached maximum concurrent Threads. Delaying until threads are finished.");
         }
 
-        static void StartThread(Guid id)
+        static void StartThread(Guid id, ThreadPriority priority)
         {
             if (threads.TryGetValue(id, out Thread thread))
             {
+                thread.Priority = priority;
                 thread.Start();
                 currentRunningThreads++;
             }
@@ -89,17 +86,20 @@ namespace VoxelValley.Common.Threading
         {
             switch (priority)
             {
-                case ThreadPriority.LOW:
-                    queuedThreadsLow.Enqueue(id);
+                case ThreadPriority.Lowest:
+                    queuedThreadsLowest.Enqueue(id);
                     break;
-                case ThreadPriority.NORMAL:
+                case ThreadPriority.BelowNormal:
+                    queuedThreadsBelowNormal.Enqueue(id);
+                    break;
+                case ThreadPriority.Normal:
                     queuedThreadsNormal.Enqueue(id);
                     break;
-                case ThreadPriority.HIGH:
-                    queuedThreadsHigh.Enqueue(id);
+                case ThreadPriority.AboveNormal:
+                    queuedThreadsAboveNormal.Enqueue(id);
                     break;
-                case ThreadPriority.URGENT:
-                    queuedThreadsUrgent.Enqueue(id);
+                case ThreadPriority.Highest:
+                    queuedThreadsHighest.Enqueue(id);
                     break;
             }
         }

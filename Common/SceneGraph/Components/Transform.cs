@@ -1,4 +1,3 @@
-using System;
 using OpenToolkit.Mathematics;
 
 namespace VoxelValley.Common.SceneGraph.Components

@@ -7,6 +7,7 @@ using VoxelValley.Common.SceneGraph.Components;
 using VoxelValley.Common.Enviroment.Generation;
 using VoxelValley.Common.Helper;
 using VoxelValley.Common.Threading;
+using System.Threading;
 
 namespace VoxelValley.Common.Enviroment
 {
@@ -26,7 +27,7 @@ namespace VoxelValley.Common.Enviroment
 
             Transform.Position = positionInWorldSpace.ToVector3();
 
-            ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { }, $"Chunk_{positionInChunkSpace}", ThreadManager.ThreadPriority.NORMAL);
+            ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { }, $"Chunk_{positionInChunkSpace}", ThreadPriority.Normal);
         }
 
         void Generate()

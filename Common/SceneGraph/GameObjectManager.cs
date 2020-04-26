@@ -9,12 +9,7 @@ namespace VoxelValley.Common.SceneGraph
     public static class GameObjectManager
     {
         static Type type = typeof(GameObjectManager);
-        static List<GameObject> gameObjects;
-
-        static GameObjectManager()
-        {
-            gameObjects = new List<GameObject>();
-        }
+        static List<GameObject> gameObjects = new List<GameObject>();
 
         public static void AddToRoot(GameObject gameObject)
         {

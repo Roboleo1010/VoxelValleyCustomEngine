@@ -6,7 +6,6 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
     public class Cube : Mesh
     {
         Vector3 color;
-
         Vector3[] colors;
 
         public Cube(Vector3 color)

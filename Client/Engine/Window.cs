@@ -2,10 +2,10 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using OpenToolkit.Graphics.OpenGL;
-using OpenToolkit.Windowing.Desktop;
 using OpenToolkit.Windowing.Common;
-using VoxelValley.Client.Engine.Graphics.Shading;
+using OpenToolkit.Windowing.Desktop;
 using VoxelValley.Client.Engine.Graphics.Rendering;
+using VoxelValley.Client.Engine.Graphics.Shading;
 
 namespace VoxelValley.Client.Engine
 {
@@ -26,7 +26,6 @@ namespace VoxelValley.Client.Engine
             CursorVisible = false;
 
             ShaderManager.LoadShaders();
-            RenderBufferManager.Start();
 
             base.OnLoad();
 
@@ -91,6 +90,7 @@ namespace VoxelValley.Client.Engine
         protected override void OnClosing(CancelEventArgs e)
         {
             RenderBufferManager.RemoveAllBuffers();
+            //TODO Cleanup Shaders
         }
     }
 }

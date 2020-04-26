@@ -1,4 +1,3 @@
-
 using VoxelValley.Client.Engine.Graphics;
 
 namespace VoxelValley.Common.SceneGraph.Components

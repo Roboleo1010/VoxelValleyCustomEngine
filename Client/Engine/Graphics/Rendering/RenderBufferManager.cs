@@ -8,11 +8,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     {
         static Dictionary<string, RenderBuffer> renderBuffers = new Dictionary<string, RenderBuffer>();
 
-        public static void Start()
-        {
-
-        }
-
         public static RenderBuffer AddBuffer(string name, string shadername)
         {
             RenderBuffer renderBuffer = new RenderBuffer(ShaderManager.GetShader(shadername));
