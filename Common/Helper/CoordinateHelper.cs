@@ -1,6 +1,4 @@
-
 using OpenToolkit.Mathematics;
-using VoxelValley.Game;
 
 namespace VoxelValley.Common.Helper
 {
@@ -14,9 +12,9 @@ namespace VoxelValley.Common.Helper
         public static Vector3i ConvertFromChunkSpaceToWorldSpace(Vector3i chunkSpacePosition)
         {
             return new Vector3i(
-                        chunkSpacePosition.X * Constants.World.chunkSize.X,
-                        chunkSpacePosition.Y * Constants.World.chunkSize.Y,
-                        chunkSpacePosition.Z * Constants.World.chunkSize.Z);
+                        chunkSpacePosition.X * CommonConstants.World.chunkSize.X,
+                        chunkSpacePosition.Y * CommonConstants.World.chunkSize.Y,
+                        chunkSpacePosition.Z * CommonConstants.World.chunkSize.Z);
         }
 
         /// <summary>
@@ -27,9 +25,9 @@ namespace VoxelValley.Common.Helper
         public static Vector3i ConvertFromWorldSpaceToChunkSpace(Vector3i worldSpacePosition)
         {
             return new Vector3i(
-                       worldSpacePosition.X / Constants.World.chunkSize.X,
-                       worldSpacePosition.Y / Constants.World.chunkSize.Y,
-                       worldSpacePosition.Z / Constants.World.chunkSize.Z);
+                       worldSpacePosition.X / CommonConstants.World.chunkSize.X,
+                       worldSpacePosition.Y / CommonConstants.World.chunkSize.Y,
+                       worldSpacePosition.Z / CommonConstants.World.chunkSize.Z);
         }
     }
 }

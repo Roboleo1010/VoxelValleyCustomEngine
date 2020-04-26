@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using VoxelValley.Common.ComponentSystem.Components;
+using VoxelValley.Common.SceneGraph.Components;
 
-namespace VoxelValley.Common.ComponentSystem
+namespace VoxelValley.Common.SceneGraph
 {
     public class GameObject
     {
@@ -151,11 +151,6 @@ namespace VoxelValley.Common.ComponentSystem
 
         #region  SceneGraph
         //TODO Handle cascading deletes, adds & Reference changes
-        void AddToRoot()
-        {
-            GameObjectManager.AddToRoot(this);
-        }
-
         public void AddChild(GameObject gameObject)
         {
             if (Children.Contains(gameObject))

@@ -1,4 +1,4 @@
-namespace VoxelValley.Common.ComponentSystem
+namespace VoxelValley.Common.SceneGraph
 {
     public abstract class Component
     {

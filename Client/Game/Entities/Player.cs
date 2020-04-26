@@ -1,7 +1,8 @@
 using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
-using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.SceneGraph;
+using VoxelValley.Common.SceneGraph.Components;
 
 namespace VoxelValley.Client.Game.Entities
 {
@@ -9,14 +10,13 @@ namespace VoxelValley.Client.Game.Entities
     {
         float moveSpeed = 2f;
         float mouseSensitivity = 0.0025f;
+
         Camera camera;
-        
+
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
             Transform.Position = spawnPosition;
-
-            camera = new Camera("Main Camera", this.gameObject);
-            AddChild(camera);
+            camera = AddComponent<Camera>();
         }
 
         public void Move(float x, float y, float z)

@@ -1,5 +1,5 @@
 using OpenToolkit.Mathematics;
-using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Engine.Graphics

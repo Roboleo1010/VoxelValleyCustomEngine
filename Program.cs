@@ -1,5 +1,6 @@
 ﻿using System;
 using VoxelValley.Client.Engine;
+using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley
@@ -10,7 +11,7 @@ namespace VoxelValley
 
         static void Main(string[] args)
         {
-            Log.Info(type, $"Starting Voxel Valley {Game.Constants.Game.Version}");
+            Log.Info(type, $"Starting Voxel Valley {CommonConstants.Version}");
 
             StartClient();
         }
@@ -19,7 +20,7 @@ namespace VoxelValley
         {
             try
             {
-                EngineManager.OpenWindow($"Voxel Valley {Game.Constants.Game.Version}");
+                EngineManager.OpenWindow();
             }
             catch (Exception ex)
             {

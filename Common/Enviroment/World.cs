@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Game;
-using VoxelValley.Common.ComponentSystem;
-using VoxelValley.Common.ComponentSystem.Components;
+using VoxelValley.Common.SceneGraph;
+using VoxelValley.Common.SceneGraph.Components;
 using VoxelValley.Common.Helper;
-using VoxelValley.Game;
 
 namespace VoxelValley.Common.Enviroment
 {
@@ -52,8 +52,8 @@ namespace VoxelValley.Common.Enviroment
 
         private void CreateAround(Vector3i position)
         {
-            for (int x = -Constants.Game.ViewDistance; x < Constants.Game.ViewDistance; x++)
-                for (int z = -Constants.Game.ViewDistance; z < Constants.Game.ViewDistance; z++)
+            for (int x = -ClientConstants.Graphics.ViewDistance; x < ClientConstants.Graphics.ViewDistance; x++)
+                for (int z = -ClientConstants.Graphics.ViewDistance; z < ClientConstants.Graphics.ViewDistance; z++)
                     CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
         }
 

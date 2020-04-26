@@ -38,7 +38,7 @@ namespace VoxelValley.Common.Threading
 
         internal static void OnUpdate(float deltaTime)
         {
-            while (currentRunningThreads < Constants.Threading.MaxThreads && (queuedThreadsLow.Count > 0 || queuedThreadsNormal.Count > 0 || queuedThreadsHigh.Count > 0 || queuedThreadsUrgent.Count > 0))
+            while (currentRunningThreads < ClientConstants.Threading.MaxThreads && (queuedThreadsLow.Count > 0 || queuedThreadsNormal.Count > 0 || queuedThreadsHigh.Count > 0 || queuedThreadsUrgent.Count > 0))
             {
                 if (queuedThreadsUrgent.Count > 0)
                     StartThread(queuedThreadsUrgent.Dequeue());
@@ -50,7 +50,7 @@ namespace VoxelValley.Common.Threading
                     StartThread(queuedThreadsLow.Dequeue());
             }
 
-            if (currentRunningThreads == Constants.Threading.MaxThreads)
+            if (currentRunningThreads == ClientConstants.Threading.MaxThreads)
                 Log.Warn(type, "Reached maximum concurrent Threads. Delaying until threads are finished.");
         }
 

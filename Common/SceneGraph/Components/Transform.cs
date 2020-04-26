@@ -1,7 +1,7 @@
 using System;
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Common.ComponentSystem.Components
+namespace VoxelValley.Common.SceneGraph.Components
 {
     public class Transform : Component
     {

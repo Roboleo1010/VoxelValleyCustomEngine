@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using VoxelValley.Client.Engine.Graphics;
-using VoxelValley.Common.ComponentSystem.Components;
+using VoxelValley.Common.SceneGraph.Components;
 using VoxelValley.Common.Diagnostics;
 
-namespace VoxelValley.Common.ComponentSystem
+namespace VoxelValley.Common.SceneGraph
 {
     public static class GameObjectManager
     {

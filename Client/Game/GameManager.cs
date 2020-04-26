@@ -1,9 +1,9 @@
 using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Entities;
-using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common;
+using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.Enviroment;
-using VoxelValley.Game;
 
 namespace VoxelValley.Client.Game
 {
@@ -24,7 +24,7 @@ namespace VoxelValley.Client.Game
             ReferencePointer.World = new World("World", this.gameObject);
             this.AddChild(ReferencePointer.World);
 
-            ReferencePointer.Player = new Player("Player", this.gameObject, new Vector3(0, Constants.World.chunkSize.Y, 0));
+            ReferencePointer.Player = new Player("Player", this.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
             this.AddChild(ReferencePointer.Player);
         }
 

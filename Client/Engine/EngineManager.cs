@@ -2,9 +2,10 @@ using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Desktop;
 using OpenToolkit.Windowing.Common;
 using VoxelValley.Client.Game;
-using VoxelValley.Common.ComponentSystem;
+using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.Threading;
 using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Engine
 {
@@ -12,12 +13,12 @@ namespace VoxelValley.Client.Engine
     {
         public static Window Window;
 
-        public static void OpenWindow(string title)
+        public static void OpenWindow()
         {
             NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = new Vector2i(800, 600),
-                Title = "LearnOpenTK - Creating a Window",
+                Title = CommonConstants.Version,
                 APIVersion = new System.Version(3, 2),
                 Profile = ContextProfile.Compatability
             };
@@ -28,7 +29,7 @@ namespace VoxelValley.Client.Engine
                 UpdateFrequency = 20
             };
 
-            using (var window = new Window(gameWindowSettings, nativeWindowSettings))
+            using (Window window = new Window(gameWindowSettings, nativeWindowSettings))
             {
                 Window = window;
                 window.Run();
