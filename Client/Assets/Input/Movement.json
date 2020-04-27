@@ -1,48 +1,36 @@
 {
     "priority": 200,
     "isActive": true,
-    "actions": [
+    "states": [
         {
             "name": "Move_Forward",
             "key": "W",
-            "onKeyDown": true,
-            "allowRepeat": true,
-            "occlude": true
+            "onKeyDown": true
         },
         {
             "name": "Move_Left",
             "key": "A",
-            "onKeyDown": true,
-            "allowRepeat": true,
-            "occlude": true
+            "onKeyDown": true
         },
         {
             "name": "Move_Backwards",
             "key": "S",
-            "onKeyDown": true,
-            "allowRepeat": true,
-            "occlude": true
+            "onKeyDown": true
         },
         {
             "name": "Move_Right",
             "key": "D",
-            "onKeyDown": true,
-            "allowRepeat": true,
-            "occlude": true
+            "onKeyDown": true
         },
         {
             "name": "Move_Up",
             "key": "Q",
-            "onKeyDown": true,
-            "allowRepeat": true,
-            "occlude": true
+            "onKeyDown": true
         },
         {
             "name": "Move_Down",
             "key": "E",
-            "onKeyDown": true,
-            "allowRepeat": true,
-            "occlude": true
+            "onKeyDown": true
         }
     ]
 }

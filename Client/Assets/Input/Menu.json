@@ -6,8 +6,7 @@
             "name": "Quit",
             "key": "Escape",
             "onKeyDown": true,
-            "allowRepeat": false,
-            "occlude": true
+            "allowRepeat": false
         }
     ]
 }

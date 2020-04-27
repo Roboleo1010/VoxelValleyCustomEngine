@@ -89,5 +89,17 @@ namespace VoxelValley.Client.Engine.Input
             Log.Warn(type, $"Can't get Action {contextName}/{actionName}");
             return null;
         }
+
+        public static State GetState(string contextName, string stateName)
+        {
+            if (contexts.TryGetValue(contextName, out Context context))
+            {
+                State state = context.States.Values.Where(s => s.Name == stateName).FirstOrDefault();
+                if (state != null)
+                    return state;
+            }
+            Log.Warn(type, $"Can't get State {contextName}/{stateName}");
+            return null;
+        }
     }
 }

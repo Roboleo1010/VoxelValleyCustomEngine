@@ -6,8 +6,7 @@
             "name": "DrawSceneGraph",
             "key": "G",
             "onKeyDown": true,
-            "allowRepeat": false,
-            "occlude": false
+            "allowRepeat": false
         }
     ]
 }

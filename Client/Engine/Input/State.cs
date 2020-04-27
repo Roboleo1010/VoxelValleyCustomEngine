@@ -1,20 +1,19 @@
-
 namespace VoxelValley.Client.Engine.Input
 {
-    public class Action
+    public class State
     {
         public string KeyName;
         public string Name;
         public bool OnKeyDown;
-        public bool AllowRepeat;
-        public System.Action Callback;
+        public System.Action<bool> Callback;
+        public bool CurrentState;
 
-        public Action(string name, string key, bool onKeyDown, bool allowRepeat)
+        public State(string name, string key, bool onKeyDown)
         {
             Name = name;
             OnKeyDown = onKeyDown;
-            AllowRepeat = allowRepeat;
             KeyName = key;
+            CurrentState = false;
         }
     }
 }

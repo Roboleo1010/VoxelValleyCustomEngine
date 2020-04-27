@@ -49,9 +49,7 @@ namespace VoxelValley.Client.Engine
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
-        {
-            InputManager.HandleInput();
-
+        {          
             Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y); //TODO Move into game
             lastMousePos = new Vector2(MouseState.X, MouseState.Y);
             player.AddRotation(delta.X, delta.Y);
@@ -69,6 +67,8 @@ namespace VoxelValley.Client.Engine
         {
             time += e.Time;
             framesPerSecond++;
+
+            InputManager.HandleInput();
 
             if (time >= 1)
             {

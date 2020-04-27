@@ -10,8 +10,10 @@ namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
-        float moveSpeed = 2f;
+        float moveSpeed = 0.2f;
         float mouseSensitivity = 0.0025f;
+
+        Vector3 movementDirection = Vector3.Zero;
 
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
@@ -21,12 +23,25 @@ namespace VoxelValley.Client.Game.Entities
             Transform.Position = spawnPosition;
             GameManager.ActiveCamera = AddComponent<Camera>();
 
-            InputManager.GetAction("Movement", "Move_Forward").Callback += () => { Move(0f, 0.1f, 0f); };
-            InputManager.GetAction("Movement", "Move_Left").Callback += () => { Move(-0.1f, 0f, 0f); };
-            InputManager.GetAction("Movement", "Move_Backwards").Callback += () => { Move(0f, -0.1f, 0f); };
-            InputManager.GetAction("Movement", "Move_Right").Callback += () => { Move(0.1f, 0f, 0f); };
-            InputManager.GetAction("Movement", "Move_Up").Callback += () => { Move(0f, 0f, 0.1f); };
-            InputManager.GetAction("Movement", "Move_Down").Callback += () => { Move(0f, 0f, -0.1f); };
+            InputManager.GetState("Movement", "Move_Forward").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.1f, 0f)); };
+            InputManager.GetState("Movement", "Move_Left").Callback += (bool newState) => { SetMovement(newState, new Vector3(-0.1f, 0f, 0f)); };
+            InputManager.GetState("Movement", "Move_Backwards").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.1f, 0f)); };
+            InputManager.GetState("Movement", "Move_Right").Callback += (bool newState) => { SetMovement(newState, new Vector3(0.1f, 0f, 0f)); };
+            InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, 0.1f)); };
+            InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, -0.1f)); };
+        }
+
+        void SetMovement(bool newState, Vector3 movement)
+        {
+            if (newState)
+                movementDirection += movement;
+            else
+                movementDirection -= movement;
+        }
+
+        protected override void OnTick(float deltaTime) //TODO On Tick?
+        {
+            Move(movementDirection.X, movementDirection.Y, movementDirection.Z);
         }
 
         public void Move(float x, float y, float z)
