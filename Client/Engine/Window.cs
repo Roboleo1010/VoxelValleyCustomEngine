@@ -2,12 +2,14 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using OpenToolkit.Graphics.OpenGL;
+using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
 using OpenToolkit.Windowing.GraphicsLibraryFramework;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.Input;
+using VoxelValley.Client.Game;
 using VoxelValley.Common.SceneGraph;
 
 namespace VoxelValley.Client.Engine
@@ -15,6 +17,8 @@ namespace VoxelValley.Client.Engine
     public class Window : GameWindow
     {
         Type type = typeof(Window);
+
+        public Vector2 lastMousePos = new Vector2();
 
         //for fps
         public double time = 0;
@@ -43,6 +47,11 @@ namespace VoxelValley.Client.Engine
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             InputManager.HandleInput();
+
+            Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y); //TODO Move into game
+            lastMousePos = new Vector2(MouseState.X, MouseState.Y);
+            ReferencePointer.Player.AddRotation(delta.X, delta.Y);
+
             EngineManager.OnTick((float)e.Time);
 
             foreach (RenderBuffer renderBuffer in RenderBufferManager.GetBuffers())
@@ -90,8 +99,7 @@ namespace VoxelValley.Client.Engine
 
         protected override void OnFocusedChanged(FocusedChangedEventArgs e)
         {
-            // if (ReferencePointer.Player != null)
-            //     ReferencePointer.Player.input.lastMousePos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y); //TODO remove reference to Game
+            lastMousePos = new Vector2(MouseState.X, MouseState.Y);
 
             base.OnFocusedChanged(e);
         }
@@ -99,7 +107,7 @@ namespace VoxelValley.Client.Engine
         protected override void OnClosing(CancelEventArgs e)
         {
             RenderBufferManager.RemoveAllBuffers();
-            //TODO Cleanup Shaders
+            ShaderManager.RemoveAllShaders();
         }
 
         #region Input Handling

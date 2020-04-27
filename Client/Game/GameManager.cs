@@ -7,7 +7,7 @@ using VoxelValley.Common.Enviroment;
 
 namespace VoxelValley.Client.Game
 {
-    public class GameManager : GameObject
+    public class GameManager : GameObject //TODO: No GameObject
     {
         Type type = typeof(GameManager);
         float time = 0;

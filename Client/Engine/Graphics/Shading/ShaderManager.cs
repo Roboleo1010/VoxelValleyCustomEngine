@@ -40,5 +40,10 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
             Log.Warn(type, $"Can't load Shader {shaderName}");
             return null;
         }
+
+        public static void RemoveAllShaders()
+        {
+            // throw new NotImplementedException(); TODO Shader Clanup
+        }
     }
 }
