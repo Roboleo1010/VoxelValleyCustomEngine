@@ -5,7 +5,6 @@ using VoxelValley.Common;
 using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.Threading;
 
-
 namespace VoxelValley.Client.Engine
 {
     public static class EngineManager
@@ -16,7 +15,6 @@ namespace VoxelValley.Client.Engine
             {
                 Size = ClientConstants.Graphics.Size,
                 Title = CommonConstants.Version,
-                APIVersion = new System.Version(3, 2),
                 Profile = ContextProfile.Compatability
             };
 

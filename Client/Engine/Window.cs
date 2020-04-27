@@ -4,8 +4,10 @@ using System.Drawing;
 using OpenToolkit.Graphics.OpenGL;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
+using OpenToolkit.Windowing.GraphicsLibraryFramework;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Client.Engine.Input;
 
 namespace VoxelValley.Client.Engine
 {
@@ -24,16 +26,20 @@ namespace VoxelValley.Client.Engine
             GL.ClearColor(Color.LightSkyBlue);
             GL.Enable(EnableCap.DepthTest);
             CursorVisible = false;
+            GL.LoadBindings(new GLFWBindingsContext());
 
             ShaderManager.LoadShaders();
 
             base.OnLoad();
+
+            InputManager.GetAction("Main_Game", "Walk_Forward").Callback += () => { System.Console.WriteLine("Pressed"); };
 
             EngineManager.EngineInitialized();
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            InputManager.HandleInput();
             EngineManager.OnTick((float)e.Time);
 
             foreach (RenderBuffer renderBuffer in RenderBufferManager.GetBuffers())
@@ -92,5 +98,21 @@ namespace VoxelValley.Client.Engine
             RenderBufferManager.RemoveAllBuffers();
             //TODO Cleanup Shaders
         }
+
+        #region Input Handling
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
+        {
+            InputManager.OnKeyDown(e);
+
+            base.OnKeyDown(e);
+        }
+
+        protected override void OnKeyUp(KeyboardKeyEventArgs e)
+        {
+            InputManager.OnKeyUp(e);
+
+            base.OnKeyDown(e);
+        }
+        #endregion
     }
 }
