@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Common.SceneGraph;
-using VoxelValley.Common.SceneGraph.Components;
+using VoxelValley.Client.Engine.SceneGraph;
+using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Common.Helper;
 using VoxelValley.Client.Game.Entities;
 
-namespace VoxelValley.Common.Enviroment
+namespace VoxelValley.Client.Game.Enviroment
 {
     public class World : GameObject
     {

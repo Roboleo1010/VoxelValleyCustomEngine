@@ -1,15 +1,14 @@
 using System;
-using OpenToolkit.Mathematics;
-using VoxelValley.Client.Game;
-using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Common.SceneGraph;
-using VoxelValley.Common.SceneGraph.Components;
-using VoxelValley.Common.Enviroment.Generation;
-using VoxelValley.Common.Helper;
-using VoxelValley.Common.Threading;
 using System.Threading;
+using OpenToolkit.Mathematics;
+using VoxelValley.Client.Game.Enviroment.Generation;
+using VoxelValley.Common.Helper;
+using VoxelValley.Client.Engine.SceneGraph;
+using VoxelValley.Client.Engine.SceneGraph.Components;
+using VoxelValley.Client.Engine.Threading;
+using VoxelValley.Common;
 
-namespace VoxelValley.Common.Enviroment
+namespace VoxelValley.Client.Game.Enviroment
 {
     public class Chunk : GameObject
     {

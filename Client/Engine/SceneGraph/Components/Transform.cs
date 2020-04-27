@@ -1,6 +1,6 @@
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Common.SceneGraph.Components
+namespace VoxelValley.Client.Engine.SceneGraph.Components
 {
     public class Transform : Component
     {

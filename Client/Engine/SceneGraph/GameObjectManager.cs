@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using VoxelValley.Common.Diagnostics;
 
-namespace VoxelValley.Common.SceneGraph
+namespace VoxelValley.Client.Engine.SceneGraph
 {
     public static class GameObjectManager
     {

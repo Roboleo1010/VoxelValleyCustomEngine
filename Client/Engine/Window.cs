@@ -11,7 +11,7 @@ using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Game;
 using VoxelValley.Client.Game.Entities;
-using VoxelValley.Common.SceneGraph;
+using VoxelValley.Client.Engine.SceneGraph;
 
 namespace VoxelValley.Client.Engine
 {

@@ -1,7 +1,7 @@
 using System;
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Common.SceneGraph.Components
+namespace VoxelValley.Client.Engine.SceneGraph.Components
 {
     public class Camera : Component
     {

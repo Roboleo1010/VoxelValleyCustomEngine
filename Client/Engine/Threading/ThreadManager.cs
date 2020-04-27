@@ -5,7 +5,7 @@ using System.Threading;
 using VoxelValley.Client.Engine;
 using VoxelValley.Common.Diagnostics;
 
-namespace VoxelValley.Common.Threading
+namespace VoxelValley.Client.Engine.Threading
 {
     public static class ThreadManager
     {

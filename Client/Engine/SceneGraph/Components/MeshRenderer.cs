@@ -1,6 +1,6 @@
 using VoxelValley.Client.Engine.Graphics;
 
-namespace VoxelValley.Common.SceneGraph.Components
+namespace VoxelValley.Client.Engine.SceneGraph.Components
 {
     public class MeshRenderer : Component
     {

@@ -1,6 +1,6 @@
 using OpenToolkit.Mathematics;
 
-namespace VoxelValley.Common.Enviroment
+namespace VoxelValley.Client.Game.Enviroment
 {
     public class Voxel
     {

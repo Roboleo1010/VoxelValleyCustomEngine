@@ -2,9 +2,9 @@ using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Input;
-using VoxelValley.Common.Enviroment;
-using VoxelValley.Common.SceneGraph;
-using VoxelValley.Common.SceneGraph.Components;
+using VoxelValley.Client.Engine.SceneGraph;
+using VoxelValley.Client.Engine.SceneGraph.Components;
+using VoxelValley.Client.Game.Enviroment;
 
 namespace VoxelValley.Client.Game.Entities
 {

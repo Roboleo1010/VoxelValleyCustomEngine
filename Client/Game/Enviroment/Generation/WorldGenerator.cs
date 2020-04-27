@@ -1,5 +1,5 @@
 
-namespace VoxelValley.Common.Enviroment.Generation
+namespace VoxelValley.Client.Game.Enviroment.Generation
 {
     public static class WorldGenerator
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using VoxelValley.Common.SceneGraph.Components;
+using VoxelValley.Client.Engine.SceneGraph.Components;
 
-namespace VoxelValley.Common.SceneGraph
+namespace VoxelValley.Client.Engine.SceneGraph
 {
     public class GameObject
     {

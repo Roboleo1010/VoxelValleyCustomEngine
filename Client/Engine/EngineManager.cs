@@ -1,8 +1,7 @@
-using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
 using VoxelValley.Common;
-using VoxelValley.Common.SceneGraph;
-using VoxelValley.Common.Threading;
+using VoxelValley.Client.Engine.SceneGraph;
+using VoxelValley.Client.Engine.Threading;
 
 namespace VoxelValley.Client.Engine
 {

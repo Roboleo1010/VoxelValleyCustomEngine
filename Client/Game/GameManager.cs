@@ -1,9 +1,9 @@
 using System;
 using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Entities;
+using VoxelValley.Client.Game.Enviroment;
 using VoxelValley.Common;
-using VoxelValley.Common.Enviroment;
-using VoxelValley.Common.SceneGraph.Components;
 
 namespace VoxelValley.Client.Game
 {

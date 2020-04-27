@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
-using VoxelValley.Common.Enviroment;
+using VoxelValley.Client.Game.Enviroment;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
