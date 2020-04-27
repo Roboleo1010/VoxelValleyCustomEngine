@@ -74,7 +74,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             }
         }
 
-        void RecalculateMeshes()
+        void RecalculateMeshes() //TODO: Optimize!
         {
             List<Vector3> vertices = new List<Vector3>();
             List<int> indices = new List<int>();
@@ -93,10 +93,12 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
                 vertexCount += m.VertexCount;
             }
 
-            vertexData = vertices.ToArray(); //TODO Performace Just Update Changing Buffers
+            vertexData = vertices.ToArray();
             indiceData = indices.ToArray();
             colorData = colors.ToArray();
             normalData = normals.ToArray();
+
+            Prepare();
         }
         #endregion
 

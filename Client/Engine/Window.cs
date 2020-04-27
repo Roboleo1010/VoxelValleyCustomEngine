@@ -49,7 +49,7 @@ namespace VoxelValley.Client.Engine
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
-        {          
+        {
             Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y); //TODO Move into game
             lastMousePos = new Vector2(MouseState.X, MouseState.Y);
             player.AddRotation(delta.X, delta.Y);
@@ -83,10 +83,7 @@ namespace VoxelValley.Client.Engine
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             foreach (RenderBuffer buffer in RenderBufferManager.GetBuffers())
-            {
-                buffer.Prepare();
                 buffer.Render(ClientSize.X / (float)ClientSize.Y);
-            }
 
             GL.Flush();
             SwapBuffers();
