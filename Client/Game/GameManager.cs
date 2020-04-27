@@ -2,35 +2,19 @@ using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Common;
-using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.Enviroment;
 
 namespace VoxelValley.Client.Game
 {
-    public class GameManager : GameObject //TODO: No GameObject
+    public static class GameManager
     {
-        Type type = typeof(GameManager);
-        float time = 0;
+        static Type type = typeof(GameManager);
 
-        public GameManager(string name) : base(name)
+        public static void Start()
         {
-
-        }
-
-        protected override void OnStart()
-        {
-            ReferencePointer.GameManager = this;
-
-            ReferencePointer.World = new World("World", this.gameObject);
-            this.AddChild(ReferencePointer.World);
-
-            ReferencePointer.Player = new Player("Player", this.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
-            this.AddChild(ReferencePointer.Player);
-        }
-
-        protected override void OnUpdate(float deltaTime)
-        {
-            time += (float)deltaTime;
+            World world = new World("World");
+            ReferencePointer.World = world;
+            ReferencePointer.Player = new Player("Player", world.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
         }
     }
 }

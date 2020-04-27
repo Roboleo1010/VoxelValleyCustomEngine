@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using OpenToolkit.Graphics.OpenGL;
+using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
@@ -30,15 +30,17 @@ namespace VoxelValley.Client.Engine
         {
             GL.ClearColor(Color.LightSkyBlue);
             GL.Enable(EnableCap.DepthTest);
-            CursorVisible = false;
             GL.LoadBindings(new GLFWBindingsContext());
+
+            CursorVisible = false;           
+            VSync = VSyncMode.Off;
 
             ShaderManager.LoadShaders();
             InputManager.LoadContexts();
 
             base.OnLoad();
 
-            EngineManager.EngineInitialized();
+            GameManager.Start();
 
             InputManager.GetAction("Debug", "DrawSceneGraph").Callback += () => { GameObjectManager.DrawSceneGraph(); };
             InputManager.GetAction("Menu", "Quit").Callback += () => { Close(); };

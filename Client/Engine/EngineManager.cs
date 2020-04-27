@@ -1,6 +1,5 @@
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
-using VoxelValley.Client.Game;
 using VoxelValley.Common;
 using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.Threading;
@@ -15,7 +14,7 @@ namespace VoxelValley.Client.Engine
             {
                 Size = ClientConstants.Graphics.Size,
                 Title = CommonConstants.Version,
-                Profile = ContextProfile.Compatability
+                Profile = ContextProfile.Compatability //FIXME: For some rason still uses the Fixed Function Pipline. Depricated for 10+ years. Find FFP Components and replace them with Programmabl Pipline Components.
             };
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings()
@@ -29,12 +28,7 @@ namespace VoxelValley.Client.Engine
                 window.Run();
             }
         }
-
-        internal static void EngineInitialized()
-        {
-            new GameManager("Game Manager");
-        }
-
+        
         public static void OnTick(float deltaTime)
         {
             GameObjectManager.OnUpdateOrTick(deltaTime, false);

@@ -18,7 +18,7 @@ namespace VoxelValley.Common.Enviroment
         RenderBuffer renderBufferVoxel;
         List<MeshRenderer> meshRenderersInVoxelRenderBuffer;
 
-        public World(string name, GameObject parent) : base(name, parent)
+        public World(string name) : base(name)
         {
             chunks = new Dictionary<Vector3i, Chunk>();
 

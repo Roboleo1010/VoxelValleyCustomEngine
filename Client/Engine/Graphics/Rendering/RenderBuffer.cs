@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using OpenToolkit.Graphics.OpenGL;
+using OpenToolkit.Graphics.OpenGL4;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Game;
 using VoxelValley.Common.SceneGraph.Components;
