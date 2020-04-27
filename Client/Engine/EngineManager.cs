@@ -15,8 +15,7 @@ namespace VoxelValley.Client.Engine
             NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = ClientConstants.Graphics.Size,
-                Title = CommonConstants.Version,
-                Profile = ContextProfile.Compatability //FIXME: For some rason still uses the Fixed Function Pipline. Depricated for 10+ years. Find FFP Components and replace them with Programmabl Pipline Components.
+                Title = CommonConstants.Version             
             };
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings()

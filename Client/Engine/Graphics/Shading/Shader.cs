@@ -104,6 +104,12 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
 
                 Uniforms.Add(info.name, info);
             }
+
+            GL.DetachShader(programID, vertShaderID);
+            GL.DeleteShader(vertShaderID);
+
+            GL.DetachShader(programID, fragShaderID);
+            GL.DeleteShader(fragShaderID);
         }
 
         void GenBuffers()

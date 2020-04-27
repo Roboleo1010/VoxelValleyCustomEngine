@@ -4,14 +4,16 @@ using OpenToolkit.Mathematics;
 using OpenToolkit.Graphics.OpenGL4;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Game;
-using VoxelValley.Common.SceneGraph.Components;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public class RenderBuffer
     {
         Type type = typeof(RenderBuffer);
-        int ibo_elements = -1;
+
+        int elementBufferObject = -1;
+        int vertexArrayObject = -1;
+
         List<Mesh> meshes;
         Shader shader;
 
@@ -26,19 +28,28 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         public RenderBuffer(Shader shader)
         {
-            ibo_elements = GL.GenBuffer();
             this.shader = shader;
+
+            elementBufferObject = GL.GenBuffer();
+            vertexArrayObject = GL.GenVertexArray();
+
+            GL.BindVertexArray(vertexArrayObject);
+
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+            shader.EnableVertexAttribArrays();
+
             meshes = new List<Mesh>();
             meshesToAdd = new List<Mesh>();
             meshesToRemove = new List<Mesh>();
         }
 
-        internal void AddMesh(Mesh mesh) //TODO Auslagern
+        #region  Mesh Building
+        internal void AddMesh(Mesh mesh)
         {
             meshesToAdd.Add(mesh);
         }
 
-        internal void RemoveMesh(Mesh mesh) //TODO Auslagern
+        internal void RemoveMesh(Mesh mesh)
         {
             meshesToRemove.Add(mesh);
         }
@@ -87,6 +98,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             colorData = colors.ToArray();
             normalData = normals.ToArray();
         }
+        #endregion
 
         public void Prepare()
         {
@@ -98,14 +110,12 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             GL.BufferData(BufferTarget.ArrayBuffer, colorData.Length * Vector3.SizeInBytes, colorData, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(shader.GetAttibute("vColor"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
-            GL.BufferData(BufferTarget.ArrayBuffer, normalData.Length * Vector3.SizeInBytes, normalData, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, 0, 0);
+            // GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
+            // GL.BufferData(BufferTarget.ArrayBuffer, normalData.Length * Vector3.SizeInBytes, normalData, BufferUsageHint.StaticDraw);
+            // GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indiceData.Length * sizeof(int), indiceData, BufferUsageHint.StaticDraw);
-
-            shader.Use();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //Unbind current buffer
         }
@@ -115,10 +125,11 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             if (meshes.Count == 0)
                 return;
 
-            shader.EnableVertexAttribArrays();
+            shader.Use();
+            GL.BindVertexArray(vertexArrayObject);
 
             int indiceAt = 0;
-            
+
             Matrix4 viewProjectionMatrix = GameManager.ActiveCamera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.3f, aspect, GameManager.ActiveCamera.NearClippingPane, GameManager.ActiveCamera.FarClippingPane);
 
             foreach (Mesh m in meshes)
@@ -133,12 +144,13 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
                 indiceAt += m.IndiceCount;
             }
 
-            shader.DisableVertexAttribArrays();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //Unbind current buffer
         }
 
         public void Remove()
         {
-            GL.DeleteBuffer(ibo_elements);
+            GL.DeleteBuffer(elementBufferObject);
+            GL.DeleteBuffer(vertexArrayObject);
         }
     }
 }
