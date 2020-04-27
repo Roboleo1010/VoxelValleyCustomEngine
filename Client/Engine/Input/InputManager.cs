@@ -1,26 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
 using OpenToolkit.Windowing.Common;
-using OpenToolkit.Windowing.Common.Input;
 using VoxelValley.Common.Diagnostics;
+using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Engine.Input
 {
     public static class InputManager
     {
-        public static Dictionary<string, Context> Contexts = new Dictionary<string, Context>();
-
         static Type type = typeof(InputManager);
+        static Dictionary<string, Context> contexts = new Dictionary<string, Context>();
         private static List<KeyboardKeyEventArgs> keyUpSinceLastUpdate = new List<KeyboardKeyEventArgs>();
         private static List<KeyboardKeyEventArgs> keyDownSinceLastUpdate = new List<KeyboardKeyEventArgs>();
 
-        static InputManager()
+        public static void LoadContexts()
         {
-            Context c = new Context(200, true);
-            c.Actions.Add(Key.W, new Action("Walk_Forward", false, false, true));
+            string[] paths = FileHelper.GetAllFilesOfType("Client/Assets/Input", "*.json");
 
-            Contexts.Add("Main_Game", c);
+            foreach (string path in paths)
+                LoadContext(path);
+
+            Log.Info(type, $"Loaded {contexts.Count} Input Contexts.");
+        }
+
+        static void LoadContext(string path)
+        {
+            Context context;
+            FileInfo file = new FileInfo(path);
+
+            using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
+            {
+                context = JsonConvert.DeserializeObject<Context>(reader.ReadToEnd());
+            }
+
+            contexts.Add(file.Name, context);
         }
 
         public static void OnKeyDown(KeyboardKeyEventArgs e)
@@ -35,7 +52,7 @@ namespace VoxelValley.Client.Engine.Input
 
         public static void HandleInput()
         {
-            List<Context> activeContexts = Contexts.Values.Where(c => c.IsActive).ToList();
+            List<Context> activeContexts = contexts.Values.Where(c => c.IsActive).OrderByDescending(c => c.Priority).ToList(); //TODO Cache list
 
             foreach (Context context in activeContexts)
                 context.HandleInputs(ref keyDownSinceLastUpdate, ref keyUpSinceLastUpdate);
@@ -45,23 +62,26 @@ namespace VoxelValley.Client.Engine.Input
         }
 
         #region  Context Management
-        public static void ActivateContext(Context context)
+        public static void ActivateContext(string name)
         {
-            // activeContexts.Add(context);
-
-            //TODO: Sort active contexts
-
+            if (contexts.TryGetValue(name, out Context context))
+                context.IsActive = true;
+            else
+                Log.Warn(type, $"Can't activate Context {name}");
         }
 
-        public static void DeactivateContext(Context context)
+        public static void DeactivateContext(string name)
         {
-            // activeContexts.Remove(context);
+            if (contexts.TryGetValue(name, out Context context))
+                context.IsActive = false;
+            else
+                Log.Warn(type, $"Can't activate Context {name}");
         }
         #endregion
 
         public static Action GetAction(string contextName, string actionName)
         {
-            if (Contexts.TryGetValue(contextName, out Context context))
+            if (contexts.TryGetValue(contextName, out Context context))
             {
                 Action action = context.Actions.Values.Where(a => a.Name == actionName).FirstOrDefault();
                 if (action != null)

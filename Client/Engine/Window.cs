@@ -29,10 +29,9 @@ namespace VoxelValley.Client.Engine
             GL.LoadBindings(new GLFWBindingsContext());
 
             ShaderManager.LoadShaders();
+            InputManager.LoadContexts();
 
             base.OnLoad();
-
-            InputManager.GetAction("Main_Game", "Walk_Forward").Callback += () => { System.Console.WriteLine("Pressed"); };
 
             EngineManager.EngineInitialized();
         }

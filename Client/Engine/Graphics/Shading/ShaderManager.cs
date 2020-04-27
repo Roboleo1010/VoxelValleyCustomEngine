@@ -18,7 +18,7 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
 
         public static void LoadShaders()
         {
-            string[] directories = FileHelper.GetAllDirectorys("Client/Engine/Assets/Shaders", "*");
+            string[] directories = FileHelper.GetAllDirectorys("Client/Assets/Shaders", "*");
 
             foreach (string directory in directories)
             {

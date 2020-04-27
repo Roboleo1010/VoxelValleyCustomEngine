@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
+using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Engine.Input
 {
@@ -15,11 +16,14 @@ namespace VoxelValley.Client.Engine.Input
         public Dictionary<Key, Action> Actions;
 
         [JsonConstructor]
-        public Context(int priority, bool isActive)
+        public Context(int priority, bool isActive, List<Action> actions)
         {
             Priority = priority;
             IsActive = isActive;
             Actions = new Dictionary<Key, Action>();
+
+            foreach (Action action in actions)
+                Actions.Add(InputHelper.GetKeyFromString(action.KeyName), action);
         }
 
         public void HandleInputs(ref List<KeyboardKeyEventArgs> keyDownSinceLastUpdate, ref List<KeyboardKeyEventArgs> keyUpSinceLastUpdate)
@@ -43,13 +47,13 @@ namespace VoxelValley.Client.Engine.Input
 
             foreach (KeyboardKeyEventArgs keyEvent in keyUpSinceLastUpdate)
                 if (Actions.TryGetValue(keyEvent.Key, out Action action) && !action.OnKeyDown) //Is valid Key & Matches key up
-                        if (action.Callback != null) //Callback set
-                        {
-                            action.Callback();
+                    if (action.Callback != null) //Callback set
+                    {
+                        action.Callback();
 
-                            if (action.Occlude)
-                                keyUpSinceLastUpdateCopy.Remove(keyEvent);
-                        }
+                        if (action.Occlude)
+                            keyUpSinceLastUpdateCopy.Remove(keyEvent);
+                    }
 
             keyUpSinceLastUpdate = keyUpSinceLastUpdateCopy;
         }
