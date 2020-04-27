@@ -8,6 +8,8 @@ namespace VoxelValley.Client.Engine
 {
     public static class EngineManager
     {
+        public static Window Window { get; private set; }
+
         public static void OpenWindow()
         {
             NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
@@ -25,10 +27,11 @@ namespace VoxelValley.Client.Engine
 
             using (Window window = new Window(gameWindowSettings, nativeWindowSettings))
             {
+                Window = window;
                 window.Run();
             }
         }
-        
+
         public static void OnTick(float deltaTime)
         {
             GameObjectManager.OnUpdateOrTick(deltaTime, false);

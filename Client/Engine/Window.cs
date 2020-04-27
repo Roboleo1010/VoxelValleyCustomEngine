@@ -20,6 +20,7 @@ namespace VoxelValley.Client.Engine
         Type type = typeof(Window);
 
         public Vector2 lastMousePos = new Vector2();
+        public Player player;
 
         //for fps
         public double time = 0;
@@ -53,7 +54,7 @@ namespace VoxelValley.Client.Engine
 
             Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y); //TODO Move into game
             lastMousePos = new Vector2(MouseState.X, MouseState.Y);
-          //  ReferencePointer.Player.AddRotation(delta.X, delta.Y);
+            player.AddRotation(delta.X, delta.Y);
 
             EngineManager.OnTick((float)e.Time);
 

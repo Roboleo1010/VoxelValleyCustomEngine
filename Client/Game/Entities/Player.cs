@@ -1,5 +1,6 @@
 using System;
 using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Common.Enviroment;
 using VoxelValley.Common.SceneGraph;
@@ -15,6 +16,7 @@ namespace VoxelValley.Client.Game.Entities
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
             ((World)Parent).Player = this;
+            EngineManager.Window.player = this;
 
             Transform.Position = spawnPosition;
             GameManager.ActiveCamera = AddComponent<Camera>();
