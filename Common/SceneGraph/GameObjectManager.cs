@@ -7,17 +7,17 @@ namespace VoxelValley.Common.SceneGraph
     public static class GameObjectManager
     {
         static Type type = typeof(GameObjectManager);
-        static List<GameObject> gameObjects = new List<GameObject>();
+      public  static List<GameObject> GameObjects = new List<GameObject>();
 
         public static void AddToRoot(GameObject gameObject)
         {
-            gameObjects.Add(gameObject);
+            GameObjects.Add(gameObject);
         }
 
         #region OnUpdate & OnTick
         public static void OnUpdateOrTick(float deltaTime, bool isUpdate)
         {
-            foreach (GameObject gameObject in gameObjects)
+            foreach (GameObject gameObject in GameObjects)
                 OnUpdateOrTickChildren(gameObject, deltaTime, isUpdate);
         }
 
@@ -46,7 +46,7 @@ namespace VoxelValley.Common.SceneGraph
         {
             List<ConsoleTreeNode> rootNodes = new List<ConsoleTreeNode>();
 
-            foreach (GameObject gameObject in gameObjects)
+            foreach (GameObject gameObject in GameObjects)
                 rootNodes.Add(new ConsoleTreeNode(gameObject.Name, GetChildNodes(gameObject)));
 
             ConsoleTree.PrintTree(rootNodes);

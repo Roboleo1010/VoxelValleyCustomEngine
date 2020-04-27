@@ -10,6 +10,7 @@ using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Game;
+using VoxelValley.Client.Game.Entities;
 using VoxelValley.Common.SceneGraph;
 
 namespace VoxelValley.Client.Engine
@@ -32,7 +33,7 @@ namespace VoxelValley.Client.Engine
             GL.Enable(EnableCap.DepthTest);
             GL.LoadBindings(new GLFWBindingsContext());
 
-            CursorVisible = false;           
+            CursorVisible = false;
             VSync = VSyncMode.Off;
 
             ShaderManager.LoadShaders();
@@ -52,7 +53,7 @@ namespace VoxelValley.Client.Engine
 
             Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y); //TODO Move into game
             lastMousePos = new Vector2(MouseState.X, MouseState.Y);
-            ReferencePointer.Player.AddRotation(delta.X, delta.Y);
+          //  ReferencePointer.Player.AddRotation(delta.X, delta.Y);
 
             EngineManager.OnTick((float)e.Time);
 

@@ -118,10 +118,8 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             shader.EnableVertexAttribArrays();
 
             int indiceAt = 0;
-
-            Camera camera = ReferencePointer.Player.GetCamera();
-
-            Matrix4 viewProjectionMatrix = camera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.3f, aspect, camera.NearClippingPane, camera.FarClippingPane);
+            
+            Matrix4 viewProjectionMatrix = GameManager.ActiveCamera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.3f, aspect, GameManager.ActiveCamera.NearClippingPane, GameManager.ActiveCamera.FarClippingPane);
 
             foreach (Mesh m in meshes)
             {

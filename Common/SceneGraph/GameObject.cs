@@ -171,6 +171,34 @@ namespace VoxelValley.Common.SceneGraph
                 Children.Remove(gameObject);
             }
         }
+
+        public List<GameObject> GetGameObjectsByName(string name)
+        {
+            List<GameObject> result = new List<GameObject>();
+
+            foreach (GameObject gameObject in GameObjectManager.GameObjects)
+            {
+                if (gameObject.Name == name)
+                    result.Add(gameObject);
+
+                result.AddRange(GetGameObjectsByNameRecursive(name, gameObject));
+            }
+
+            return result;
+        }
+
+        List<GameObject> GetGameObjectsByNameRecursive(string name, GameObject gameObject)
+        {
+            List<GameObject> result = new List<GameObject>();
+
+            if (gameObject.Name == name)
+                result.Add(gameObject);
+
+            foreach (GameObject child in gameObject.Children)
+                result.AddRange(GetGameObjectsByNameRecursive(name, child));
+
+            return result;
+        }
         #endregion
     }
 }

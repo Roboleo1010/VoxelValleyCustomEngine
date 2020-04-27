@@ -49,7 +49,7 @@ namespace VoxelValley.Common.Enviroment
             MeshRenderer meshRenderer = AddComponent<MeshRenderer>();
             meshRenderer.Mesh = mesh;
 
-            ReferencePointer.World.OnVoxelRenderBufferChanged(meshRenderer);
+            ((World)(gameObject.Parent)).OnVoxelRenderBufferChanged(meshRenderer);
         }
     }
 }

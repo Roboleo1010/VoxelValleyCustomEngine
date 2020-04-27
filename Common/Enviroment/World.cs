@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Client.Game;
 using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.SceneGraph.Components;
 using VoxelValley.Common.Helper;
+using VoxelValley.Client.Game.Entities;
 
 namespace VoxelValley.Common.Enviroment
 {
@@ -17,6 +17,8 @@ namespace VoxelValley.Common.Enviroment
 
         RenderBuffer renderBufferVoxel;
         List<MeshRenderer> meshRenderersInVoxelRenderBuffer;
+
+        public Player Player;
 
         public World(string name) : base(name)
         {
@@ -34,9 +36,9 @@ namespace VoxelValley.Common.Enviroment
         protected override void OnUpdate(float deltaTime)
         {
             CreateAround(CoordinateHelper.ConvertFromWorldSpaceToChunkSpace(new Vector3i(
-                (int)ReferencePointer.Player.Transform.Position.X,
-                (int)ReferencePointer.Player.Transform.Position.Y,
-                (int)ReferencePointer.Player.Transform.Position.Z)));
+                (int)Player.Transform.Position.X,
+                (int)Player.Transform.Position.Y,
+                (int)Player.Transform.Position.Z)));
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace)

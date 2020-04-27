@@ -1,7 +1,7 @@
 using System;
 using OpenToolkit.Mathematics;
-using VoxelValley.Client.Engine.Graphics;
 using VoxelValley.Client.Engine.Input;
+using VoxelValley.Common.Enviroment;
 using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.SceneGraph.Components;
 
@@ -12,12 +12,12 @@ namespace VoxelValley.Client.Game.Entities
         float moveSpeed = 2f;
         float mouseSensitivity = 0.0025f;
 
-        Camera camera;
-
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
+            ((World)Parent).Player = this;
+
             Transform.Position = spawnPosition;
-            camera = AddComponent<Camera>();
+            GameManager.ActiveCamera = AddComponent<Camera>();
 
             InputManager.GetAction("Movement", "Move_Forward").Callback += () => { Move(0f, 0.1f, 0f); };
             InputManager.GetAction("Movement", "Move_Left").Callback += () => { Move(-0.1f, 0f, 0f); };
@@ -53,11 +53,6 @@ namespace VoxelValley.Client.Game.Entities
                 (Transform.Rotation.X + x) % ((float)Math.PI * 2.0f),
                 Math.Max(Math.Min(Transform.Rotation.Y + y, (float)Math.PI / 2.0f - 0.1f), (float)-Math.PI / 2.0f + 0.1f),
                 Transform.Rotation.Z);
-        }
-
-        public Camera GetCamera()
-        {
-            return camera;
         }
     }
 }
