@@ -30,14 +30,13 @@ namespace VoxelValley.Client.Engine.Input
         static void LoadContext(string path)
         {
             Context context;
-            FileInfo file = new FileInfo(path);
 
             using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
             {
                 context = JsonConvert.DeserializeObject<Context>(reader.ReadToEnd());
             }
 
-            contexts.Add(file.Name, context);
+            contexts.Add(FileHelper.GetFileNameWithoutExtention(path), context);
         }
 
         public static void OnKeyDown(KeyboardKeyEventArgs e)

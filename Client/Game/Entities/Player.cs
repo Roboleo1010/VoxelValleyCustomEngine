@@ -1,6 +1,7 @@
 using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Client.Engine.Input;
 using VoxelValley.Common.SceneGraph;
 using VoxelValley.Common.SceneGraph.Components;
 
@@ -17,6 +18,13 @@ namespace VoxelValley.Client.Game.Entities
         {
             Transform.Position = spawnPosition;
             camera = AddComponent<Camera>();
+
+            InputManager.GetAction("Movement", "Move_Forward").Callback += () => { Move(0f, 0.1f, 0f); };
+            InputManager.GetAction("Movement", "Move_Left").Callback += () => { Move(-0.1f, 0f, 0f); };
+            InputManager.GetAction("Movement", "Move_Backwards").Callback += () => { Move(0f, -0.1f, 0f); };
+            InputManager.GetAction("Movement", "Move_Right").Callback += () => { Move(0.1f, 0f, 0f); };
+            InputManager.GetAction("Movement", "Move_Up").Callback += () => { Move(0f, 0f, 0.1f); };
+            InputManager.GetAction("Movement", "Move_Down").Callback += () => { Move(0f, 0f, -0.1f); };
         }
 
         public void Move(float x, float y, float z)

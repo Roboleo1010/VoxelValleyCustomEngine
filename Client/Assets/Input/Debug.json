@@ -1,0 +1,13 @@
+{
+    "priority": 250,
+    "isActive": true,
+    "actions": [
+        {
+            "name": "DrawSceneGraph",
+            "key": "G",
+            "onKeyDown": true,
+            "allowRepeat": false,
+            "occlude": false
+        }
+    ]
+}

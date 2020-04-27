@@ -8,6 +8,7 @@ using OpenToolkit.Windowing.GraphicsLibraryFramework;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.Input;
+using VoxelValley.Common.SceneGraph;
 
 namespace VoxelValley.Client.Engine
 {
@@ -34,6 +35,9 @@ namespace VoxelValley.Client.Engine
             base.OnLoad();
 
             EngineManager.EngineInitialized();
+
+            InputManager.GetAction("Debug", "DrawSceneGraph").Callback += () => { GameObjectManager.DrawSceneGraph(); };
+            InputManager.GetAction("Menu", "Quit").Callback += () => { Close(); };
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)

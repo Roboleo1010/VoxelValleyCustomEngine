@@ -3,36 +3,43 @@
     "isActive": true,
     "actions": [
         {
-            "name": "Quit",
-            "key": "Escape",
-            "onKeyDown": true,
-            "allowRepeat": false,
-            "occlude": true
-        },
-        {
-            "name": "Walk_Forward",
+            "name": "Move_Forward",
             "key": "W",
             "onKeyDown": true,
             "allowRepeat": true,
             "occlude": true
         },
         {
-            "name": "Walk_Left",
+            "name": "Move_Left",
             "key": "A",
             "onKeyDown": true,
             "allowRepeat": true,
             "occlude": true
         },
         {
-            "name": "Walk_Backwards",
+            "name": "Move_Backwards",
             "key": "S",
             "onKeyDown": true,
             "allowRepeat": true,
             "occlude": true
         },
         {
-            "name": "Walk_Right",
+            "name": "Move_Right",
             "key": "D",
+            "onKeyDown": true,
+            "allowRepeat": true,
+            "occlude": true
+        },
+        {
+            "name": "Move_Up",
+            "key": "Q",
+            "onKeyDown": true,
+            "allowRepeat": true,
+            "occlude": true
+        },
+        {
+            "name": "Move_Down",
+            "key": "E",
             "onKeyDown": true,
             "allowRepeat": true,
             "occlude": true

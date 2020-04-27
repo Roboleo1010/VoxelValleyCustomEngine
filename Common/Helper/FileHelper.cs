@@ -19,5 +19,10 @@ namespace VoxelValley.Common.Helper
 
             return new string[0];
         }
+
+        public static string GetFileNameWithoutExtention(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path);
+        }
     }
 }

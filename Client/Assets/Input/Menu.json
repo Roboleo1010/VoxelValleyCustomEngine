@@ -1,0 +1,13 @@
+{
+    "priority": 150,
+    "isActive": true,
+    "actions": [
+        {
+            "name": "Quit",
+            "key": "Escape",
+            "onKeyDown": true,
+            "allowRepeat": false,
+            "occlude": true
+        }
+    ]
+}
