@@ -14,6 +14,8 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
+            VoxelTypeManager.LoadVoxelTypes();
+
             World world = new World("World");
             new Player("Player", world.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
         }

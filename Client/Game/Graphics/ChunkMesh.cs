@@ -139,7 +139,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
             if (addedVertices > 0)
             {
-                Vector3 voxelColor = parentChunk.voxels[x, y, z].Color;
+                Vector3 voxelColor = parentChunk.voxels[x, y, z].Type.Color;
                 for (int i = 0; i < addedVertices; i++)
                     colors.Add(voxelColor);
             }

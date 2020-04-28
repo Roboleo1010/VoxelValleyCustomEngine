@@ -54,6 +54,7 @@ namespace VoxelValley.Client.Engine
             lastMousePos = new Vector2(MouseState.X, MouseState.Y);
             player.AddRotation(delta.X, delta.Y);
 
+            InputManager.HandleInput();
             EngineManager.OnTick((float)e.Time);
 
             foreach (RenderBuffer renderBuffer in RenderBufferManager.GetBuffers())
@@ -67,8 +68,6 @@ namespace VoxelValley.Client.Engine
         {
             time += e.Time;
             framesPerSecond++;
-
-            InputManager.HandleInput();
 
             if (time >= 1)
             {

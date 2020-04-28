@@ -13,7 +13,6 @@ namespace VoxelValley.Client.Game.Enviroment
     public class Chunk : GameObject
     {
         Type type = typeof(Chunk);
-        Vector3i positionInChunkSpace;
         Vector3i positionInWorldSpace;
 
         public Voxel[,,] voxels = new Voxel[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
@@ -21,7 +20,6 @@ namespace VoxelValley.Client.Game.Enviroment
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {
-            this.positionInChunkSpace = positionInChunkSpace;
             positionInWorldSpace = CoordinateHelper.ConvertFromChunkSpaceToWorldSpace(positionInChunkSpace);
 
             Transform.Position = positionInWorldSpace.ToVector3();
@@ -31,13 +29,21 @@ namespace VoxelValley.Client.Game.Enviroment
 
         void Generate()
         {
-            Random r = new Random();
-
             for (int x = 0; x < CommonConstants.World.chunkSize.X; x++)
                 for (int z = 0; z < CommonConstants.World.chunkSize.Z; z++)
                     for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                        if (WorldGenerator.GetHeight(positionInWorldSpace.X + x, positionInWorldSpace.Z + z) == y)
-                            voxels[x, y, z] = new Voxel(new Vector3(new Vector3((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble())));
+                    {
+                        int height = WorldGenerator.GetHeight(positionInWorldSpace.X + x, positionInWorldSpace.Z + z);
+                        if (height == y)
+                        {
+                            if (y > 24)
+                                voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("snow"));
+                            else if (y > 18)
+                                voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("stone"));
+                            else
+                                voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("grass"));
+                        }
+                    }
         }
 
         void CreateMesh()

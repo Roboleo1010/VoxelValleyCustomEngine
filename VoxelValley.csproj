@@ -19,4 +19,11 @@
     <None Include="Common\Assets\**" CopyToOutputDirectory="Always" />
     <None Include="Server\Assets\**" CopyToOutputDirectory="Always" />
   </ItemGroup>
+
+    <!-- Included DLLs -->
+  <ItemGroup>
+    <Reference Include="FastNoise">
+      <HintPath>/Common/Libraries/FastNoise.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

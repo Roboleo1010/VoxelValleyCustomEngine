@@ -4,11 +4,12 @@ namespace VoxelValley.Client.Game.Enviroment
 {
     public class Voxel
     {
-        public Vector3 Color { get; set; }
+        public VoxelType Type;
 
-        public Voxel(Vector3 color)
+        public Voxel(VoxelType type)
         {
-            Color = color;
+            Type = type;
+
         }
     }
 }
