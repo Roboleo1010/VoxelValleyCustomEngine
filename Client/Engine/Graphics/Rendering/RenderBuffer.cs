@@ -122,7 +122,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //Unbind current buffer
         }
 
-        public void Render(float aspect)
+        public void Render()
         {
             if (meshes.Count == 0)
                 return;
@@ -132,15 +132,16 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
             int indiceAt = 0;
 
-            Matrix4 viewProjectionMatrix = GameManager.ActiveCamera.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.3f, aspect, GameManager.ActiveCamera.NearClippingPane, GameManager.ActiveCamera.FarClippingPane);
+            Matrix4 viewMatrix = GameManager.ActiveCamera.GetViewMatrix();
+            Matrix4 projectionMatrix = GameManager.ActiveCamera.GetProjectionMatrix();
 
             foreach (Mesh m in meshes)
             {
                 m.CalculateModelMatrix();
-                m.ViewProjectionMatrix = viewProjectionMatrix;
-                m.ModelViewProjectionMatrix = m.ModelMatrix * m.ViewProjectionMatrix;
 
-                GL.UniformMatrix4(shader.GetUniform("modelview"), false, ref m.ModelViewProjectionMatrix);
+                GL.UniformMatrix4(shader.GetUniform("model"), false, ref m.ModelMatrix);
+                GL.UniformMatrix4(shader.GetUniform("view"), false, ref viewMatrix);
+                GL.UniformMatrix4(shader.GetUniform("projection"), false, ref projectionMatrix);
 
                 GL.DrawElements(PrimitiveType.Triangles, m.IndiceCount, DrawElementsType.UnsignedInt, indiceAt * sizeof(uint));
                 indiceAt += m.IndiceCount;

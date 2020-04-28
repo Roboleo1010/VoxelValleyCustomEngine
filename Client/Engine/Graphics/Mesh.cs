@@ -17,8 +17,8 @@ namespace VoxelValley.Client.Engine.Graphics
         public virtual int NormalCount { get; set; }
 
         public Matrix4 ModelMatrix = Matrix4.Identity;
-        public Matrix4 ViewProjectionMatrix = Matrix4.Identity;
-        public Matrix4 ModelViewProjectionMatrix = Matrix4.Identity;
+        // public Matrix4 ViewProjectionMatrix = Matrix4.Identity;
+        // public Matrix4 ModelViewProjectionMatrix = Matrix4.Identity;
 
         public abstract Vector3[] GetVertices();
 
