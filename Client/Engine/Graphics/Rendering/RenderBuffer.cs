@@ -135,14 +135,22 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             Matrix4 viewMatrix = GameManager.ActiveCamera.GetViewMatrix();
             Matrix4 projectionMatrix = GameManager.ActiveCamera.GetProjectionMatrix();
 
+            GL.Uniform3(shader.GetUniform("directionalLight.direction"), new Vector3(-0.2f, -1.0f, -0.3f));
+            GL.Uniform3(shader.GetUniform("directionalLight.ambient"), new Vector3(0.8f, 0.8f, 0.8f));
+            GL.Uniform3(shader.GetUniform("directionalLight.diffuse"), new Vector3(0.4f, 0.4f, 0.4f));
+            GL.Uniform3(shader.GetUniform("directionalLight.specular"), new Vector3(0.5f, 0.5f, 0.5f));
+
+            GL.Uniform1(shader.GetUniform("numPointLights"), 0);
+
             foreach (Mesh m in meshes)
             {
                 m.CalculateModelMatrix();
 
+                GL.Uniform3(shader.GetUniform("viewPos"), GameManager.ActiveCamera.ParentGameObject.Transform.Position);
+
                 GL.UniformMatrix4(shader.GetUniform("model"), false, ref m.ModelMatrix);
                 GL.UniformMatrix4(shader.GetUniform("view"), false, ref viewMatrix);
                 GL.UniformMatrix4(shader.GetUniform("projection"), false, ref projectionMatrix);
-                GL.Uniform3(shader.GetUniform("lightColor"), new Vector3(1, 1, 1));
 
                 GL.DrawElements(PrimitiveType.Triangles, m.IndiceCount, DrawElementsType.UnsignedInt, indiceAt * sizeof(uint));
                 indiceAt += m.IndiceCount;

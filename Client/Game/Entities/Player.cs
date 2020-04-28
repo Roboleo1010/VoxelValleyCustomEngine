@@ -10,7 +10,7 @@ namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
-        float moveSpeed = 0.02f;
+        float moveSpeed = 0.2f;
         float mouseSensitivity = 0.0025f;
 
         Vector3 movementDirection = Vector3.Zero;

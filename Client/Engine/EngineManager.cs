@@ -14,13 +14,13 @@ namespace VoxelValley.Client.Engine
             NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = ClientConstants.Graphics.Size,
-                Title = CommonConstants.Version             
+                Title = CommonConstants.Version
             };
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings()
             {
-                RenderFrequency = 0,
-                UpdateFrequency = ClientConstants.Graphics.RenderFrequency
+                RenderFrequency = ClientConstants.Graphics.RenderFrequency,
+                UpdateFrequency = 30
             };
 
             using (Window window = new Window(gameWindowSettings, nativeWindowSettings))

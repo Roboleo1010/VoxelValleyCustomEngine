@@ -36,7 +36,7 @@ namespace VoxelValley.Client.Engine
 
             CursorVisible = false;
             CursorGrabbed = true;
-            VSync = VSyncMode.Off;
+            VSync = VSyncMode.On;
 
             ShaderManager.LoadShaders();
             InputManager.LoadContexts();
