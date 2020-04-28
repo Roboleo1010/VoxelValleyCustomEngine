@@ -35,6 +35,7 @@ namespace VoxelValley.Client.Engine
             GL.LoadBindings(new GLFWBindingsContext());
 
             CursorVisible = false;
+            CursorGrabbed = true;
             VSync = VSyncMode.Off;
 
             ShaderManager.LoadShaders();

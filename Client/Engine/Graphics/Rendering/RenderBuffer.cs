@@ -112,9 +112,9 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             GL.BufferData(BufferTarget.ArrayBuffer, colorData.Length * Vector3.SizeInBytes, colorData, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(shader.GetAttibute("vColor"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            // GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
-            // GL.BufferData(BufferTarget.ArrayBuffer, normalData.Length * Vector3.SizeInBytes, normalData, BufferUsageHint.StaticDraw);
-            // GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
+            GL.BufferData(BufferTarget.ArrayBuffer, normalData.Length * Vector3.SizeInBytes, normalData, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indiceData.Length * sizeof(int), indiceData, BufferUsageHint.StaticDraw);
@@ -142,6 +142,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
                 GL.UniformMatrix4(shader.GetUniform("model"), false, ref m.ModelMatrix);
                 GL.UniformMatrix4(shader.GetUniform("view"), false, ref viewMatrix);
                 GL.UniformMatrix4(shader.GetUniform("projection"), false, ref projectionMatrix);
+                GL.Uniform3(shader.GetUniform("lightColor"), new Vector3(1, 1, 1));
 
                 GL.DrawElements(PrimitiveType.Triangles, m.IndiceCount, DrawElementsType.UnsignedInt, indiceAt * sizeof(uint));
                 indiceAt += m.IndiceCount;

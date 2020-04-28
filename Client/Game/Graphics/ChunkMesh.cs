@@ -67,6 +67,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 vertices.Add(new Vector3(x + 0, y + 1, z + 0));
 
                 indices.AddRange(new int[] { indiceOffset + 0, indiceOffset + 1, indiceOffset + 2, indiceOffset + 0, indiceOffset + 3, indiceOffset + 1 });
+                normals.AddRange(new Vector3[] { -Vector3.UnitZ, -Vector3.UnitZ, -Vector3.UnitZ, -Vector3.UnitZ });
 
                 addedVertices += 4;
                 indiceOffset += 4;
@@ -80,6 +81,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 vertices.Add(new Vector3(x + 0, y + 1, z + 1));
 
                 indices.AddRange(new int[] { indiceOffset + 0, indiceOffset + 1, indiceOffset + 2, indiceOffset + 0, indiceOffset + 2, indiceOffset + 3 });
+                normals.AddRange(new Vector3[] { Vector3.UnitZ, Vector3.UnitZ, Vector3.UnitZ, Vector3.UnitZ });
 
                 addedVertices += 4;
                 indiceOffset += 4;
@@ -93,6 +95,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 vertices.Add(new Vector3(x + 0, y + 0, z + 1));
 
                 indices.AddRange(new int[] { indiceOffset + 0, indiceOffset + 1, indiceOffset + 2, indiceOffset + 0, indiceOffset + 3, indiceOffset + 1 });
+                normals.AddRange(new Vector3[] { -Vector3.UnitX, -Vector3.UnitX, -Vector3.UnitX, -Vector3.UnitX });
 
                 addedVertices += 4;
                 indiceOffset += 4;
@@ -106,6 +109,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 vertices.Add(new Vector3(x + 1, y + 0, z + 1));
 
                 indices.AddRange(new int[] { indiceOffset + 0, indiceOffset + 1, indiceOffset + 2, indiceOffset + 0, indiceOffset + 2, indiceOffset + 3 });
+                normals.AddRange(new Vector3[] { Vector3.UnitX, Vector3.UnitX, Vector3.UnitX, Vector3.UnitX });
 
                 addedVertices += 4;
                 indiceOffset += 4;
@@ -119,6 +123,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 vertices.Add(new Vector3(x + 0, y + 0, z + 1));
 
                 indices.AddRange(new int[] { indiceOffset + 0, indiceOffset + 1, indiceOffset + 2, indiceOffset + 0, indiceOffset + 2, indiceOffset + 3 });
+                normals.AddRange(new Vector3[] { -Vector3.UnitY, -Vector3.UnitY, -Vector3.UnitY, -Vector3.UnitY });
 
                 addedVertices += 4;
                 indiceOffset += 4;
@@ -132,6 +137,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 vertices.Add(new Vector3(x + 0, y + 1, z + 1));
 
                 indices.AddRange(new int[] { indiceOffset + 1, indiceOffset + 2, indiceOffset + 0, indiceOffset + 1, indiceOffset + 3, indiceOffset + 2 });
+                normals.AddRange(new Vector3[] { Vector3.UnitY, Vector3.UnitY, Vector3.UnitY, Vector3.UnitY });
 
                 addedVertices += 4;
                 indiceOffset += 4;
