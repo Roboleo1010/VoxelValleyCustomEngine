@@ -140,8 +140,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             GL.Uniform3(shader.GetUniform("directionalLight.diffuse"), new Vector3(0.4f, 0.4f, 0.4f));
             GL.Uniform3(shader.GetUniform("directionalLight.specular"), new Vector3(0.5f, 0.5f, 0.5f));
 
-            GL.Uniform1(shader.GetUniform("numPointLights"), 0);
-
             foreach (Mesh m in meshes)
             {
                 m.CalculateModelMatrix();
