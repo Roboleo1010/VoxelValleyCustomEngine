@@ -17,7 +17,7 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(Chunk);
         Vector3i positionInWorldSpace;
 
-        public Voxel[,,] voxels = new Voxel[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
+        public VoxelType[,,] voxels = new VoxelType[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
         public bool KeepAlive = true;
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
@@ -39,11 +39,11 @@ namespace VoxelValley.Client.Game.Enviroment
                         if (height == y)
                         {
                             if (y > 45)
-                                voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("snow"));
+                                voxels[x, y, z] = VoxelTypeManager.GetVoxelType("snow");
                             else if (y > 38)
-                                voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("stone"));
+                                voxels[x, y, z] = VoxelTypeManager.GetVoxelType("stone");
                             else
-                                voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("grass"));
+                                voxels[x, y, z] = VoxelTypeManager.GetVoxelType("grass");
                         }
                     }
         }

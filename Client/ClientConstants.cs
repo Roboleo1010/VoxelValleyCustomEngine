@@ -11,8 +11,8 @@ namespace VoxelValley.Client.Engine
 
         public static class Graphics
         {
-            public static readonly int RenderDistance = 1; //for generating
-            public static readonly int ViewDistance = 2; //until unloaded
+            public static readonly int RenderDistance = 5; //for generating
+            public static readonly int ViewDistance = 8; //until unloaded
             public static readonly Vector2i Size = new Vector2i(1280, 720);
             public static readonly int RenderFrequency = 0;
         }

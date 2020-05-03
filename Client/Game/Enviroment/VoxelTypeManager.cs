@@ -31,7 +31,12 @@ namespace VoxelValley.Client.Game.Enviroment
             }
 
             foreach (VoxelType type in types)
+            {
                 voxelTypes.Add(type.Name, type);
+                type.Name = string.Empty;
+            }
+
+            Log.Info(type, $"Loaded {voxelTypes.Count} voxels.");
         }
 
         public static VoxelType GetVoxelType(string name)
