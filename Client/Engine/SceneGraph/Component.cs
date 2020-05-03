@@ -22,7 +22,7 @@ namespace VoxelValley.Client.Engine.SceneGraph
 
         internal virtual void OnRemove()
         {
-
+            
         }
     }
 }

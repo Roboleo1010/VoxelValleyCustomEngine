@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
-using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.SceneGraph;
-using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Common.Helper;
 
@@ -16,17 +14,11 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(World);
         Dictionary<Vector3i, Chunk> chunks;
 
-        RenderBuffer renderBufferVoxel;
-        List<MeshRenderer> meshRenderersInVoxelRenderBuffer;
-
         public Player Player;
 
         public World(string name) : base(name)
         {
             chunks = new Dictionary<Vector3i, Chunk>();
-
-            renderBufferVoxel = RenderBufferManager.AddBuffer("Voxel", "voxel");
-            meshRenderersInVoxelRenderBuffer = new List<MeshRenderer>();
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -82,25 +74,9 @@ namespace VoxelValley.Client.Game.Enviroment
 
             if (chunk != null)
             {
-                MeshRenderer meshRenderer = chunk.GetComponent<MeshRenderer>();
-                meshRenderer.Mesh = null;
-
-                OnVoxelRenderBufferChanged(meshRenderer);
-
                 chunk.Destroy();
                 chunks.Remove(positionInChunkSpace);
             }
-        }
-
-        public void OnVoxelRenderBufferChanged(MeshRenderer meshRenderer)
-        {
-            if (meshRenderersInVoxelRenderBuffer.Contains(meshRenderer))
-                renderBufferVoxel.RemoveMesh(meshRenderer.Mesh);
-
-            renderBufferVoxel.AddMesh(meshRenderer.Mesh);
-
-            lock (meshRenderersInVoxelRenderBuffer)
-                meshRenderersInVoxelRenderBuffer.Add(meshRenderer);
         }
     }
 }

@@ -33,12 +33,14 @@ namespace VoxelValley.Client.Engine
             GL.ClearColor(Color.LightSkyBlue);
             GL.Enable(EnableCap.DepthTest);
             GL.LoadBindings(new GLFWBindingsContext());
+            // GL.CullFace(CullFaceMode.Back); //TODO: Cull back faces
 
             CursorVisible = false;
             CursorGrabbed = true;
             VSync = VSyncMode.On;
 
             ShaderManager.LoadShaders();
+            RenderBufferManager.CreateMeshRenderBuffers();
             InputManager.LoadContexts();
 
             base.OnLoad();
@@ -59,9 +61,6 @@ namespace VoxelValley.Client.Engine
 
             InputManager.HandleInput();
             EngineManager.OnTick((float)e.Time);
-
-            foreach (RenderBuffer renderBuffer in RenderBufferManager.GetBuffers())
-                renderBuffer.UpdateMeshes();
 
             base.OnUpdateFrame(e);
         }

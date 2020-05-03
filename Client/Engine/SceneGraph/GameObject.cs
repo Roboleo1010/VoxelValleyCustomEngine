@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 
@@ -105,6 +106,9 @@ namespace VoxelValley.Client.Engine.SceneGraph
         internal void Destroy()
         {
             OnDestroy();
+
+            foreach (Component component in components.Values.ToArray())
+                component.OnRemove();
 
             if (Parent != null)
                 Parent.RemoveChild(this);

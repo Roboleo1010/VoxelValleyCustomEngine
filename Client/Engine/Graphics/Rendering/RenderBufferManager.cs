@@ -1,46 +1,64 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public static class RenderBufferManager
     {
-        static Dictionary<string, RenderBuffer> renderBuffers = new Dictionary<string, RenderBuffer>();
+        static Type type = typeof(RenderBufferManager);
+        static Dictionary<MeshRenderBufferType, MeshRenderBuffer> meshRenderBuffers = new Dictionary<MeshRenderBufferType, MeshRenderBuffer>();
 
-        public static RenderBuffer AddBuffer(string name, string shadername)
+        public enum MeshRenderBufferType
         {
-            RenderBuffer renderBuffer = new RenderBuffer(ShaderManager.GetShader(shadername));
-            renderBuffers.Add(name, renderBuffer);
-            return renderBuffer;
+            VOXEL
+        };
+
+        public static void CreateMeshRenderBuffers()
+        {
+            foreach (string name in Enum.GetNames(typeof(MeshRenderBufferType)))
+            {
+                Enum.TryParse(typeof(MeshRenderBufferType), name, out object type); //FIXME: Besser machen
+                AddMeshRenderBuffer((MeshRenderBufferType)type);
+            }
+
+            Log.Info(type, $"Created {meshRenderBuffers.Count} render buffers.");
+        }
+
+        static void AddMeshRenderBuffer(MeshRenderBufferType type)
+        {
+            MeshRenderBuffer renderBuffer = new MeshRenderBuffer(ShaderManager.GetShader(type));
+            meshRenderBuffers.Add(type, renderBuffer);
         }
 
         public static RenderBuffer[] GetBuffers()
         {
-            return renderBuffers.Values.ToArray();
+            return meshRenderBuffers.Values.ToArray();
         }
 
-        public static RenderBuffer GetBuffer(string name)
+        public static MeshRenderBuffer GetBufferMeshRenderBuffer(MeshRenderBufferType type)
         {
-            if (renderBuffers.TryGetValue(name, out RenderBuffer buffer))
+            if (meshRenderBuffers.TryGetValue(type, out MeshRenderBuffer buffer))
                 return buffer;
 
             return null;
         }
 
-        public static void RemoveBuffer(string name)
+        public static void RemoveBuffer(MeshRenderBufferType type)
         {
-            RenderBuffer buffer = GetBuffer(name);
+            RenderBuffer buffer = GetBufferMeshRenderBuffer(type);
             buffer.Remove();
-            renderBuffers.Remove(name);
+            meshRenderBuffers.Remove(type);
         }
 
         public static void RemoveAllBuffers()
         {
-            string[] names = renderBuffers.Keys.ToArray();
+            // string[] names = renderBuffers.Keys.ToArray(); //TODO: Cleanup
 
-            foreach (string name in names)
-                RemoveBuffer(name);
+            // foreach (string name in names)
+            //     RemoveBuffer(name);
         }
     }
 }

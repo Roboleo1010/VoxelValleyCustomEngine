@@ -7,7 +7,9 @@ namespace VoxelValley.Client.Engine.Graphics
     public abstract class Mesh
     {
         public GameObject ParentGameObject;
-        public string Name;
+        public Matrix4 ModelMatrix = Matrix4.Identity;
+
+ 
 
         Vector3[] normalData;
 
@@ -15,10 +17,7 @@ namespace VoxelValley.Client.Engine.Graphics
         public virtual int IndiceCount { get; set; }
         public virtual int ColorCount { get; set; }
         public virtual int NormalCount { get; set; }
-
-        public Matrix4 ModelMatrix = Matrix4.Identity;
-        // public Matrix4 ViewProjectionMatrix = Matrix4.Identity;
-        // public Matrix4 ModelViewProjectionMatrix = Matrix4.Identity;
+        // public virtual MeshType meshType { get; set; }
 
         public abstract Vector3[] GetVertices();
 
@@ -30,7 +29,7 @@ namespace VoxelValley.Client.Engine.Graphics
         {
             if (ParentGameObject == null)
             {
-                Log.Error(typeof(Mesh), $"No ParentGameObject set in Mesh {Name}. Set ModelMatrix to Matrix4.Identity");
+                Log.Error(typeof(Mesh), "No ParentGameObject set in Mesh. Set ModelMatrix to Matrix4.Identity");
                 ModelMatrix = Matrix4.Identity;
             }
             else
@@ -44,7 +43,7 @@ namespace VoxelValley.Client.Engine.Graphics
         public virtual Vector3[] GetNormals()
         {
             if (normalData == null)
-                normalData = GetNormals();
+                CalculateNormals();
 
             return normalData;
         }

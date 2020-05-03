@@ -1,43 +1,37 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using VoxelValley.Common.Diagnostics;
-using VoxelValley.Common.Helper;
+using static VoxelValley.Client.Engine.Graphics.Rendering.RenderBufferManager;
 
 namespace VoxelValley.Client.Engine.Graphics.Shading
 {
     public static class ShaderManager
     {
         static Type type = typeof(ShaderManager);
-        static Dictionary<string, Shader> shaders;
-
-        static ShaderManager()
-        {
-            shaders = new Dictionary<string, Shader>();
-        }
+        static Dictionary<MeshRenderBufferType, Shader> shaders = new Dictionary<MeshRenderBufferType, Shader>();
 
         public static void LoadShaders()
         {
-            string[] directories = FileHelper.GetAllDirectorys("Client/Assets/Shaders", "*");
-
-            foreach (string directory in directories)
+            foreach (string name in Enum.GetNames(typeof(MeshRenderBufferType)))
             {
-                FileInfo fileInfo = new FileInfo(directory);
-                LoadShader(fileInfo.FullName, fileInfo.Name);
+                Enum.TryParse(typeof(MeshRenderBufferType), name, out object type); //FIXME: Besser machen
+                LoadShader($"Client/Assets/Shaders/{name}", (MeshRenderBufferType)type);
             }
+
+            Log.Info(type, $"Loaded {shaders.Count} sahders.");
         }
 
-        public static void LoadShader(string path, string name)
+        public static void LoadShader(string path, MeshRenderBufferType type)
         {
-            shaders.Add(name, new Shader($"{path}/shader.vert", $"{path}/shader.frag"));
+            shaders.Add(type, new Shader($"{path}/shader.vert", $"{path}/shader.frag"));
         }
 
-        public static Shader GetShader(string shaderName)
+        public static Shader GetShader(MeshRenderBufferType type)
         {
-            if (shaders.TryGetValue(shaderName, out Shader shader))
+            if (shaders.TryGetValue(type, out Shader shader))
                 return shader;
 
-            Log.Warn(type, $"Can't load Shader {shaderName}");
+            Log.Warn(ShaderManager.type, $"Can't load Shader {type.ToString()}");
             return null;
         }
 
