@@ -36,9 +36,9 @@ namespace VoxelValley.Client.Game.Enviroment
                         int height = WorldGenerator.GetHeight(positionInWorldSpace.X + x, positionInWorldSpace.Z + z);
                         if (height == y)
                         {
-                            if (y > 24)
+                            if (y > 45)
                                 voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("snow"));
-                            else if (y > 18)
+                            else if (y > 38)
                                 voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("stone"));
                             else
                                 voxels[x, y, z] = new Voxel(VoxelTypeManager.GetVoxelType("grass"));

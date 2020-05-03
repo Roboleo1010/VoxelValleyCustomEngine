@@ -10,7 +10,6 @@ namespace VoxelValley.Client.Engine.SceneGraph.Components
         public float FOV = MathHelper.PiOver2;
         public float AspectRatio;
 
-
         public Matrix4 GetViewMatrix()
         {
             Vector3 lookAt = new Vector3();

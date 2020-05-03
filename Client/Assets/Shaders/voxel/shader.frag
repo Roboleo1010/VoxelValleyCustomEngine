@@ -91,7 +91,7 @@ vec3 CalculateDirectionalLight(DirectionalLight light, vec3 normal,
   // Specular shading
   vec3 reflectDirection = reflect(-lightDirection, normal);
   float spec = pow(max(dot(viewDirection, reflectDirection), 0.0),
-                   1); // Where 0 = shinyness
+                   0); // Where 0 = shinyness
 
   // combine results
   vec3 ambient = light.ambient;
@@ -111,7 +111,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 fragPos,
   // specular shading
   vec3 reflectDirection = reflect(-lightDirection, normal);
   float spec = pow(max(dot(viewDirection, reflectDirection), 0.0),
-                   32); // Where 32 = shinyness
+                   0); // Where 0 = shinyness
 
   // attenuation
   float distance = length(light.position - fragPos);
@@ -139,8 +139,7 @@ vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos,
   // specular shading
   vec3 reflectDirection = reflect(-lightDirection, normal);
   float spec = pow(max(dot(viewDirection, reflectDirection), 0.0),
-                   32); // Where 32 = shinyness
-
+                   0); // Where 0 = shinyness
   // attenuation
   float distance = length(light.position - fragPos);
   float attenuation = 1.0 / (light.constant + light.linear * distance +

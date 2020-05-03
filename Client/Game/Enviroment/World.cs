@@ -5,8 +5,9 @@ using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
-using VoxelValley.Common.Helper;
 using VoxelValley.Client.Game.Entities;
+using VoxelValley.Common.Helper;
+
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -28,17 +29,16 @@ namespace VoxelValley.Client.Game.Enviroment
             meshRenderersInVoxelRenderBuffer = new List<MeshRenderer>();
         }
 
-        protected override void OnTick(float deltaTime)
-        {
-            CreateChunk(new Vector3i(0, 0, 0));
-        }
-
         protected override void OnUpdate(float deltaTime)
         {
-            CreateAround(CoordinateHelper.ConvertFromWorldSpaceToChunkSpace(new Vector3i(
-                (int)Player.Transform.Position.X,
-                (int)Player.Transform.Position.Y,
-                (int)Player.Transform.Position.Z)));
+            Vector3i palyerPosInChukSpace = CoordinateHelper.ConvertFromWorldSpaceToChunkSpace(new Vector3i(
+                            (int)Player.Transform.Position.X,
+                            (int)Player.Transform.Position.Y,
+                            (int)Player.Transform.Position.Z));
+
+            // UnloadDistant(palyerPosInChukSpace);
+
+            CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace)
@@ -54,9 +54,19 @@ namespace VoxelValley.Client.Game.Enviroment
 
         private void CreateAround(Vector3i position)
         {
-            for (int x = -ClientConstants.Graphics.ViewDistance; x < ClientConstants.Graphics.ViewDistance; x++)
-                for (int z = -ClientConstants.Graphics.ViewDistance; z < ClientConstants.Graphics.ViewDistance; z++)
+            for (int x = -ClientConstants.Graphics.RenderDistance; x < ClientConstants.Graphics.RenderDistance; x++)
+                for (int z = -ClientConstants.Graphics.RenderDistance; z < ClientConstants.Graphics.RenderDistance; z++)
                     CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
+        }
+
+        public void UnloadDistant(Vector3i positionInChunkSpace)
+        {
+            foreach (Vector3i chunkPos in chunks.Keys)
+            {
+                double distance = Math.Sqrt((Math.Pow((chunkPos.X - positionInChunkSpace.X), 2) + Math.Pow((chunkPos.Z - positionInChunkSpace.Z), 2)));
+                if (distance > ClientConstants.Graphics.ViewDistance)
+                    RemoveChunk(chunkPos);
+            }
         }
 
         public Chunk GetChunk(Vector3i positionInChunkSpace)
@@ -72,6 +82,11 @@ namespace VoxelValley.Client.Game.Enviroment
 
             if (chunk != null)
             {
+                MeshRenderer meshRenderer = chunk.GetComponent<MeshRenderer>();
+                meshRenderer.Mesh = null;
+
+                OnVoxelRenderBufferChanged(meshRenderer);
+
                 chunk.Destroy();
                 chunks.Remove(positionInChunkSpace);
             }
