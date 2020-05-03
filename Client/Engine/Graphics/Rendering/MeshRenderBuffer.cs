@@ -78,10 +78,10 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
                 vertexCount += m.VertexCount;
             }
 
-            Prepare();
+            SendMeshData();
         }
 
-        public override void Prepare()
+        public override void SendMeshData()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vPosition"));
             GL.BufferData(BufferTarget.ArrayBuffer, vertexData.Count * Vector3.SizeInBytes, vertexData.ToArray(), BufferUsageHint.StaticDraw);
@@ -120,6 +120,9 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             GL.Uniform3(shader.GetUniform("directionalLight.ambient"), new Vector3(0.8f, 0.8f, 0.8f)); //TODO: Move out
             GL.Uniform3(shader.GetUniform("directionalLight.diffuse"), new Vector3(0.4f, 0.4f, 0.4f)); //TODO: Move out
             GL.Uniform3(shader.GetUniform("directionalLight.specular"), new Vector3(0.5f, 0.5f, 0.5f)); //TODO: Move out
+
+            GL.Uniform1(shader.GetUniform("numPointLights"), 0);
+            GL.Uniform1(shader.GetUniform("numSpotLights"), 0);
 
             foreach (Mesh m in meshes)
             {

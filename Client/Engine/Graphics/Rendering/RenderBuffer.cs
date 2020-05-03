@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             shader.EnableVertexAttribArrays();
         }
 
-        public abstract void Prepare();
+        public abstract void SendMeshData();
 
         public abstract void Render();
 

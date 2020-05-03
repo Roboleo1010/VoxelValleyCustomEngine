@@ -1,7 +1,7 @@
 #version 330
 
-#define NR_POINT_LIGHTS 4
-#define NR_Spot_LIGHTS 4
+#define MAX_NR_POINT_LIGHTS 4
+#define MAX_NR_Spot_LIGHTS 4
 
 struct DirectionalLight {
   vec3 direction;
@@ -45,8 +45,11 @@ in vec3 fragPosInWorld;
 uniform vec3 viewPos;
 
 uniform DirectionalLight directionalLight;
-uniform PointLight pointLights[NR_POINT_LIGHTS];
-uniform SpotLight spotLights[NR_Spot_LIGHTS];
+uniform PointLight pointLights[MAX_NR_POINT_LIGHTS];
+uniform SpotLight spotLights[MAX_NR_Spot_LIGHTS];
+
+uniform int numPointLights;
+uniform int numSpotLights;
 
 out vec4 FragColor;
 
@@ -68,15 +71,14 @@ void main() {
       CalculateDirectionalLight(directionalLight, norm, viewDirection);
 
   // 2. Point lights
-  // for (int i = 0; i < NR_POINT_LIGHTS; i++)
-  //   result += CalculatePointLight(pointLights[i], norm, fragPosInWorld,
-  //                                 viewDirection);
+  for (int i = 0; i < numPointLights; i++)
+    result += CalculatePointLight(pointLights[i], norm, fragPosInWorld,
+                                  viewDirection);
 
   // 3. Spot lights
-  // for (int i = 0; i < NR_Spot_LIGHTS; i++)
-  //   result +=
-  //       CalculateSpotLight(spotLights[i], norm, fragPosInWorld,
-  //       viewDirection);
+  for (int i = 0; i < numSpotLights; i++)
+    result +=
+        CalculateSpotLight(spotLights[i], norm, fragPosInWorld, viewDirection);
 
   FragColor = vec4(result, 1.0);
 }
