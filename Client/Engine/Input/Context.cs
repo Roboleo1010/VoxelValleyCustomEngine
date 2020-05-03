@@ -30,7 +30,7 @@ namespace VoxelValley.Client.Engine.Input
 
             if (states != null)
                 foreach (State state in states)
-                    States.Add(InputHelper.GetKeyFromString(state.KeyName), state);
+                    States.Add(InputHelper.GetKeyFromString(state.KeyName), state);                    
         }
 
         public void HandleInputs(ref List<KeyboardKeyEventArgs> keyDownSinceLastUpdate, ref List<KeyboardKeyEventArgs> keyUpSinceLastUpdate)

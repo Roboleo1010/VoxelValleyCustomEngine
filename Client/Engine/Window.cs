@@ -37,9 +37,9 @@ namespace VoxelValley.Client.Engine
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
 
-            CursorVisible = false;
+            CursorVisible = true;
             CursorGrabbed = true;
-            VSync = VSyncMode.Off;
+            VSync = VSyncMode.On;
 
             ShaderManager.LoadShaders();
             RenderBufferManager.CreateMeshRenderBuffers();

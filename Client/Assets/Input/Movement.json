@@ -24,12 +24,12 @@
         },
         {
             "name": "Move_Up",
-            "key": "Q",
+            "key": "Space",
             "onKeyDown": true
         },
         {
             "name": "Move_Down",
-            "key": "E",
+            "key": "ShiftLeft",
             "onKeyDown": true
         }
     ]

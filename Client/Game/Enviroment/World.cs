@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Game.Enviroment
                             (int)Player.Transform.Position.Y,
                             (int)Player.Transform.Position.Z));
 
-            UnloadDistant(palyerPosInChukSpace);
+            // UnloadDistant(palyerPosInChukSpace); 
 
             CreateAround(palyerPosInChukSpace);
         }
@@ -51,7 +51,7 @@ namespace VoxelValley.Client.Game.Enviroment
                     CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
         }
 
-        public void UnloadDistant(Vector3i positionInChunkSpace)
+        public void UnloadDistant(Vector3i positionInChunkSpace) //FIXME: Loads an unloads same chunks every frame check distance function
         {
             foreach (Vector3i chunkPos in chunks.Keys)
             {
