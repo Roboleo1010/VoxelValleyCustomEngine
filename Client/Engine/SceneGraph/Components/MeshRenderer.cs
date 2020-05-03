@@ -6,7 +6,7 @@ namespace VoxelValley.Client.Engine.SceneGraph.Components
     public class MeshRenderer : Component
     {
         #region Mesh
-        public Action<MeshRenderer, Mesh, Mesh> OnMeshChanged;
+        public event Action<MeshRenderer, Mesh, Mesh> OnMeshChanged;
         Mesh _mesh;
         public Mesh Mesh
         {

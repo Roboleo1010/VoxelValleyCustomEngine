@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Game.Enviroment
                             (int)Player.Transform.Position.Y,
                             (int)Player.Transform.Position.Z));
 
-            // UnloadDistant(palyerPosInChukSpace);
+            UnloadDistant(palyerPosInChukSpace);
 
             CreateAround(palyerPosInChukSpace);
         }

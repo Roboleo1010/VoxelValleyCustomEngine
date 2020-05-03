@@ -5,8 +5,6 @@ using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game;
 using VoxelValley.Client.Engine.SceneGraph.Components;
-using VoxelValley.Common.Diagnostics;
-using System.Linq;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
@@ -14,8 +12,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     {
         Type type = typeof(RenderBuffer);
         List<Mesh> meshesToAdd = new List<Mesh>();
-        List<Mesh> meshesToRemove = new List<Mesh>(); //TODO da auf anderem Thread ausgeführt, müsste mesh dann mittlerweile null sein. Add Mesh Guid or smth
-
+        List<Mesh> meshesToRemove = new List<Mesh>();
 
         List<Vector3> vertexData = new List<Vector3>();
         List<int> indiceData = new List<int>();
@@ -43,10 +40,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         void UpdateMeshes()
         {
-            //TODO: Debug
-            if (meshesToRemove.Count > 0 && meshesToRemove.ElementAt(0) == null)
-                Log.Error(type, "mehseToRemove is null");
-
             if (meshesToAdd.Count > 0 || meshesToRemove.Count > 0)
             {
                 foreach (Mesh m in meshesToAdd)
