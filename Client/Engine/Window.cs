@@ -33,11 +33,13 @@ namespace VoxelValley.Client.Engine
             GL.ClearColor(Color.LightSkyBlue);
             GL.Enable(EnableCap.DepthTest);
             GL.LoadBindings(new GLFWBindingsContext());
-            // GL.CullFace(CullFaceMode.Back); //TODO: Cull back faces
+
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
 
             CursorVisible = false;
             CursorGrabbed = true;
-            VSync = VSyncMode.On;
+            VSync = VSyncMode.Off;
 
             ShaderManager.LoadShaders();
             RenderBufferManager.CreateMeshRenderBuffers();

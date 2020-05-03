@@ -9,6 +9,7 @@ namespace VoxelValley.Common
         public static class World
         {
             public static readonly Vector3i chunkSize = new Vector3i(64, 64, 64);
+            public static float Gravity = -0.02f;
         }
     }
 }

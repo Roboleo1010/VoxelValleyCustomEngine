@@ -5,12 +5,14 @@ using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
-        float moveSpeed = 1f;
+        float moveSpeed = 0.1f;
+
         float mouseSensitivity = 0.0025f;
 
         Vector3 movementDirection = Vector3.Zero;
@@ -23,12 +25,14 @@ namespace VoxelValley.Client.Game.Entities
             Transform.Position = spawnPosition;
             GameManager.ActiveCamera = AddComponent<Camera>();
 
-            InputManager.GetState("Movement", "Move_Forward").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.1f, 0f)); };
+            InputManager.GetState("Movement", "Move_Forward").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, 0.1f)); };
+            InputManager.GetState("Movement", "Move_Backwards").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, -0.1f)); };
+
             InputManager.GetState("Movement", "Move_Left").Callback += (bool newState) => { SetMovement(newState, new Vector3(-0.1f, 0f, 0f)); };
-            InputManager.GetState("Movement", "Move_Backwards").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.1f, 0f)); };
             InputManager.GetState("Movement", "Move_Right").Callback += (bool newState) => { SetMovement(newState, new Vector3(0.1f, 0f, 0f)); };
-            InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, 0.1f)); };
-            InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, -0.1f)); };
+
+            InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.1f, 0f)); };
+            InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.1f, 0f)); };
         }
 
         void SetMovement(bool newState, Vector3 movement)
@@ -39,9 +43,9 @@ namespace VoxelValley.Client.Game.Entities
                 movementDirection -= movement;
         }
 
-        protected override void OnTick(float deltaTime) //TODO On Tick?
+        protected override void OnTick(float deltaTime)
         {
-            Move(movementDirection.X, movementDirection.Y, movementDirection.Z);
+            Move(movementDirection.X, movementDirection.Y, movementDirection.Z); //TODO CommonConstants.World.Gravity
         }
 
         public void Move(float x, float y, float z)
@@ -52,8 +56,8 @@ namespace VoxelValley.Client.Game.Entities
             Vector3 right = new Vector3(-forward.Z, 0, forward.X);
 
             offset += x * right;
-            offset += y * forward;
-            offset.Y += z;
+            offset += z * forward;
+            offset.Y += y;
 
             offset.NormalizeFast();
             offset = Vector3.Multiply(offset, moveSpeed);
