@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 
         internal static HeatType GetHeatType(float x, float z, float height)
         {
-            float value = GetValue(x, z, height);
+            float value = GetHeat(x, z, height);
 
             if (value < 0.05f)
                 return HeatType.COLDEST;
@@ -44,12 +44,23 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
                 return HeatType.HOTTEST;
         }
 
-        static float GetValue(float x, float z, float height)
+        static float GetHeat(float x, float z, float height)
         {
             float baseValue = GetBaseValue(z);
             float detailValue = GenerationUtilities.FBMSimplex(x, z, 3, 0.4f, 1.3f);
-            //TODO: Use Terrain Height
-            return baseValue * detailValue;
+
+            float combinedValue = baseValue * detailValue;
+
+            if (height > 0.6f)
+                combinedValue -= 0.1f * height;
+            if (height > 0.7f)
+                combinedValue -= 0.2f * height;
+            if (height > 0.8f)
+                combinedValue -= 0.3f * height;
+            if (height > 0.9f)
+                combinedValue -= 0.4f * height;
+
+            return combinedValue;
         }
 
         internal static float GetBaseValue(float z)

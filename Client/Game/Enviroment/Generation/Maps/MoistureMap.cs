@@ -23,7 +23,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 
         internal static MoistureType GetMoistureType(float x, float z, float height)
         {
-            float value = GetValue(x, z, height);
+            float value = GetMoisture(x, z, height);
 
             if (value < 0.27f)
                 return MoistureType.Dryest;
@@ -39,18 +39,18 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
                 return MoistureType.Wettest;
         }
 
-        static float GetValue(float x, float z, float height)
+        static float GetMoisture(float x, float z, float height)
         {
-            float detailValue = GenerationUtilities.FBMSimplex(x, z, 3, 0.3f, 1.3f);
-            //TODO: Use Terrain Height
-            if (height < 0.2)
-                detailValue += 7 * height;
-            if (height < 0.4)
-                detailValue += 2 * height;
-            if (height < 0.5)
-                detailValue += 1 * height;
+            float value = GenerationUtilities.FBMSimplex(x, z, 3, 0.3f, 1.3f);
 
-            return detailValue;
+            if (height < 0.2)
+                value += 7 * height;
+            if (height < 0.4)
+                value += 2 * height;
+            if (height < 0.5)
+                value += 1 * height;
+
+            return value;
         }
 
         internal static Color GetColor(MoistureType type)
