@@ -12,7 +12,7 @@ namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
-        float moveSpeed = 0.1f;
+        float moveSpeed = 0.9f;
 
         float mouseSensitivity = 0.0025f;
 
@@ -38,6 +38,7 @@ namespace VoxelValley.Client.Game.Entities
             InputManager.GetState("Movement", "Move_Right").Callback += (bool newState) => { SetMovement(newState, new Vector3(0.1f, 0f, 0f)); };
 
             InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.2f, 0f)); };
+            InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.2f, 0f)); };
         }
 
         void SetMovement(bool newState, Vector3 movement)
@@ -50,12 +51,12 @@ namespace VoxelValley.Client.Game.Entities
 
         protected override void OnTick(float deltaTime)
         {
-            Move(movementDirection.X, movementDirection.Y - CommonConstants.World.Gravity, movementDirection.Z);
+            Move(movementDirection.X, movementDirection.Y, movementDirection.Z); //- CommonConstants.World.Gravity
 
-            int height = WorldGenerator.GetHeight((int)Transform.Position.X, (int)Transform.Position.Z);
+            // int height = WorldGenerator.GetHeight((int)Transform.Position.X, (int)Transform.Position.Z); //TODO Collision
 
-            if (Transform.Position.Y < height)
-                Transform.Position = new Vector3(Transform.Position.X, height, Transform.Position.Z);
+            // if (Transform.Position.Y < height)
+            //     Transform.Position = new Vector3(Transform.Position.X, height, Transform.Position.Z);
         }
 
         public void Move(float x, float y, float z)

@@ -17,10 +17,7 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
-#if DEBUG
-            Log.Warn(type, "Debug Build, Running Tests..");
-            DoTests();
-#endif
+            // DoTests();
 
             VoxelTypeManager.LoadVoxelTypes();
 
@@ -39,7 +36,7 @@ namespace VoxelValley.Client.Game
             for (int x = -size / 2; x < size / 2; x++)
                 for (int z = -size / 2; z < size / 2; z++)
                 {
-                    float height = HeightMap.GetValue(x, z);
+                    float height = HeightMap.GetHeight(x, z);
                     heightMapData[x + size / 2, z + size / 2] = height;
 
                     heatMapData[x + size / 2, z + size / 2] = HeatMap.GetColor(HeatMap.GetHeatType(x, z, height));

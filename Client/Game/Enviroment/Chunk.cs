@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
 using OpenToolkit.Mathematics;
-using VoxelValley.Client.Game.Enviroment.Generation;
 using VoxelValley.Common.Helper;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Engine.Threading;
 using VoxelValley.Common;
-using VoxelValley.Common.Diagnostics;
 using VoxelValley.Client.Engine.Graphics.Rendering;
+using VoxelValley.Client.Game.Enviroment.Generation.Biomes;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -35,12 +34,12 @@ namespace VoxelValley.Client.Game.Enviroment
                 for (int z = 0; z < CommonConstants.World.chunkSize.Z; z++)
                     for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
                     {
-                        int height = WorldGenerator.GetHeight(positionInWorldSpace.X + x, positionInWorldSpace.Z + z);
+                        int height = BiomeManager.GetBiome(positionInWorldSpace.X + x, positionInWorldSpace.Z + z).GetHeight(positionInWorldSpace.X + x, positionInWorldSpace.Z + z);
                         if (height == y)
                         {
-                            if (y > 45)
+                            if (y > 100)
                                 voxels[x, y, z] = VoxelTypeManager.GetVoxelType("snow");
-                            else if (y > 38)
+                            else if (y > 90)
                                 voxels[x, y, z] = VoxelTypeManager.GetVoxelType("stone");
                             else
                                 voxels[x, y, z] = VoxelTypeManager.GetVoxelType("grass");

@@ -1,12 +1,14 @@
+using VoxelValley.Common;
+
 namespace VoxelValley.Client.Game.Enviroment.Generation
 {
     public static class GenerationUtilities
     {
-        static FastNoise.FastNoise noise;
+        public static FastNoise.FastNoise Noise;
 
         static GenerationUtilities()
         {
-            noise = new FastNoise.FastNoise(); //TODO: Seed here
+            Noise = new FastNoise.FastNoise(); //TODO: Seed here
         }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
             for (int o = 0; o < octaves; o++)
             {
-                total += noise.GetPerlin(x * frequency, z * frequency) * amplitude;
+                total += Noise.GetPerlin(x * frequency, z * frequency) * amplitude;
                 frequency *= lacunarity;
                 amplitude *= persistence;
             }
@@ -53,7 +55,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
             for (int o = 0; o < octaves; o++)
             {
-                total += noise.GetSimplex(x * frequency, z * frequency) * amplitude;
+                total += Noise.GetSimplex(x * frequency, z * frequency) * amplitude;
                 frequency *= lacunarity;
                 amplitude *= persistence;
             }
@@ -61,7 +63,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
             return NormalizeNoise(total, offsetValue);
         }
 
-          /// <summary>
+        /// <summary>
         /// Layers multiple Value Noises
         /// </summary>
         /// <param name="x">x position in worldspace</param>
@@ -79,7 +81,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
             for (int o = 0; o < octaves; o++)
             {
-                total += noise.GetValue(x * frequency, z * frequency) * amplitude;
+                total += Noise.GetValue(x * frequency, z * frequency) * amplitude;
                 frequency *= lacunarity;
                 amplitude *= persistence;
             }
@@ -87,7 +89,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
             return NormalizeNoise(total, offsetValue);
         }
 
-          /// <summary>
+        /// <summary>
         /// Layers multiple Cellular Noises
         /// </summary>
         /// <param name="x">x position in worldspace</param>
@@ -105,7 +107,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
             for (int o = 0; o < octaves; o++)
             {
-                total += noise.GetCellular(x * frequency, z * frequency) * amplitude;
+                total += Noise.GetCellular(x * frequency, z * frequency) * amplitude;
                 frequency *= lacunarity;
                 amplitude *= persistence;
             }
@@ -128,6 +130,11 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                 value = 1;
 
             return value;
+        }
+
+        public static int MapToWorld(float noiseValue)
+        {
+            return (int)(noiseValue * CommonConstants.World.chunkSize.Y);
         }
     }
 }

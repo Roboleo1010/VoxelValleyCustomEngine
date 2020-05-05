@@ -26,6 +26,11 @@
             "name": "Move_Up",
             "key": "Space",
             "onKeyDown": true
+        },
+        {
+            "name": "Move_Down",
+            "key": "ShiftLeft",
+            "onKeyDown": true
         }
     ]
 }

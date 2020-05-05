@@ -8,24 +8,19 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
     {
         static float totalHeatMapHeight = 600;
         static float totalHeatMapHeightHalf = totalHeatMapHeight / 2;
-        static FastNoise.FastNoise noise;
+
         static float baseScaleFactor = 0.08f;
 
         public enum HeatType
         {
-            COLDEST,
-            COLDER,
-            COLD,
-            HOT,
-            HOTTER,
-            HOTTEST
+            COLDEST = 0,
+            COLDER = 1,
+            COLD = 2,
+            HOT = 3,
+            HOTTER = 4,
+            HOTTEST = 5
         };
-
-        static HeatMap()
-        {
-            noise = new FastNoise.FastNoise(); //TODO: SEED
-        }
-
+        
         internal static HeatType GetHeatType(float x, float z, float height)
         {
             float value = GetHeat(x, z, height);

@@ -4,22 +4,15 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 {
     public static class MoistureMap
     {
-        static FastNoise.FastNoise noise;
-
         public enum MoistureType
         {
-            Wettest,
-            Wetter,
-            Wet,
-            Dry,
-            Dryer,
-            Dryest
+            Dryest = 0,
+            Dryer = 1,
+            Dry = 2,
+            Wet = 3,
+            Wetter = 4,
+            Wettest = 5
         };
-
-        static MoistureMap()
-        {
-            noise = new FastNoise.FastNoise(); //TODO: SEED
-        }
 
         internal static MoistureType GetMoistureType(float x, float z, float height)
         {
