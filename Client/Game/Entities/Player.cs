@@ -5,6 +5,7 @@ using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
+using VoxelValley.Client.Game.Enviroment.Generation;
 using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Entities
@@ -22,8 +23,13 @@ namespace VoxelValley.Client.Game.Entities
             ((World)Parent).Player = this;
             EngineManager.Window.player = this;
 
+            GameObject cameraContainer = new GameObject("Camera", this, new Vector3(0, 4, 0));
+            Camera camera = cameraContainer.AddComponent<Camera>();
+            GameManager.ActiveCamera = camera;
+
             Transform.Position = spawnPosition;
-            GameManager.ActiveCamera = AddComponent<Camera>();
+
+
 
             InputManager.GetState("Movement", "Move_Forward").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, 0.1f)); };
             InputManager.GetState("Movement", "Move_Backwards").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, -0.1f)); };
@@ -31,8 +37,7 @@ namespace VoxelValley.Client.Game.Entities
             InputManager.GetState("Movement", "Move_Left").Callback += (bool newState) => { SetMovement(newState, new Vector3(-0.1f, 0f, 0f)); };
             InputManager.GetState("Movement", "Move_Right").Callback += (bool newState) => { SetMovement(newState, new Vector3(0.1f, 0f, 0f)); };
 
-            InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.1f, 0f)); };
-            InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.1f, 0f)); };
+            InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.2f, 0f)); };
         }
 
         void SetMovement(bool newState, Vector3 movement)
@@ -45,7 +50,12 @@ namespace VoxelValley.Client.Game.Entities
 
         protected override void OnTick(float deltaTime)
         {
-            Move(movementDirection.X, movementDirection.Y, movementDirection.Z); //TODO CommonConstants.World.Gravity
+            Move(movementDirection.X, movementDirection.Y - CommonConstants.World.Gravity, movementDirection.Z);
+
+            int height = WorldGenerator.GetHeight((int)Transform.Position.X, (int)Transform.Position.Z);
+
+            if (Transform.Position.Y < height)
+                Transform.Position = new Vector3(Transform.Position.X, height, Transform.Position.Z);
         }
 
         public void Move(float x, float y, float z)

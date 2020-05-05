@@ -4,6 +4,7 @@ using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Game.Enviroment;
 using VoxelValley.Common;
+using VoxelValley.Common.Graphics;
 
 namespace VoxelValley.Client.Game
 {
@@ -14,6 +15,8 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
+            TextureGenerator.GenerateTexture(new Vector2i(128, 128), "trol");
+
             VoxelTypeManager.LoadVoxelTypes();
 
             World world = new World("World");
