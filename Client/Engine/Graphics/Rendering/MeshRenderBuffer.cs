@@ -119,7 +119,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             GL.Uniform3(shader.GetUniform("directionalLight.direction"), new Vector3(-0.2f, -1.0f, -0.3f)); //TODO: Move out
             GL.Uniform3(shader.GetUniform("directionalLight.ambient"), new Vector3(0.8f, 0.8f, 0.8f)); //TODO: Move out
             GL.Uniform3(shader.GetUniform("directionalLight.diffuse"), new Vector3(0.4f, 0.4f, 0.4f)); //TODO: Move out
-            GL.Uniform3(shader.GetUniform("directionalLight.specular"), new Vector3(0.5f, 0.5f, 0.5f)); //TODO: Move out
+            GL.Uniform3(shader.GetUniform("directionalLight.specular"), new Vector3(0.05f, 0.05f, 0.05f)); //TODO: Move out
 
             GL.Uniform1(shader.GetUniform("numPointLights"), 0);
             GL.Uniform1(shader.GetUniform("numSpotLights"), 0);

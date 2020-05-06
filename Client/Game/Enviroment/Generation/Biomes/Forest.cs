@@ -1,9 +1,12 @@
+using System;
 
 namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
 {
-    public class Desert : Biome
+    public class Forest : Biome
     {
-        public override string Name { get => "Desert"; }
+        public override string Name { get => "Forest"; }
+
+        Random r = new Random(); //TODO: Noise
 
         public override int GetHeight(int x, int z)
         {
@@ -15,9 +18,14 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
             if (y > height)
                 return null;
             else if (y == height)
-                return VoxelManager.GetVoxel("sand");
+            {
+                if (r.NextDouble() > 0.5f)
+                    return VoxelManager.GetVoxel("grass");
+                else
+                    return VoxelManager.GetVoxel("dirt");
+            }
             else if (y > height - 4)
-                return VoxelManager.GetVoxel("sand");
+                return VoxelManager.GetVoxel("dirt");
             else
                 return VoxelManager.GetVoxel("stone");
         }

@@ -29,7 +29,7 @@
         },
         {
             "name": "Move_Down",
-            "key": "ShiftLeft",
+            "key": "ControlLeft",
             "onKeyDown": true
         }
     ]

@@ -17,9 +17,9 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
-            // DoTests();
+             DoTests();
 
-            VoxelTypeManager.LoadVoxelTypes();
+            VoxelManager.LoadVoxels();
 
             World world = new World("World");
             new Player("Player", world.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
@@ -27,7 +27,7 @@ namespace VoxelValley.Client.Game
 
         static void DoTests()
         {
-            int size = 1500;
+            int size = 2000;
 
             float[,] heightMapData = new float[size, size];
             Color[,] heatMapData = new Color[size, size];

@@ -6,7 +6,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 {
     public static class HeatMap
     {
-        static float totalHeatMapHeight = 600;
+        static float totalHeatMapHeight = 2000;
         static float totalHeatMapHeightHalf = totalHeatMapHeight / 2;
 
         static float baseScaleFactor = 0.08f;

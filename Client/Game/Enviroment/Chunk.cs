@@ -7,7 +7,7 @@ using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Engine.Threading;
 using VoxelValley.Common;
 using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Client.Game.Enviroment.Generation.Biomes;
+using VoxelValley.Client.Game.Enviroment.Generation;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -16,7 +16,7 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(Chunk);
         Vector3i positionInWorldSpace;
 
-        public VoxelType[,,] voxels = new VoxelType[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
+        public Voxel[,,] voxels = new Voxel[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
         public bool KeepAlive = true;
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
@@ -32,19 +32,15 @@ namespace VoxelValley.Client.Game.Enviroment
         {
             for (int x = 0; x < CommonConstants.World.chunkSize.X; x++)
                 for (int z = 0; z < CommonConstants.World.chunkSize.Z; z++)
+                {
+                    int worldSpacePosX = positionInWorldSpace.X + x;
+                    int worldSpacePosZ = positionInWorldSpace.Z + z;
+
+                    Voxel[] voxelColumn = BiomeManager.GetBiome(worldSpacePosX, worldSpacePosZ).GetVoxelColumn(worldSpacePosX, worldSpacePosZ);
+
                     for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                    {
-                        int height = BiomeManager.GetBiome(positionInWorldSpace.X + x, positionInWorldSpace.Z + z).GetHeight(positionInWorldSpace.X + x, positionInWorldSpace.Z + z);
-                        if (height == y)
-                        {
-                            if (y > 100)
-                                voxels[x, y, z] = VoxelTypeManager.GetVoxelType("snow");
-                            else if (y > 90)
-                                voxels[x, y, z] = VoxelTypeManager.GetVoxelType("stone");
-                            else
-                                voxels[x, y, z] = VoxelTypeManager.GetVoxelType("grass");
-                        }
-                    }
+                        voxels[x, y, z] = voxelColumn[y];
+                }
         }
 
         void CreateMesh()

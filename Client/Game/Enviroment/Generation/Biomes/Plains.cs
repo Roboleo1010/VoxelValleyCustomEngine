@@ -1,9 +1,8 @@
-
 namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
 {
-    public class Desert : Biome
+    public class Plains : Biome
     {
-        public override string Name { get => "Desert"; }
+        public override string Name { get => "Plains"; }
 
         public override int GetHeight(int x, int z)
         {
@@ -15,9 +14,9 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
             if (y > height)
                 return null;
             else if (y == height)
-                return VoxelManager.GetVoxel("sand");
+                return VoxelManager.GetVoxel("grass");
             else if (y > height - 4)
-                return VoxelManager.GetVoxel("sand");
+                return VoxelManager.GetVoxel("dirt");
             else
                 return VoxelManager.GetVoxel("stone");
         }
