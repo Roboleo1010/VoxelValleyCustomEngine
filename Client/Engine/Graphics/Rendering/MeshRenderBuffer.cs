@@ -11,6 +11,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     public class MeshRenderBuffer : RenderBuffer
     {
         Type type = typeof(RenderBuffer);
+
         List<Mesh> meshesToAdd = new List<Mesh>();
         List<Mesh> meshesToRemove = new List<Mesh>();
 
@@ -18,6 +19,8 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         List<int> indiceData = new List<int>();
         List<Vector3> normalData = new List<Vector3>();
         List<Vector3> colorData = new List<Vector3>();
+
+        int vertexCount = 0;
 
         public MeshRenderBuffer(Shader shader) : base(shader) { }
 
@@ -40,42 +43,62 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         void UpdateMeshes()
         {
-            if (meshesToAdd.Count > 0 || meshesToRemove.Count > 0)
-            {
-                foreach (Mesh m in meshesToAdd)
+            Mesh[] meshesToAddCopy = meshesToAdd.ToArray();
+            Mesh[] meshesToRemoveCopy = meshesToRemove.ToArray();
+
+            if (meshesToAdd.Count > 0)
+                foreach (Mesh m in meshesToAddCopy)
+                {
                     meshes.Add(m);
+                    meshesToAdd.Remove(m);
+                }
 
-                meshesToAdd.Clear();
+            if (meshesToRemove.Count > 0)
+                foreach (Mesh m in meshesToRemoveCopy)
+                {
+                    meshes.Add(m);
+                    meshesToRemove.Remove(m);
+                }
 
-                foreach (Mesh m in meshesToRemove)
-                    meshes.Remove(m);
-
-                meshesToRemove.Clear();
-
-                RecalculateMeshes();
-            }
+            if (meshesToAddCopy.Length > 0 || meshesToRemoveCopy.Length > 0)
+                RecalculateMeshes(meshesToAddCopy, meshesToRemoveCopy);
         }
 
-        void RecalculateMeshes()
+        void RecalculateMeshes(Mesh[] meshesAdded, Mesh[] meshesRemoved)
         {
             if (meshes == null)
                 return;
 
-            vertexData.Clear();
-            indiceData.Clear();
-            normalData.Clear();
-            colorData.Clear();
-
-            int vertexCount = 0;
-
-            foreach (Mesh m in meshes.ToArray())
+            if (meshesAdded.Length > 0 && meshesRemoved.Length == 0) //Just mehes added, none removed. Smart Recalculating
             {
-                vertexData.AddRange(m.GetVertices());
-                indiceData.AddRange(m.GetIndices(vertexCount));
-                normalData.AddRange(m.GetNormals());
-                colorData.AddRange(m.GetColors());
+                foreach (Mesh m in meshesAdded)
+                {
+                    vertexData.AddRange(m.GetVertices());
+                    indiceData.AddRange(m.GetIndices(vertexCount));
+                    normalData.AddRange(m.GetNormals());
+                    colorData.AddRange(m.GetColors());
 
-                vertexCount += m.VertexCount;
+                    vertexCount += m.VertexCount;
+                }
+            }
+            else
+            {
+                vertexData.Clear();
+                indiceData.Clear();
+                normalData.Clear();
+                colorData.Clear();
+
+                vertexCount = 0;
+
+                foreach (Mesh m in meshes.ToArray())
+                {
+                    vertexData.AddRange(m.GetVertices());
+                    indiceData.AddRange(m.GetIndices(vertexCount));
+                    normalData.AddRange(m.GetNormals());
+                    colorData.AddRange(m.GetColors());
+
+                    vertexCount += m.VertexCount;
+                }
             }
 
             SendMeshData();

@@ -7,7 +7,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
     {
         internal static float GetHeight(float x, float z)
         {
-            return GenerationUtilities.FBMPerlin(x, z, 6, 1, 1);
+            return GenerationUtilities.FBMPerlin(x, z, 3, 0.45f, 1);
         }
     }
 }

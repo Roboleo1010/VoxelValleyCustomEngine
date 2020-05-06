@@ -6,10 +6,8 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 {
     public static class HeatMap
     {
-        static float totalHeatMapHeight = 2000;
+        static float totalHeatMapHeight = 5000;
         static float totalHeatMapHeightHalf = totalHeatMapHeight / 2;
-
-        static float baseScaleFactor = 0.08f;
 
         public enum HeatType
         {
@@ -20,40 +18,42 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
             HOTTER = 4,
             HOTTEST = 5
         };
-        
+
         internal static HeatType GetHeatType(float x, float z, float height)
         {
             float value = GetHeat(x, z, height);
 
-            if (value < 0.05f)
-                return HeatType.COLDEST;
-            else if (value < 0.18f)
-                return HeatType.COLDER;
-            else if (value < 0.4f)
-                return HeatType.COLD;
-            else if (value < 0.6f)
-                return HeatType.HOT;
-            else if (value < 0.8f)
-                return HeatType.HOTTER;
-            else
+            if (value > 0.9f)
                 return HeatType.HOTTEST;
+            else if (value > 0.75f)
+                return HeatType.HOTTER;
+            else if (value > 0.60f)
+                return HeatType.HOT;
+            else if (value > 0.35f)
+                return HeatType.COLD;
+            else if (value > 0.15f)
+                return HeatType.COLDER;
+            else // value < 0.15
+                return HeatType.COLDEST;
+
         }
 
         static float GetHeat(float x, float z, float height)
         {
             float baseValue = GetBaseValue(z);
-            float detailValue = GenerationUtilities.FBMSimplex(x, z, 3, 0.4f, 1.3f);
+            float detailValue = GenerationUtilities.FBMSimplex(x, z, 3, 0.1f, 1.3f);
 
-            float combinedValue = baseValue * detailValue;
+             float combinedValue = ((baseValue * 1.2f) + (detailValue * 1)) / 2;
 
-            if (height > 0.6f)
-                combinedValue -= 0.1f * height;
-            if (height > 0.7f)
-                combinedValue -= 0.2f * height;
-            if (height > 0.8f)
-                combinedValue -= 0.3f * height;
-            if (height > 0.9f)
-                combinedValue -= 0.4f * height;
+            //TODO: Use Height Data?
+            // if (height > 0.6f) 
+            //     combinedValue -= 0.1f * height;
+            // if (height > 0.7f)
+            //     combinedValue -= 0.2f * height;
+            // if (height > 0.8f)
+            //     combinedValue -= 0.3f * height;
+            // if (height > 0.9f)
+            //     combinedValue -= 0.4f * height;
 
             return combinedValue;
         }
@@ -62,18 +62,18 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
         {
             float relativeAbsoluteZ = Math.Abs(Math.Abs(z) % totalHeatMapHeight - totalHeatMapHeightHalf);
 
-            if (relativeAbsoluteZ > (5 * baseScaleFactor) * totalHeatMapHeight)      //warmest
-                return 1f;
-            else if (relativeAbsoluteZ > (4 * baseScaleFactor) * totalHeatMapHeight) //warmer
-                return 0.8f;
-            else if (relativeAbsoluteZ > (3 * baseScaleFactor) * totalHeatMapHeight) //warm
-                return 0.6f;
-            else if (relativeAbsoluteZ > (2 * baseScaleFactor) * totalHeatMapHeight) //cold
-                return 0.4f;
-            else if (relativeAbsoluteZ > (1 * baseScaleFactor) * totalHeatMapHeight) //colder
+            if (relativeAbsoluteZ < (0.1f) * totalHeatMapHeightHalf)      //coldest
+                return 0f;
+            else if (relativeAbsoluteZ < (0.25f) * totalHeatMapHeightHalf) //colder
                 return 0.2f;
-            else //coldest
-                return 0;
+            else if (relativeAbsoluteZ < (0.35f) * totalHeatMapHeightHalf) //cold
+                return 0.4f;
+            else if (relativeAbsoluteZ < (0.65f) * totalHeatMapHeightHalf) //warm
+                return 0.6f;
+            else if (relativeAbsoluteZ < (0.85f) * totalHeatMapHeightHalf) //warmer
+                return 0.8f;
+            else //warmest
+                return 1;
         }
 
         internal static Color GetColor(HeatType type)

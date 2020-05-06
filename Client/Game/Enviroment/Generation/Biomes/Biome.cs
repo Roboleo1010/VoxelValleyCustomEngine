@@ -1,3 +1,4 @@
+using System.Drawing;
 using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
@@ -5,6 +6,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
     public abstract class Biome
     {
         public abstract string Name { get; }
+        public abstract Color Color { get; }
 
         public abstract int GetHeight(int x, int z);
         internal abstract Voxel GetVoxel(int y, int height);

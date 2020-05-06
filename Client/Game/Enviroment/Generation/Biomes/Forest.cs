@@ -1,10 +1,12 @@
 using System;
+using System.Drawing;
 
 namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
 {
     public class Forest : Biome
     {
         public override string Name { get => "Forest"; }
+        public override Color Color { get => Color.Olive; }
 
         Random r = new Random(); //TODO: Noise
 

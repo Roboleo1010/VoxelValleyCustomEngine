@@ -34,14 +34,14 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 
         static float GetMoisture(float x, float z, float height)
         {
-            float value = GenerationUtilities.FBMSimplex(x, z, 3, 0.3f, 1.3f);
+            float value = GenerationUtilities.FBMSimplex(x, z, 3, 0.05f, 0.8f);
 
-            if (height < 0.2)
-                value += 7 * height;
-            if (height < 0.4)
-                value += 2 * height;
-            if (height < 0.5)
-                value += 1 * height;
+            // if (height < 0.2)
+            //     value += 7 * height;
+            // if (height < 0.4)
+            //     value += 2 * height;
+            // if (height < 0.5)
+            //     value += 1 * height;
 
             return value;
         }

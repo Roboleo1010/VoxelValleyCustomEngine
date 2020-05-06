@@ -1,8 +1,11 @@
+using System.Drawing;
+
 namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
 {
     public class Ice : Biome
     {
         public override string Name { get => "Ice"; }
+        public override Color Color { get => Color.White; }
 
         public override int GetHeight(int x, int z)
         {

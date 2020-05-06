@@ -4,7 +4,7 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Client.Game.Enviroment.Generation.Maps;
+using VoxelValley.Client.Game.Enviroment.Generation;
 using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
 
@@ -17,7 +17,7 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
-             DoTests();
+            //   DoTests();
 
             VoxelManager.LoadVoxels();
 
@@ -32,20 +32,24 @@ namespace VoxelValley.Client.Game
             float[,] heightMapData = new float[size, size];
             Color[,] heatMapData = new Color[size, size];
             Color[,] moistureMapData = new Color[size, size];
+            Color[,] biomeMapData = new Color[size, size];
 
             for (int x = -size / 2; x < size / 2; x++)
                 for (int z = -size / 2; z < size / 2; z++)
                 {
-                    float height = HeightMap.GetHeight(x, z);
-                    heightMapData[x + size / 2, z + size / 2] = height;
+                    // float height = HeightMap.GetHeight(x, z);
+                    // heightMapData[x + size / 2, z + size / 2] = height;
 
-                    heatMapData[x + size / 2, z + size / 2] = HeatMap.GetColor(HeatMap.GetHeatType(x, z, height));
-                    moistureMapData[x + size / 2, z + size / 2] = MoistureMap.GetColor(MoistureMap.GetMoistureType(x, z, height));
+                    //  heatMapData[x + size / 2, z + size / 2] = HeatMap.GetColor(HeatMap.GetHeatType(x, z, 0));
+                    //  moistureMapData[x + size / 2, z + size / 2] = MoistureMap.GetColor(MoistureMap.GetMoistureType(x, z, 0));
+
+                    biomeMapData[x + size / 2, z + size / 2] = BiomeManager.GetBiomeColor(BiomeManager.GetBiome(x, z));
                 }
 
             TextureGenerator.GenerateTexture(heightMapData, "heightmap");
             TextureGenerator.GenerateTexture(heatMapData, "heatmap");
             TextureGenerator.GenerateTexture(moistureMapData, "moisturemap");
+            TextureGenerator.GenerateTexture(biomeMapData, "biomemap");
         }
     }
 }
