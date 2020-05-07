@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Common.Helper;
-
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -19,6 +19,7 @@ namespace VoxelValley.Client.Game.Enviroment
         public World(string name) : base(name)
         {
             chunks = new Dictionary<Vector3i, Chunk>();
+            CreateChunk(new Vector3i(0, 0, 0));
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -28,9 +29,8 @@ namespace VoxelValley.Client.Game.Enviroment
                             (int)Player.Transform.Position.Y,
                             (int)Player.Transform.Position.Z));
 
-            // UnloadDistant(palyerPosInChukSpace); 
-
-            CreateAround(palyerPosInChukSpace);
+            if (chunks.Count > 0 && chunks.ElementAt(0).Value.IsFinished) //FIXME For testing, so first region is always at 0,0
+                CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace)
@@ -49,16 +49,6 @@ namespace VoxelValley.Client.Game.Enviroment
             for (int x = -ClientConstants.Graphics.RenderDistance; x < ClientConstants.Graphics.RenderDistance; x++)
                 for (int z = -ClientConstants.Graphics.RenderDistance; z < ClientConstants.Graphics.RenderDistance; z++)
                     CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
-        }
-
-        public void UnloadDistant(Vector3i positionInChunkSpace) //FIXME: Loads an unloads same chunks every frame check distance function
-        {
-            foreach (Vector3i chunkPos in chunks.Keys)
-            {
-                double distance = Math.Sqrt((Math.Pow((chunkPos.X - positionInChunkSpace.X), 2) + Math.Pow((chunkPos.Z - positionInChunkSpace.Z), 2)));
-                if (distance > ClientConstants.Graphics.ViewDistance)
-                    RemoveChunk(chunkPos);
-            }
         }
 
         public Chunk GetChunk(Vector3i positionInChunkSpace)

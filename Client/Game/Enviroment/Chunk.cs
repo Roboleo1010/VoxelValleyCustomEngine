@@ -7,12 +7,14 @@ using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Engine.Threading;
 using VoxelValley.Common;
 using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Client.Game.Enviroment.BiomeManagement;
+using VoxelValley.Client.Game.Enviroment.RegionManagement;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
     public class Chunk : GameObject
     {
+        public bool IsFinished = false;
+
         Type type = typeof(Chunk);
         Vector3i positionInWorldSpace;
 
@@ -24,7 +26,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
             Transform.Position = positionInWorldSpace.ToVector3();
 
-            ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { }, $"Chunk_{positionInChunkSpace}", ThreadPriority.Normal);
+            ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { IsFinished = true; }, $"Chunk_{positionInChunkSpace}", ThreadPriority.Normal);
         }
 
         void Generate()
@@ -35,7 +37,7 @@ namespace VoxelValley.Client.Game.Enviroment
                     int worldSpacePosX = positionInWorldSpace.X + x;
                     int worldSpacePosZ = positionInWorldSpace.Z + z;
 
-                    Voxel[] voxelColumn = BiomeManager.GetBiome(worldSpacePosX, worldSpacePosZ).GetVoxelColumn(worldSpacePosX, worldSpacePosZ);
+                    Voxel[] voxelColumn = RegionManager.GetRegion(worldSpacePosX, worldSpacePosZ).GetBiome(worldSpacePosX, worldSpacePosZ).GetVoxelColumn(worldSpacePosX, worldSpacePosZ);
 
                     for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
                         voxels[x, y, z] = voxelColumn[y];
