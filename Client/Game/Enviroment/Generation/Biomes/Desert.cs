@@ -13,8 +13,13 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
             return GenerationUtilities.MapToWorld(GenerationUtilities.FBMPerlin(x, z, 5, 0.8f, 0.1f));
         }
 
-        internal override Voxel GetVoxel(int y, int height)
+        internal override Voxel GetVoxel(int x, int y, int z, int height)
         {
+            Voxel structure = GetStructure(x, y, z, height);
+
+            if (structure != null)
+                return structure;
+
             if (y > height)
                 return null;
             else if (y == height)
@@ -23,6 +28,14 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
                 return VoxelManager.GetVoxel("sand");
             else
                 return VoxelManager.GetVoxel("stone");
+        }
+
+        internal Voxel GetStructure(int x, int y, int z, int height)
+        {
+            if (y == height + 1 && GenerationUtilities.FBMPerlin(x, z, 20, 2, 2) == 1)
+                return VoxelManager.GetVoxel("cactus");
+
+            return null;
         }
     }
 }

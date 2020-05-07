@@ -32,14 +32,29 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
         public static Biome GetBiome(int x, int z)
         {
-            float height = HeightMap.GetHeight(x, z);
+            // float height = HeightMap.GetHeight(x, z);
 
             //TODO Generate ocean if( height < 20 && Moiste = 5) return Ocean
 
-            HeatMap.HeatType heatType = HeatMap.GetHeatType(x, z, height);
-            MoistureMap.MoistureType moistureType = MoistureMap.GetMoistureType(x, z, height);
+            // HeatMap.HeatType heatType = HeatMap.GetHeatType(x, z, height);
+            // MoistureMap.MoistureType moistureType = MoistureMap.GetMoistureType(x, z, height);
 
-            return biomes[(int)moistureType, (int)heatType];
+            float biomeNoise = GenerationUtilities.FBMCellular(x, z, 1, 0.25f, 1f);
+
+            if (biomeNoise < 0.2f)
+                return Ice;
+            else if (biomeNoise < 0.4f)
+                return Forest;
+            else if (biomeNoise < 0.6f)
+                return Plains;
+            else if (biomeNoise < 0.8f)
+                return Forest;
+            else
+                return Mountains;
+
+            // return biomes[(int)moistureType, (int)heatType];
+
+            //return biomes[0, 0];
         }
 
         public static Color GetBiomeColor(Biome biome)

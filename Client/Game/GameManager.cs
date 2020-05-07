@@ -17,7 +17,7 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
-            //   DoTests();
+            //  DoTests();
 
             VoxelManager.LoadVoxels();
 
@@ -43,7 +43,9 @@ namespace VoxelValley.Client.Game
                     //  heatMapData[x + size / 2, z + size / 2] = HeatMap.GetColor(HeatMap.GetHeatType(x, z, 0));
                     //  moistureMapData[x + size / 2, z + size / 2] = MoistureMap.GetColor(MoistureMap.GetMoistureType(x, z, 0));
 
-                    biomeMapData[x + size / 2, z + size / 2] = BiomeManager.GetBiomeColor(BiomeManager.GetBiome(x, z));
+                    // biomeMapData[x + size / 2, z + size / 2] = BiomeManager.GetBiomeColor(BiomeManager.GetBiome(x, z));
+
+                    heightMapData[x + size / 2, z + size / 2] = GenerationUtilities.FBMCellular(x, z, 3, 0.25f, 1f);
                 }
 
             TextureGenerator.GenerateTexture(heightMapData, "heightmap");

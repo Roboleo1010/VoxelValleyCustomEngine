@@ -15,7 +15,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
             return GenerationUtilities.MapToWorld(GenerationUtilities.FBMPerlin(x, z, 5, 2, 0.1f));
         }
 
-        internal override Voxel GetVoxel(int y, int height)
+        internal override Voxel GetVoxel(int x, int y, int z, int height)
         {
             if (y > height)
                 return null;
