@@ -1,7 +1,8 @@
 using System;
 using System.Drawing;
+using VoxelValley.Client.Game.Enviroment.Generation;
 
-namespace VoxelValley.Client.Game.Enviroment.Generation.Biomes
+namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 {
     public class Forest : Biome
     {

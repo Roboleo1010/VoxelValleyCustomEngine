@@ -1,16 +1,12 @@
 using System.Drawing;
-using VoxelValley.Client.Game.Enviroment.Generation.Biomes;
-using VoxelValley.Client.Game.Enviroment.Generation.Maps;
+using VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes;
+using VoxelValley.Client.Game.Enviroment.Generation;
 
-namespace VoxelValley.Client.Game.Enviroment.Generation
+namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
 {
     public static class BiomeManager
     {
-        static Desert Desert = new Desert();
-        static Ice Ice = new Ice();
-        static Plains Plains = new Plains();
         static Forest Forest = new Forest();
-        static Mountains Mountains = new Mountains();
 
         // static Biome[,] biomes = new Biome[6, 6] {   
         // //COLDEST COLDER COLD    HOT                HOTTER               HOTTEST
@@ -21,15 +17,6 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         // {Ice,Tundra,BorealForest,SeasonalForest,     TropicalRainforest, TropicalRainforest },   //WETTER
         // {Ice,Tundra,BorealForest,TemperateRainforest,TropicalRainforest, TropicalRainforest } }; //WETTEST
 
-        static Biome[,] biomes = new Biome[6, 6] {   
-        //COLDEST COLDER    COLD        HOT    HOTTER      HOTTEST
-        {Ice,   Plains,     Plains,     Desert, Desert,     Desert },       //DRYEST
-        {Ice,   Ice,        Plains,     Desert, Desert,     Desert },       //DRYER
-        {Ice,   Ice,        Forest,     Forest, Desert,     Desert },       //DRY
-        {Ice,   Mountains,  Mountains,  Forest, Plains,     Desert },       //WET
-        {Ice,   Mountains,  Mountains,  Forest, Plains,     Plains },       //WETTER
-        {Ice,   Ice,        Forest,     Forest, Plains,     Plains } };     //WETTEST
-
         public static Biome GetBiome(int x, int z)
         {
             // float height = HeightMap.GetHeight(x, z);
@@ -39,18 +26,21 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
             // HeatMap.HeatType heatType = HeatMap.GetHeatType(x, z, height);
             // MoistureMap.MoistureType moistureType = MoistureMap.GetMoistureType(x, z, height);
 
-            float biomeNoise = GenerationUtilities.FBMCellular(x, z, 1, 0.25f, 1f);
+            // float biomeNoise = GenerationUtilities.FBMCellular(x, z, 1, 0.25f, 1f);
 
-            if (biomeNoise < 0.2f)
-                return Ice;
-            else if (biomeNoise < 0.4f)
-                return Forest;
-            else if (biomeNoise < 0.6f)
-                return Plains;
-            else if (biomeNoise < 0.8f)
-                return Forest;
-            else
-                return Mountains;
+            // if (biomeNoise < 0.2f)
+            //     return Ice;
+            // else if (biomeNoise < 0.4f)
+            //     return Forest;
+            // else if (biomeNoise < 0.6f)
+            //     return Plains;
+            // else if (biomeNoise < 0.8f)
+            //     return Forest;
+            // else
+            //     return Mountains;
+
+
+            return Forest;
 
             // return biomes[(int)moistureType, (int)heatType];
 

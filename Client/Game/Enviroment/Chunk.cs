@@ -7,7 +7,7 @@ using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Engine.Threading;
 using VoxelValley.Common;
 using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Client.Game.Enviroment.Generation;
+using VoxelValley.Client.Game.Enviroment.BiomeManagement;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -17,7 +17,6 @@ namespace VoxelValley.Client.Game.Enviroment
         Vector3i positionInWorldSpace;
 
         public Voxel[,,] voxels = new Voxel[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
-        public bool KeepAlive = true;
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {

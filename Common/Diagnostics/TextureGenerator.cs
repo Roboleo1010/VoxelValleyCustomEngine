@@ -22,7 +22,7 @@ namespace VoxelValley.Common.Diagnostics
                 }
 
             if (!string.IsNullOrEmpty(filename))
-                bitmap.Save($"Output/{filename}.png", ImageFormat.Png);
+                bitmap.Save($"Test/{filename}.png", ImageFormat.Png);
 
             return bitmap;
         }
@@ -45,7 +45,7 @@ namespace VoxelValley.Common.Diagnostics
                 }
 
             if (!string.IsNullOrEmpty(filename))
-                bitmap.Save($"Output/{filename}.png", ImageFormat.Png);
+                bitmap.Save($"Test/{filename}.png", ImageFormat.Png);
 
             return bitmap;
         }
