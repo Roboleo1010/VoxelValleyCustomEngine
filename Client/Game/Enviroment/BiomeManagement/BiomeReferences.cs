@@ -11,10 +11,5 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
             public static Mountains Mountains = new Mountains();
             public static Plains Plains = new Plains();
         }
-
-        public static class Empty
-        {
-            public static BiomeManagement.Biomes.Empty EmptyBiome = new BiomeManagement.Biomes.Empty();
-        }
     }
 }
