@@ -34,7 +34,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 
         static float GetHeight(float x, float z)
         {
-            return GenerationUtilities.FBMPerlin(x, z, 3, 1f, 1.4f);
+            return GenerationUtilities.FBMPerlin(x, z, 3, 0.6f, 1.4f);
         }
 
         internal static Color GetColor(HeightType type)

@@ -1,12 +1,18 @@
-{
-    "priority": 250,
-    "isActive": true,
-    "actions": [
-        {
-            "name": "DrawSceneGraph",
-            "key": "G",
-            "onKeyDown": true,
-            "allowRepeat": false
-        }
-    ]
-}
+    {
+        "priority": 250,
+        "isActive": true,
+        "actions": [
+            {
+                "name": "DrawSceneGraph",
+                "key": "G",
+                "onKeyDown": true,
+                "allowRepeat": false
+            },
+            {
+                "name": "LogCoordinates",
+                "key": "C",
+                "onKeyDown": true,
+                "allowRepeat": false
+            }
+        ]
+    }

@@ -8,6 +8,9 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         public abstract string Name { get; }
         public abstract Color Color { get; }
 
+        public byte[] terrainHeights;
+        public byte[] BiomeTypes;
+
         public abstract Biome GetBiome(int x, int z);
     }
 }

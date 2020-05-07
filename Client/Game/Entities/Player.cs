@@ -5,13 +5,14 @@ using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Client.Game.Enviroment.Generation;
-using VoxelValley.Common;
+using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
+        Type type = typeof(Player);
+
         float moveSpeed = 0.9f;
 
         float mouseSensitivity = 0.0025f;
@@ -39,6 +40,8 @@ namespace VoxelValley.Client.Game.Entities
 
             InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.2f, 0f)); };
             InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.2f, 0f)); };
+
+            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Coordinates: {Transform.Position.ToString()}, Rotation: {Transform.Rotation.ToString()}"); };
         }
 
         void SetMovement(bool newState, Vector3 movement)

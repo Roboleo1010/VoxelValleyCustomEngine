@@ -10,6 +10,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         static Greenlands Greenlands = new Greenlands();
         static Empty Empty = new Empty();
 
+        static byte t = byte.MaxValue;
         public static void GenerateRegion(int x, int z)
         {
 

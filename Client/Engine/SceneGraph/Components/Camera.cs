@@ -7,7 +7,7 @@ namespace VoxelValley.Client.Engine.SceneGraph.Components
     {
         public float NearClippingPane = 0.2f;
         public float FarClippingPane = 10000f;
-        public float FOV = MathHelper.PiOver2;
+        public float FOV = MathHelper.DegreesToRadians(80f);
         public float AspectRatio;
 
         public Matrix4 GetViewMatrix()

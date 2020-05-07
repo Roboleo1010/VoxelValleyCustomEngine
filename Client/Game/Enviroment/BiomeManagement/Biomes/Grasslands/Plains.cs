@@ -10,7 +10,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         public override int GetHeight(int x, int z)
         {
-            return GenerationUtilities.MapToWorld(GenerationUtilities.FBMPerlin(x, z, 5, 2, 0.1f));
+            return GenerationUtilities.MapToWorld(GenerationUtilities.FBMPerlin(x, z, 5, 1, 0.15f));
         }
 
         internal override Voxel GetVoxel(int x, int y, int z, int height)
