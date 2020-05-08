@@ -136,5 +136,10 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         {
             return (int)(noiseValue * CommonConstants.World.chunkSize.Y);
         }
+
+        public static byte MapToWorldByte(float noiseValue)
+        {
+            return (byte)(noiseValue * CommonConstants.World.chunkSize.Y);
+        }
     }
 }

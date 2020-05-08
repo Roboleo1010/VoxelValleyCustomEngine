@@ -1,4 +1,5 @@
 using System.Drawing;
+using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
 using VoxelValley.Client.Game.Enviroment.Generation.Maps;
 
@@ -9,7 +10,12 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
         public override string Name => "Greenlands";
         public override Color Color => Color.Green;
 
-        public override Biome GetBiome(int x, int z)
+        public Greenlands(Vector2i posInWorld, bool[,] regionCover) : base(posInWorld, regionCover)
+        {
+
+        }
+
+        protected override byte GetBiome(int x, int z)
         {
             HeightMap.HeightType heightType = HeightMap.GetHeightType(x, z);
 
@@ -17,17 +23,17 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
             {
                 case HeightMap.HeightType.Lowest:
                 case HeightMap.HeightType.Lower:
-                    return BiomeReferences.Grasslands.Plains;
+                    return BiomeReferences.Grasslands.Plains.BiomeId;
                 case HeightMap.HeightType.Low:
                 case HeightMap.HeightType.High:
-                    return BiomeReferences.Grasslands.Forest;
+                    return BiomeReferences.Grasslands.Forest.BiomeId;
                 case HeightMap.HeightType.Higher:
-                    return BiomeReferences.Grasslands.Hills;
+                    return BiomeReferences.Grasslands.Hills.BiomeId;
                 case HeightMap.HeightType.Highest:
-                    return BiomeReferences.Grasslands.Mountains;
+                    return BiomeReferences.Grasslands.Mountains.BiomeId;
+                default:
+                    return 0;
             }
-
-            return null;
         }
     }
 }

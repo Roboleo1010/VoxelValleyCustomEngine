@@ -4,6 +4,8 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
 {
     public static class BiomeReferences
     {
+        public static Empty Empty = new Empty();
+        
         public static class Grasslands
         {
             public static Forest Forest = new Forest();

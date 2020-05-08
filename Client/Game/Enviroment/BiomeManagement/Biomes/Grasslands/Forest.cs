@@ -9,12 +9,13 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
     {
         public override string Name { get => "Forest"; }
         public override Color Color { get => Color.Olive; }
+        public override byte BiomeId { get => 0; }
 
         Random r = new Random(); //TODO: Noise
 
-        public override int GetHeight(int x, int z)
+        public override byte GetHeight(int x, int z)
         {
-            return GenerationUtilities.MapToWorld(GenerationUtilities.FBMPerlin(x, z, 5, 0.3f, 0.1f));
+            return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 0.3f, 0.1f));
         }
 
         internal override Voxel GetVoxel(int x, int y, int z, int height)

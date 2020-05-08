@@ -7,8 +7,8 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
     {
         public abstract string Name { get; }
         public abstract Color Color { get; }
-
-        public abstract int GetHeight(int x, int z);
+        public abstract byte BiomeId { get; }
+        public abstract byte GetHeight(int x, int z);
         internal abstract Voxel GetVoxel(int x, int y, int z, int height);
 
         public Voxel[] GetVoxelColumn(int x, int z)

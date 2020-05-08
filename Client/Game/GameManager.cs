@@ -1,12 +1,12 @@
 using System;
-using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Client.Game.Enviroment.Generation;
+using VoxelValley.Client.Game.Enviroment.BiomeManagement;
+using VoxelValley.Client.Game.Enviroment.RegionManagement;
 using VoxelValley.Common;
-using VoxelValley.Common.Diagnostics;
+
 
 namespace VoxelValley.Client.Game
 {
@@ -17,9 +17,10 @@ namespace VoxelValley.Client.Game
 
         public static void Start()
         {
-            //   DoTests();
+            DoTests();
 
             VoxelManager.LoadVoxels();
+            BiomeManager.LoadBiomes();
 
             World world = new World("World");
             new Player("Player", world.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
@@ -27,28 +28,30 @@ namespace VoxelValley.Client.Game
 
         static void DoTests()
         {
-            int size = 2000;
+            RegionManager.GenerateRegion(0, 0);
 
-            float[,] heightMapData = new float[size, size];
-            Color[,] heatMapData = new Color[size, size];
-            Color[,] moistureMapData = new Color[size, size];
-            Color[,] biomeMapData = new Color[size, size];
+            // int size = 2000;
 
-            for (int x = -size / 2; x < size / 2; x++)
-                for (int z = -size / 2; z < size / 2; z++)
-                {
-                    // float height = HeightMap.GetHeight(x, z);
-                    // heightMapData[x + size / 2, z + size / 2] = height;
+            // float[,] heightMapData = new float[size, size];
+            // Color[,] heatMapData = new Color[size, size];
+            // Color[,] moistureMapData = new Color[size, size];
+            // Color[,] biomeMapData = new Color[size, size];
 
-                    //  heatMapData[x + size / 2, z + size / 2] = HeatMap.GetColor(HeatMap.GetHeatType(x, z, 0));
-                    //  moistureMapData[x + size / 2, z + size / 2] = MoistureMap.GetColor(MoistureMap.GetMoistureType(x, z, 0));
+            // for (int x = -size / 2; x < size / 2; x++)
+            //     for (int z = -size / 2; z < size / 2; z++)
+            //     {
+            //         // float height = HeightMap.GetHeight(x, z);
+            //         // heightMapData[x + size / 2, z + size / 2] = height;
 
-                    // biomeMapData[x + size / 2, z + size / 2] = BiomeManager.GetBiomeColor(BiomeManager.GetBiome(x, z));
+            //         //  heatMapData[x + size / 2, z + size / 2] = HeatMap.GetColor(HeatMap.GetHeatType(x, z, 0));
+            //         //  moistureMapData[x + size / 2, z + size / 2] = MoistureMap.GetColor(MoistureMap.GetMoistureType(x, z, 0));
 
-                    heightMapData[x + size / 2, z + size / 2] = GenerationUtilities.FBMCellular(x, z, 1, 0.25f, 1f);
-                }
+            //         // biomeMapData[x + size / 2, z + size / 2] = BiomeManager.GetBiomeColor(BiomeManager.GetBiome(x, z));
 
-            TextureGenerator.GenerateTexture(heightMapData, "heightmap");
+            //         heightMapData[x + size / 2, z + size / 2] = GenerationUtilities.FBMCellular(x, z, 1, 0.25f, 1f);
+            //     }
+
+            // TextureGenerator.GenerateTexture(heightMapData, "heightmap");
         }
     }
 }
