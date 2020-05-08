@@ -10,6 +10,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
 
         public static void LoadBiomes()
         {
+            AddBiome(BiomeReferences.Empty);
             AddBiome(BiomeReferences.Grasslands.Forest);
             AddBiome(BiomeReferences.Grasslands.Hills);
             AddBiome(BiomeReferences.Grasslands.Mountains);

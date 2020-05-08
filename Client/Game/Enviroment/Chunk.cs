@@ -37,10 +37,10 @@ namespace VoxelValley.Client.Game.Enviroment
                     int worldSpacePosX = positionInWorldSpace.X + x;
                     int worldSpacePosZ = positionInWorldSpace.Z + z;
 
-                    // Voxel[] voxelColumn = RegionManager.GetRegion(worldSpacePosX, worldSpacePosZ).GetBiome(worldSpacePosX, worldSpacePosZ).GetVoxelColumn(worldSpacePosX, worldSpacePosZ);
+                    Voxel[] voxelColumn = RegionManager.GetRegion(worldSpacePosX, worldSpacePosZ).GetVoxelColumn(worldSpacePosX, worldSpacePosZ);
 
-                    // for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                    //     voxels[x, y, z] = voxelColumn[y];
+                    for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
+                        voxels[x, y, z] = voxelColumn[y];
                 }
         }
 

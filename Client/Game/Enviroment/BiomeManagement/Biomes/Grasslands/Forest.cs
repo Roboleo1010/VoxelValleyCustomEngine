@@ -9,7 +9,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
     {
         public override string Name { get => "Forest"; }
         public override Color Color { get => Color.Olive; }
-        public override byte BiomeId { get => 0; }
+        public override byte BiomeId { get => 1; }
 
         Random r = new Random(); //TODO: Noise
 
@@ -20,8 +20,6 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         internal override Voxel GetVoxel(int x, int y, int z, int height)
         {
-
-
             if (y > height)
                 return null;
             else if (y == height)

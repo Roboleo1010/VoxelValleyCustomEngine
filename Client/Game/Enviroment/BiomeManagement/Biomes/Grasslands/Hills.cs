@@ -8,7 +8,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
     {
         public override string Name { get => "Hills"; }
         public override Color Color { get => Color.Green; }
-         public override byte BiomeId { get => 1; }
+        public override byte BiomeId { get => 2; }
 
         public override byte GetHeight(int x, int z)
         {
@@ -17,6 +17,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         internal override Voxel GetVoxel(int x, int y, int z, int height)
         {
+
             if (y > height)
                 return null;
             else if (y == height)

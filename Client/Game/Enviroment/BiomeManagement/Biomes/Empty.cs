@@ -17,7 +17,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         internal override Voxel GetVoxel(int x, int y, int z, int height)
         {
-            return VoxelManager.GetVoxel("missing_voxel");
+            return null;
         }
     }
 }
