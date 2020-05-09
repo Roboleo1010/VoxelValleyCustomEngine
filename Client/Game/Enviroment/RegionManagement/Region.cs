@@ -1,7 +1,6 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
-using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Enviroment.RegionManagement
@@ -11,15 +10,15 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         public abstract string Name { get; }
         public abstract Color Color { get; }
 
-        protected Vector2i posInWorld;
+        protected Vector2i centerPosInWorldSpace;
         protected bool[,] regionCover;
         protected byte[,] biomeId;
         protected byte[,] heightData;
         protected Voxel[,][] voxelColumns;
 
-        public Region(Vector2i posInWorld, bool[,] regionCover)
+        public Region(Vector2i centerPosInWorldSpace, bool[,] regionCover)
         {
-            this.posInWorld = posInWorld;
+            this.centerPosInWorldSpace = centerPosInWorldSpace;
             this.regionCover = regionCover;
 
             biomeId = new byte[regionCover.GetLength(0), regionCover.GetLength(1)];
@@ -62,7 +61,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                 for (int z = 0; z < regionCover.GetLength(1); z++)
                     if (regionCover[x, z] == true)
                     {
-                        heightData[x, z] = BiomeManager.GetBiome(biomeId[x, z]).GetHeight(posInWorld.X + x, posInWorld.Y + z);
+                        heightData[x, z] = BiomeManager.GetBiome(biomeId[x, z]).GetHeight(centerPosInWorldSpace.X + x, centerPosInWorldSpace.Y + z);
                         heightColors[x, z] = (float)heightData[x, z] / 255;
                     }
 
@@ -84,15 +83,20 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             for (int x = 0; x < regionCover.GetLength(0); x++)
                 for (int z = 0; z < regionCover.GetLength(1); z++)
                     if (regionCover[x, z] == true)
-                        voxelColumns[x, z] = BiomeManager.GetBiome(biomeId[x, z]).GetVoxelColumn(posInWorld.X + x, posInWorld.Y + z, heightData[x, z]);
+                        voxelColumns[x, z] = BiomeManager.GetBiome(biomeId[x, z]).GetVoxelColumn(centerPosInWorldSpace.X + x, centerPosInWorldSpace.Y + z, heightData[x, z]);
         }
 
         internal Voxel[] GetVoxelColumn(int worldPosX, int worldPosZ)
         {
-            if(worldPosX < 0 || worldPosX >= regionCover.GetLength(0) || worldPosZ < 0 || worldPosZ >= regionCover.GetLength(1) || voxelColumns[worldPosX, worldPosZ] == null)
+            int translatedPositionX = worldPosX + centerPosInWorldSpace.X;
+            int translatedPositionZ = worldPosZ + centerPosInWorldSpace.Y;
+
+            if (translatedPositionX < 0 || translatedPositionX >= regionCover.GetLength(0) ||
+                translatedPositionZ < 0 || translatedPositionZ >= regionCover.GetLength(1) ||
+                voxelColumns[translatedPositionX, translatedPositionZ] == null)
                 return BiomeReferences.Empty.GetVoxelColumn(0, 0, 0);
 
-            return voxelColumns[worldPosX, worldPosZ]; //FIXME Check array bounds and translarte to world
+            return voxelColumns[translatedPositionX, translatedPositionZ];
         }
     }
 }

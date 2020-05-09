@@ -17,7 +17,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
         public VoronoiDiagram(Vector2i worldPos, Vector2i cellCount, int cellSize, float jitterFactor)
         {
-            this.worldPos = worldPos;
+            this.worldPos = worldPos; //Just for noise
             this.cellCount = cellCount;
             this.cellSize = cellSize;
             this.jitterFactor = jitterFactor;
@@ -56,10 +56,12 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                     int baseX = ((cellSize / 2) + (x * cellSize));
                     int baseY = ((cellSize / 2) + (y * cellSize));
 
-                    int jitter = random.Next((int)-jitterFactor, (int)jitterFactor); //TODO Generate seeded
+                    int jitterX = random.Next((int)-jitterFactor, (int)jitterFactor); //TODO Generate seeded
+                    int jitterY = random.Next((int)-jitterFactor, (int)jitterFactor); //TODO Generate seeded
+
                     //int jitter = (int)((GenerationUtilities.FBMPerlin(worldPos.X + x, worldPos.Y + y, 1, 2, 10) * 2 - 1) * jitterFactor);
 
-                    Seeds[x, y] = new Vector2i(baseX + jitter, baseY + jitter);
+                    Seeds[x, y] = new Vector2i(baseX + jitterX, baseY + jitterY);
                     Regions[x, y] = regionIndex++;
                 }
         }

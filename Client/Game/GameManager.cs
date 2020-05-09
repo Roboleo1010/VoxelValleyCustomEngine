@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Game
 
         static void DoTests()
         {
-            RegionManager.GenerateRegion(0, 0);
+            RegionManager.GenerateRegion(new Vector2i(0, 0));
 
             // int size = 2000;
 
