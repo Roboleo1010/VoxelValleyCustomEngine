@@ -1,0 +1,26 @@
+[
+    {
+        "name": "debug_red",
+        "color": [
+            255,
+            0,
+            0
+        ]
+    },
+    {
+        "name": "debug_green",
+        "color": [
+            0,
+            0,
+            255
+        ]
+    },
+    {
+        "name": "debug_blue",
+        "color": [
+            0,
+            0,
+            255
+        ]
+    }
+]

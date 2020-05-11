@@ -13,7 +13,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         Random r = new Random(); //TODO: Noise
 
-        public override byte GetHeight(int x, int z)
+        public override short GetHeight(int x, int z)
         {
             return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 0.3f, 0.1f));
         }

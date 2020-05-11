@@ -6,5 +6,15 @@ namespace VoxelValley.Common.Helper
         {
             return (value - origmin) / (origmax - origmin) * (newmax - newmin) + newmin;
         }
+
+        /// <summary>
+        /// Interpolates linerally between values first and second
+        /// </summary>
+        /// <param name="by">0 returns first value, 1 returns second value, 0.5 retuns interpolated value in middle</param>
+        /// <returns>Interpolated value</returns>
+        public static float InterpolateLinear(float first, float second, float by)
+        {
+            return first + (second - first) * by;
+        }
     }
 }

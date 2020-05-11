@@ -2,22 +2,25 @@ using System.Drawing;
 
 namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 {
-    public class Empty : Biome
+    public class Low : Biome
     {
         public override string Name => "Empty";
 
-        public override Color Color => Color.White;
+        public override Color Color => Color.Blue;
 
-        public override byte BiomeId => 0;
+        public override byte BiomeId => 10;
 
         public override short GetHeight(int x, int z)
         {
-            return 0;
+            return 5;
         }
 
         internal override Voxel GetVoxel(int x, int y, int z, int height)
         {
-            return null;
+            if (y < height)
+                return VoxelManager.GetVoxel("debug_blue");
+            else
+                return null;
         }
     }
 }

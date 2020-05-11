@@ -5,6 +5,7 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Game.Entities;
+using VoxelValley.Client.Game.Enviroment.RegionManagement;
 using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Game.Enviroment
@@ -29,7 +30,7 @@ namespace VoxelValley.Client.Game.Enviroment
                             (int)Player.Transform.Position.Y,
                             (int)Player.Transform.Position.Z));
 
-            if (chunks.Count > 0 && chunks.ElementAt(0).Value.IsFinished) //FIXME For testing, so first region is always at 0,0
+            if (chunks.Count > 0 && chunks.ElementAt(0).Value.IsFinished)
                 CreateAround(palyerPosInChukSpace);
         }
 
