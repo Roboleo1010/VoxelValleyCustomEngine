@@ -1,4 +1,3 @@
-using System;
 using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
@@ -39,7 +38,10 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             InterpolateBiomes();
             InterpolateRegions();
             GenerateTerrainComposition();
+            GenerateFinishers();
         }
+
+        #region Generation Pipeline
 
         protected virtual void SetBiomeTypes()
         {
@@ -57,6 +59,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         }
 
         protected abstract byte GetBiome(int x, int z);
+
         protected virtual void SetBiomeHeights()
         {
             float[,] heightColors = new float[regionCover.GetLength(0), regionCover.GetLength(1)];
@@ -149,28 +152,6 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                     }
         }
 
-        protected bool IsBiomeBorder(int x, int z, int xOffset, int zOffset)
-        {
-            if (biomeId[x, z] != 0)
-                if (biomeId[x, z] != biomeId[x + xOffset, z + zOffset])
-                    return true;
-
-            return false;
-        }
-
-        public bool IsRegionCover(int x, int z)
-        {
-            if (x < 0 || x > regionCover.GetLength(0) || z < 0 || z > regionCover.GetLength(1))
-                return false;
-
-            return regionCover[x, z];
-        }
-
-        public bool IsRegionCover(Vector2i pos)
-        {
-            return IsRegionCover(pos.X, pos.Y);
-        }
-
         protected virtual void InterpolateRegions()
         {
             //TODO: InterpolateRegions
@@ -183,6 +164,45 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                     if (IsRegionCover(x, z))
                         voxelColumns[x, z] = BiomeManager.GetBiome(biomeId[x, z]).GetVoxelColumn(centerPosInWorldSpace.X + x, centerPosInWorldSpace.Y + z, heightData[x, z]);
         }
+
+        protected virtual void GenerateFinishers()
+        {
+            for (int x = 0; x < regionCover.GetLength(0); x++)
+                for (int z = 0; z < regionCover.GetLength(1); z++)
+                    if (IsRegionCover(x, z))
+                    {
+                        // BiomeManager.GetBiome(biomeId[x, z]).GetFinisher()
+
+                    }
+        }
+
+        #endregion
+
+        #region  Biome Helper
+        protected bool IsBiomeBorder(int x, int z, int xOffset, int zOffset)
+        {
+            if (biomeId[x, z] != 0)
+                if (biomeId[x, z] != biomeId[x + xOffset, z + zOffset])
+                    return true;
+
+            return false;
+        }
+        #endregion
+
+        #region  Region helpers
+        public bool IsRegionCover(int x, int z)
+        {
+            if (x < 0 || x > regionCover.GetLength(0) || z < 0 || z > regionCover.GetLength(1))
+                return false;
+
+            return regionCover[x, z];
+        }
+
+        public bool IsRegionCover(Vector2i pos)
+        {
+            return IsRegionCover(pos.X, pos.Y);
+        }
+        #endregion
 
         internal Voxel[] GetVoxelColumn(int worldPosX, int worldPosZ)
         {
