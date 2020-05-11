@@ -31,16 +31,16 @@ namespace VoxelValley.Client.Game.Enviroment
 
         void Generate()
         {
-            for (int x = 0; x < CommonConstants.World.chunkSize.X; x++)
-                for (int z = 0; z < CommonConstants.World.chunkSize.Z; z++)
+            for (int localX = 0; localX < CommonConstants.World.chunkSize.X; localX++)
+                for (int localZ = 0; localZ < CommonConstants.World.chunkSize.Z; localZ++)
                 {
-                    int worldSpacePosX = positionInWorldSpace.X + x;
-                    int worldSpacePosZ = positionInWorldSpace.Z + z;
+                    int worldX = positionInWorldSpace.X + localX;
+                    int worldZ = positionInWorldSpace.Z + localZ;
 
-                    Voxel[] voxelColumn = RegionManager.GetRegion(worldSpacePosX, worldSpacePosZ).GetVoxelColumn(worldSpacePosX, worldSpacePosZ);
+                    Voxel[] voxelColumn = RegionManager.GetRegion(worldX, worldZ).GetVoxelColumn(worldX, worldZ);
 
                     for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                        voxels[x, y, z] = voxelColumn[y];
+                        voxels[localX, y, localZ] = voxelColumn[y];
                 }
         }
 

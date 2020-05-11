@@ -7,7 +7,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 {
     public static class RegionManager
     {
-        static Region testRegion;
+        static Region activeRegion;
 
         public static void GenerateRegion(Vector2i worldPos)
         {
@@ -28,16 +28,14 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             Vector2i voronoiCenter = voronoi.Seeds[1, 1];
             Vector2i voronoiCenterInWorldSopace = voronoiCenter - worldPos;
 
-            Greenlands region = new Greenlands(voronoiCenterInWorldSopace, regionCover);
-            region.Generate();
-            testRegion = region;
+            activeRegion = new Greenlands(voronoiCenterInWorldSopace, regionCover);
 
             TextureGenerator.GenerateTexture(voronoi.GetColors(), "RegionMap");
         }
 
         public static Region GetRegion(int worldPosX, int worldPosZ)
         {
-            return testRegion; //TODO: Implement
+            return activeRegion; //TODO: Implement
         }
     }
 }
