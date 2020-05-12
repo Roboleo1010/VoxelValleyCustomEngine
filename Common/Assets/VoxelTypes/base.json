@@ -8,6 +8,14 @@
         ]
     },
     {
+        "name": "air",
+        "color": [
+            0,
+            0,
+            0
+        ]
+    },
+    {
         "name": "grass",
         "color": [
             19,

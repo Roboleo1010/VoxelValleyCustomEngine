@@ -15,12 +15,12 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
             return 20;
         }
 
-        internal override Voxel GetVoxel(int x, int y, int z, int height)
+        internal override int GetVoxel(int x, int y, int z, int height)
         {
             if (y < height)
-                return VoxelManager.GetVoxel("debug_red");
+                return VoxelManager.GetVoxel("debug_red").Id;
             else
-                return null;
+               return VoxelManager.AirVoxel;
         }
     }
 }

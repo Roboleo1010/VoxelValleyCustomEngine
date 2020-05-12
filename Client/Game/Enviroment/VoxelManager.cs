@@ -11,20 +11,23 @@ namespace VoxelValley.Client.Game.Enviroment
     public static class VoxelManager
     {
         static Type type = typeof(VoxelManager);
-        static Dictionary<string, Voxel> voxels = new Dictionary<string, Voxel>();
+
+        static Dictionary<int, Voxel> voxels = new Dictionary<int, Voxel>();
+        static int missingVoxel;
+        public static int AirVoxel;
 
         public static void LoadVoxels()
         {
             string[] paths = FileHelper.GetAllFilesOfType("Common/Assets/VoxelTypes/", "*.json");
 
             foreach (string path in paths)
-                LoadVoxel(path);
+                LoadVoxelJson(path);
 
-            if (!voxels.ContainsKey("missing_voxel"))
-                Log.Error(type, "Can't find 'missing_voxel'. The game will crash, if a non existent Voxel is requested.");
+            missingVoxel = GetVoxel("missing_voxel").Id;
+            AirVoxel = GetVoxel("air").Id;
         }
 
-        static void LoadVoxel(string path)
+        static void LoadVoxelJson(string path)
         {
             List<Voxel> voxels = new List<Voxel>();
 
@@ -34,20 +37,22 @@ namespace VoxelValley.Client.Game.Enviroment
             }
 
             foreach (Voxel voxel in voxels)
-            {
-                VoxelManager.voxels.Add(voxel.Name, voxel);
-                voxel.Name = string.Empty;
-            }
+                VoxelManager.voxels.Add(voxel.Id, voxel);
 
             Log.Info(type, $"Loaded {VoxelManager.voxels.Count} voxels.");
         }
 
-        public static Voxel GetVoxel(string name)
+        public static Voxel GetVoxel(int id)
         {
-            if (voxels.TryGetValue(name, out Voxel voxelType))
+            if (voxels.TryGetValue(id, out Voxel voxelType))
                 return voxelType;
 
-            return GetVoxel("missing_voxel");
+            return GetVoxel("missingVoxel");
+        }
+
+        public static Voxel GetVoxel(string name)
+        {
+            return GetVoxel(name.GetHashCode());
         }
     }
 }

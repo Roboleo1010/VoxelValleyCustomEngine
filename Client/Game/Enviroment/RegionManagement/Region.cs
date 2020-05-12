@@ -14,7 +14,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         protected bool[,] regionCover;
         protected byte[,] biomeId;
         protected short[,] heightData;
-        protected Voxel[,][] voxelColumns;
+        protected int[,][] voxelColumns;
 
         protected int interpolationDistance = 10;
         private int interpolationDistanceHalfed;
@@ -37,7 +37,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         {
             biomeId = new byte[regionWidth, regionHeight];
             heightData = new short[regionWidth, regionHeight];
-            voxelColumns = new Voxel[regionWidth, regionHeight][];
+            voxelColumns = new int[regionWidth, regionHeight][];
 
             SetBiomeTypes();
             SetBiomeHeights();
@@ -223,7 +223,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             return regionCover[x, z];
         }
 
-        internal Voxel[] GetVoxelColumn(int worldPosX, int worldPosZ)
+        internal int[] GetVoxelColumn(int worldPosX, int worldPosZ)
         {
             Vector2i translatedPosition = new Vector2i(FromWorldToLocalSpaceX(worldPosX), FromWorldToLocalSpaceZ(worldPosZ));
 

@@ -14,16 +14,16 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
             return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 1, 0.15f));
         }
 
-        internal override Voxel GetVoxel(int x, int y, int z, int height)
+        internal override int GetVoxel(int x, int y, int z, int height)
         {
             if (y > height)
-                return null;
+               return VoxelManager.AirVoxel;
             else if (y == height)
-                return VoxelManager.GetVoxel("grass");
+                return VoxelManager.GetVoxel("grass").Id;
             else if (y > height - 4)
-                return VoxelManager.GetVoxel("dirt");
+                return VoxelManager.GetVoxel("dirt").Id;
             else
-                return VoxelManager.GetVoxel("stone");
+                return VoxelManager.GetVoxel("stone").Id;
         }
     }
 }

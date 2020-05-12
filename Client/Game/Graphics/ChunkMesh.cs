@@ -34,7 +34,7 @@ namespace VoxelValley.Client.Game.Enviroment
             for (int x = 0; x < parentChunk.voxels.GetLength(0); x++)
                 for (int z = 0; z < parentChunk.voxels.GetLength(2); z++)
                     for (int y = 0; y < parentChunk.voxels.GetLength(1); y++)
-                        if (parentChunk.voxels[x, y, z] != null)
+                        if (parentChunk.voxels[x, y, z] != VoxelManager.AirVoxel)
                             GetMeshData(x, y, z);
 
             vertexData = vertices.ToArray();
@@ -144,7 +144,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
             if (addedVertices > 0)
             {
-                Vector3 voxelColor = parentChunk.voxels[x, y, z].Color;
+                Vector3 voxelColor = VoxelManager.GetVoxel(parentChunk.voxels[x, y, z]).Color;
                 for (int i = 0; i < addedVertices; i++)
                     colors.Add(voxelColor);
             }
@@ -156,7 +156,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 z < 0 || z >= parentChunk.voxels.GetLength(2))
                 return true;
 
-            return parentChunk.voxels[x, y, z] == null;
+            return parentChunk.voxels[x, y, z] == VoxelManager.AirVoxel;
         }
 
         public override Vector3[] GetVertices()
