@@ -15,19 +15,22 @@ namespace VoxelValley.Client.Game.Enviroment
 
         static Dictionary<string, Voxel> voxelLookUp = new Dictionary<string, Voxel>();
 
-        static ushort voxelIndex = 0;
-        static ushort missingVoxel;
+        static ushort voxelIndex;
         public static ushort AirVoxel;
 
         public static void LoadVoxels()
         {
+            //Add Air Voxel
+            Voxel airVoxel = new Voxel("air", new int[] { 0, 0, 0 });
+
+            voxels.Add(0, airVoxel);
+            voxelLookUp.Add("air", airVoxel);
+            voxelIndex = 1;
+
             string[] paths = FileHelper.GetAllFilesOfType("Common/Assets/VoxelTypes/", "*.json");
 
             foreach (string path in paths)
                 LoadVoxelJson(path);
-
-            missingVoxel = GetVoxel("missing_voxel").Id;
-            AirVoxel = GetVoxel("air").Id;
         }
 
         static void LoadVoxelJson(string path)

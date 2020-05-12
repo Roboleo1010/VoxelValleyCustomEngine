@@ -58,7 +58,7 @@ namespace VoxelValley.Client.Game.Enviroment
             int indiceOffset = vertices.Count;
 
             //Left
-            if (HasToRenderSide(x, y, z - 1))
+            if (IsSolid(x, y, z - 1))
             {
                 vertices.Add(new Vector3(x + 0, y + 0, z + 0));
                 vertices.Add(new Vector3(x + 1, y + 1, z + 0));
@@ -72,7 +72,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 indiceOffset += 4;
             }
             //Right
-            if (HasToRenderSide(x, y, z + 1))
+            if (IsSolid(x, y, z + 1))
             {
                 vertices.Add(new Vector3(x + 0, y + 0, z + 1));
                 vertices.Add(new Vector3(x + 1, y + 0, z + 1));
@@ -86,7 +86,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 indiceOffset += 4;
             }
             //Front
-            if (HasToRenderSide(x - 1, y, z))
+            if (IsSolid(x - 1, y, z))
             {
                 vertices.Add(new Vector3(x + 0, y + 0, z + 0));
                 vertices.Add(new Vector3(x + 0, y + 1, z + 1));
@@ -100,7 +100,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 indiceOffset += 4;
             }
             //Back
-            if (HasToRenderSide(x + 1, y, z))
+            if (IsSolid(x + 1, y, z))
             {
                 vertices.Add(new Vector3(x + 1, y + 0, z + 0));
                 vertices.Add(new Vector3(x + 1, y + 1, z + 0));
@@ -114,7 +114,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 indiceOffset += 4;
             }
             //Bottom
-            if (HasToRenderSide(x, y - 1, z))
+            if (IsSolid(x, y - 1, z))
             {
                 vertices.Add(new Vector3(x + 0, y + 0, z + 0));
                 vertices.Add(new Vector3(x + 1, y + 0, z + 0));
@@ -128,7 +128,7 @@ namespace VoxelValley.Client.Game.Enviroment
                 indiceOffset += 4;
             }
             //Top
-            if (HasToRenderSide(x, y + 1, z))
+            if (IsSolid(x, y + 1, z))
             {
                 vertices.Add(new Vector3(x + 1, y + 1, z + 0));
                 vertices.Add(new Vector3(x + 0, y + 1, z + 0));
@@ -149,7 +149,7 @@ namespace VoxelValley.Client.Game.Enviroment
                     colors.Add(voxelColor);
             }
         }
-        bool HasToRenderSide(int x, int y, int z)
+        bool IsSolid(int x, int y, int z)
         {
             if (x < 0 || x >= parentChunk.voxels.GetLength(0) ||
                 y < 0 || y >= parentChunk.voxels.GetLength(1) ||

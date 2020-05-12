@@ -219,7 +219,31 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                 for (int localZ = 0; localZ < regionHeight; localZ++)
                     if (IsRegionCoverInLocalSpace(localX, localZ))
                         for (int localY = 0; localY < CommonConstants.World.chunkSize.Y; localY++)
-                            ; //TODO
+                            if (HasAllSolidNeighbours(localX, localY, localZ))
+                                voxels[localX, localY, localZ] = VoxelManager.AirVoxel;
+        }
+
+        bool IsSolid(int x, int y, int z)
+        {
+            if (x < 0 || x >= regionWidth ||
+                y < 0 || y >= CommonConstants.World.chunkSize.Y ||
+                z < 0 || z >= regionHeight)
+                return true;
+
+            return voxels[x, y, z] == VoxelManager.AirVoxel;
+        }
+
+        bool HasAllSolidNeighbours(int x, int y, int z)
+        {
+            if (IsSolid(x + 1, y, z) &&
+                IsSolid(x - 1, y, z) &&
+                IsSolid(x, y + 1, z) &&
+                IsSolid(x, y - 1, z) &&
+                IsSolid(x, y, z + 1) &&
+                IsSolid(x, y, z - 1))
+                return true;
+
+            return false;
         }
 
         #endregion
