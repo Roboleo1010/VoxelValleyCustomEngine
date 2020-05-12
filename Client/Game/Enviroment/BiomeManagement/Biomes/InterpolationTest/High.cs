@@ -15,7 +15,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
             return 20;
         }
 
-        internal override int GetVoxel(int x, int y, int z, int height)
+        internal override ushort GetVoxel(int x, int y, int z, int height)
         {
             if (y < height)
                 return VoxelManager.GetVoxel("debug_red").Id;

@@ -18,7 +18,7 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(Chunk);
         Vector3i positionInWorldSpace;
 
-        public int[,,] voxels = new int[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z]; //TODO Use short? instead of reference. Short = 2 byte ref = 8 byte
+        public ushort[,,] voxels = new ushort[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z]; //TODO Use short? instead of reference. Short = 2 byte ref = 8 byte
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {
@@ -37,10 +37,8 @@ namespace VoxelValley.Client.Game.Enviroment
                     int worldX = positionInWorldSpace.X + localX;
                     int worldZ = positionInWorldSpace.Z + localZ;
 
-                    int[] voxelColumn = RegionManager.GetRegion(worldX, worldZ).GetVoxelColumn(worldX, worldZ);
-
-                    for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                        voxels[localX, y, localZ] = voxelColumn[y];
+                    for (int localY = 0; localY < CommonConstants.World.chunkSize.Y; localY++)
+                        voxels[localX, localY, localZ] = RegionManager.GetRegion(worldX, worldZ).GetVoxel(worldX, localY, worldZ);
                 }
         }
 

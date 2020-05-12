@@ -11,10 +11,13 @@ namespace VoxelValley.Client.Game.Enviroment
     public static class VoxelManager
     {
         static Type type = typeof(VoxelManager);
+        static Dictionary<ushort, Voxel> voxels = new Dictionary<ushort, Voxel>();
 
-        static Dictionary<int, Voxel> voxels = new Dictionary<int, Voxel>();
-        static int missingVoxel;
-        public static int AirVoxel;
+        static Dictionary<string, Voxel> voxelLookUp = new Dictionary<string, Voxel>();
+
+        static ushort voxelIndex = 0;
+        static ushort missingVoxel;
+        public static ushort AirVoxel;
 
         public static void LoadVoxels()
         {
@@ -37,22 +40,32 @@ namespace VoxelValley.Client.Game.Enviroment
             }
 
             foreach (Voxel voxel in voxels)
+            {
+                voxel.Id = voxelIndex;
+
                 VoxelManager.voxels.Add(voxel.Id, voxel);
+                VoxelManager.voxelLookUp.Add(voxel.Name, voxel);
+
+                voxelIndex++;
+            }
 
             Log.Info(type, $"Loaded {VoxelManager.voxels.Count} voxels.");
         }
 
-        public static Voxel GetVoxel(int id)
+        public static Voxel GetVoxel(string name)
+        {
+            if (voxelLookUp.TryGetValue(name, out Voxel voxelType))
+                return voxelType;
+
+            return GetVoxel("missing_voxel");
+        }
+
+        public static Voxel GetVoxel(ushort id)
         {
             if (voxels.TryGetValue(id, out Voxel voxelType))
                 return voxelType;
 
-            return GetVoxel("missingVoxel");
-        }
-
-        public static Voxel GetVoxel(string name)
-        {
-            return GetVoxel(name.GetHashCode());
+            return GetVoxel("missing_voxel");
         }
     }
 }

@@ -1,7 +1,10 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
+using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
+using VoxelValley.Common.Helper;
+using VoxelValley.Common.SaveManagement.SaveStates;
 
 namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 {
@@ -12,9 +15,9 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
         protected Vector2i centerPosInWorldSpace;
         protected bool[,] regionCover;
-        protected byte[,] biomeId;
+        protected byte[,] biomeIds;
         protected short[,] heightData;
-        protected int[,][] voxelColumns;
+        protected ushort[,,] voxels;
 
         protected int interpolationDistance = 10;
         private int interpolationDistanceHalfed;
@@ -35,9 +38,9 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
         public virtual void Generate()
         {
-            biomeId = new byte[regionWidth, regionHeight];
+            biomeIds = new byte[regionWidth, regionHeight];
             heightData = new short[regionWidth, regionHeight];
-            voxelColumns = new int[regionWidth, regionHeight][];
+            voxels = new ushort[regionWidth, CommonConstants.World.chunkSize.Y, regionHeight];
 
             SetBiomeTypes();
             SetBiomeHeights();
@@ -45,11 +48,18 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             InterpolateRegions();
             GenerateTerrainComposition();
             GenerateFinishers();
+            OptimizeRegion();
         }
 
         public virtual void Save()
         {
+            RegionSaveState saveState = new RegionSaveState("SaveStates/Region_0_250_0_250", "region", "json")
+            {
+                BiomeIds = biomeIds,
+                Voxels = voxels
+            };
 
+            saveState.Save();
         }
 
         #region Generation Pipeline
@@ -65,8 +75,8 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                         int worldX = FromLocalToWorldSpaceX(localX);
                         int worldZ = FromLocalToWorldSpaceZ(localZ);
 
-                        biomeId[localX, localZ] = GetBiome(worldX, worldZ);
-                        biomeColors[localX, localZ] = BiomeManager.GetBiome(biomeId[localX, localZ]).Color;
+                        biomeIds[localX, localZ] = GetBiome(worldX, worldZ);
+                        biomeColors[localX, localZ] = BiomeManager.GetBiome(biomeIds[localX, localZ]).Color;
                     }
 
             TextureGenerator.GenerateTexture(biomeColors, "BiomeMap");
@@ -85,7 +95,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                         int worldX = FromLocalToWorldSpaceX(localX);
                         int worldZ = FromLocalToWorldSpaceZ(localZ);
 
-                        heightData[localX, localZ] = BiomeManager.GetBiome(biomeId[localX, localZ]).GetHeight(worldX, worldZ);
+                        heightData[localX, localZ] = BiomeManager.GetBiome(biomeIds[localX, localZ]).GetHeight(worldX, worldZ);
                         heightColors[localX, localZ] = (float)heightData[localX, localZ] / 255;
                     }
 
@@ -186,20 +196,30 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                         int worldX = FromLocalToWorldSpaceX(localX);
                         int worldZ = FromLocalToWorldSpaceZ(localZ);
 
-                        voxelColumns[localX, localZ] = BiomeManager.GetBiome(biomeId[localX, localZ])
-                                                                   .GetVoxelColumn(worldX, worldZ, heightData[localX, localZ]);
+                        for (int localY = 0; localY < CommonConstants.World.chunkSize.Y; localY++)
+                            voxels[localX, localY, localZ] = BiomeManager.GetBiome(biomeIds[localX, localZ])
+                                                                       .GetVoxel(worldX, localY, worldZ, heightData[localX, localZ]);
                     }
         }
 
         protected virtual void GenerateFinishers()
         {
+            // for (int localX = 0; localX < regionWidth; localX++)
+            //     for (int localZ = 0; localZ < regionHeight; localZ++)
+            //         if (IsRegionCoverInLocalSpace(localX, localZ))
+            //         {
+            //             int worldX = FromLocalToWorldSpaceX(localX);
+            //             int worldZ = FromLocalToWorldSpaceZ(localZ);
+            //         }
+        }
+
+        protected virtual void OptimizeRegion()
+        {
             for (int localX = 0; localX < regionWidth; localX++)
                 for (int localZ = 0; localZ < regionHeight; localZ++)
                     if (IsRegionCoverInLocalSpace(localX, localZ))
-                    {
-                        int worldX = FromLocalToWorldSpaceX(localX);
-                        int worldZ = FromLocalToWorldSpaceZ(localZ);
-                    }
+                        for (int localY = 0; localY < CommonConstants.World.chunkSize.Y; localY++)
+                            ; //TODO
         }
 
         #endregion
@@ -207,8 +227,8 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         #region  Biome Helper
         protected bool IsBiomeBorder(int x, int z, int xOffset, int zOffset)
         {
-            if (biomeId[x, z] != 0)
-                if (biomeId[x, z] != biomeId[x + xOffset, z + zOffset])
+            if (biomeIds[x, z] != 0)
+                if (biomeIds[x, z] != biomeIds[x + xOffset, z + zOffset])
                     return true;
 
             return false;
@@ -223,14 +243,14 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             return regionCover[x, z];
         }
 
-        internal int[] GetVoxelColumn(int worldPosX, int worldPosZ)
+        internal ushort GetVoxel(int worldX, int worldY, int worldZ)
         {
-            Vector2i translatedPosition = new Vector2i(FromWorldToLocalSpaceX(worldPosX), FromWorldToLocalSpaceZ(worldPosZ));
+            Vector2i translatedPosition = new Vector2i(FromWorldToLocalSpaceX(worldX), FromWorldToLocalSpaceZ(worldZ));
 
             if (IsRegionCoverInLocalSpace(translatedPosition.X, translatedPosition.Y))
-                return voxelColumns[translatedPosition.X, translatedPosition.Y];
+                return voxels[translatedPosition.X, worldY, translatedPosition.Y];
             else
-                return BiomeReferences.Empty.GetVoxelColumn(0, 0, 0);
+                return BiomeReferences.Empty.GetVoxel(worldX, worldY, worldZ, 0);
         }
 
         #region  Coordinate Conversion helper

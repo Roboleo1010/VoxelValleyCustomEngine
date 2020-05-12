@@ -56,7 +56,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
             //TextureGenerator.GenerateTexture(voronoi.GetColors(), "RegionMap");
 
-            int size = 250;
+            int size = 200;
 
             bool[,] regionCover = new bool[size, size];
 
