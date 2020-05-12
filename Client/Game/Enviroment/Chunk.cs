@@ -18,7 +18,7 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(Chunk);
         Vector3i positionInWorldSpace;
 
-        public Voxel[,,] voxels = new Voxel[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
+        public Voxel[,,] voxels = new Voxel[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z]; //TODO Use short? instead of reference. Short = 2 byte ref = 8 byte
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {

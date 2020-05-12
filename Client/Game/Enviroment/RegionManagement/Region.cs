@@ -30,23 +30,26 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             regionWidth = regionCover.GetLength(0);
             regionHeight = regionCover.GetLength(1);
 
-            biomeId = new byte[regionWidth, regionHeight];
-            heightData = new short[regionWidth, regionHeight];
-            voxelColumns = new Voxel[regionWidth, regionHeight][];
-
             interpolationDistanceHalfed = interpolationDistance / 2;
-
-            Generate();
         }
 
         public virtual void Generate()
         {
+            biomeId = new byte[regionWidth, regionHeight];
+            heightData = new short[regionWidth, regionHeight];
+            voxelColumns = new Voxel[regionWidth, regionHeight][];
+
             SetBiomeTypes();
             SetBiomeHeights();
             InterpolateBiomes();
             InterpolateRegions();
             GenerateTerrainComposition();
             GenerateFinishers();
+        }
+
+        public virtual void Save()
+        {
+
         }
 
         #region Generation Pipeline
@@ -231,12 +234,12 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         }
 
         #region  Coordinate Conversion helper
-        protected int FromWorldToLocalSpaceX(int xInWorldSpace)
+        public int FromWorldToLocalSpaceX(int xInWorldSpace)
         {
             return xInWorldSpace + centerPosInWorldSpace.X;
         }
 
-        protected int FromWorldToLocalSpaceZ(int zInWorldSpace)
+        public int FromWorldToLocalSpaceZ(int zInWorldSpace)
         {
             return zInWorldSpace + centerPosInWorldSpace.Y;
         }

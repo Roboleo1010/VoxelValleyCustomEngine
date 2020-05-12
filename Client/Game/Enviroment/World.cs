@@ -36,6 +36,9 @@ namespace VoxelValley.Client.Game.Enviroment
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace)
         {
+            if (RegionManager.CurrentlyGenerating)
+                return null;
+
             Chunk chunk = GetChunk(positionInChunkSpace);
             if (chunk == null)
             {
