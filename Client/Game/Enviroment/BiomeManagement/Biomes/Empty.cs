@@ -17,7 +17,12 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         internal override ushort GetVoxel(int x, int y, int z, int height)
         {
-           return VoxelManager.AirVoxel;
+            return VoxelManager.AirVoxel;
+        }
+
+        internal override void GetFinishers(int worldX, int worldZ, int height, ref ushort[] voxels)
+        {
+
         }
     }
 }

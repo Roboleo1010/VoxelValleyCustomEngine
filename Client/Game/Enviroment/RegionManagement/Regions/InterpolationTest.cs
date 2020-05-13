@@ -15,12 +15,12 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
 
         }
 
-        protected override byte GetBiome(int x, int z)
+        protected override Biome GetBiome(int x, int z)
         {
             if (Math.Abs(x) % 40 > 20 || Math.Abs(z) % 40 > 20)
-                return BiomeReferences.InterpolationTest.Low.BiomeId;
+                return BiomeReferences.InterpolationTest.Low;
             else
-                return BiomeReferences.InterpolationTest.High.BiomeId;
+                return BiomeReferences.InterpolationTest.High;
         }
     }
 }

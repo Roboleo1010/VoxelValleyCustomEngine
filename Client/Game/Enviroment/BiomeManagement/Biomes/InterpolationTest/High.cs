@@ -20,7 +20,12 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
             if (y < height)
                 return VoxelManager.GetVoxel("debug_red").Id;
             else
-               return VoxelManager.AirVoxel;
+                return VoxelManager.AirVoxel;
+        }
+
+        internal override void GetFinishers(int worldX, int worldZ, int height, ref ushort[] voxels)
+        {
+
         }
     }
 }

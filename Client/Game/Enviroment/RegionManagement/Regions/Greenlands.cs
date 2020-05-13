@@ -15,7 +15,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
 
         }
 
-        protected override byte GetBiome(int x, int z)
+        protected override Biome GetBiome(int x, int z)
         {
             HeightMap.HeightType heightType = HeightMap.GetHeightType(x, z);
 
@@ -23,16 +23,16 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
             {
                 case HeightMap.HeightType.Lowest:
                 case HeightMap.HeightType.Lower:
-                    return BiomeReferences.Grasslands.Plains.BiomeId;
+                    return BiomeReferences.Grasslands.Plains;
                 case HeightMap.HeightType.Low:
                 case HeightMap.HeightType.High:
-                    return BiomeReferences.Grasslands.Forest.BiomeId;
+                    return BiomeReferences.Grasslands.Forest;
                 case HeightMap.HeightType.Higher:
-                    return BiomeReferences.Grasslands.Hills.BiomeId;
+                    return BiomeReferences.Grasslands.Hills;
                 case HeightMap.HeightType.Highest:
-                    return BiomeReferences.Grasslands.Mountains.BiomeId;
+                    return BiomeReferences.Grasslands.Mountains;
                 default:
-                    return 0;
+                    return BiomeReferences.Empty;
             }
         }
     }

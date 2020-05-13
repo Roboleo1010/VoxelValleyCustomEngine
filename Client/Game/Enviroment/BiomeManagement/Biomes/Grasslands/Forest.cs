@@ -34,5 +34,10 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
             else
                 return VoxelManager.GetVoxel("stone").Id;
         }
+
+        internal override void GetFinishers(int worldX, int worldZ, int height, ref ushort[] voxels)
+        {
+
+        }
     }
 }

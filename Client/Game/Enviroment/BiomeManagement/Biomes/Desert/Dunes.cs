@@ -12,7 +12,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
 
         public override short GetHeight(int x, int z)
         {
-            return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 1.3f, 0.25f));
+            return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 0.4f, 0.25f));
         }
 
         internal override ushort GetVoxel(int x, int y, int z, int height)
@@ -26,6 +26,11 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
                 return VoxelManager.GetVoxel("sand").Id;
             else
                 return VoxelManager.GetVoxel("stone").Id;
+        }
+
+        internal override void GetFinishers(int worldX, int worldZ, int height, ref ushort[] voxels)
+        {
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         protected Vector2i worldPosition;
 
         //Region Data
-        protected byte biomeId;
+        protected Biome biome;
         protected short height;
         protected ushort[] voxels;
 
@@ -38,7 +38,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         }
         #region  abstract Region Functions
 
-        protected abstract byte GetBiome(int x, int z);
+        protected abstract Biome GetBiome(int x, int z);
 
         #endregion
 
@@ -46,12 +46,12 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
         protected virtual void SetBiomeType()
         {
-            biomeId = GetBiome(worldPosition.X, worldPosition.Y);
+            biome = GetBiome(worldPosition.X, worldPosition.Y);
         }
 
         protected virtual void SetBiomeHeights()
         {
-            height = BiomeManager.GetBiome(biomeId).GetHeight(worldPosition.X, worldPosition.Y);
+            height = biome.GetHeight(worldPosition.X, worldPosition.Y);
         }
 
         protected virtual void InterpolateBiomes()
@@ -67,12 +67,12 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
         protected virtual void GenerateTerrainComposition()
         {
             for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                voxels[y] = BiomeManager.GetBiome(biomeId).GetVoxel(worldPosition.X, y, worldPosition.Y, height);
+                voxels[y] = biome.GetVoxel(worldPosition.X, y, worldPosition.Y, height);
         }
 
         protected virtual void GenerateFinishers()
         {
-
+            biome.GetFinishers(worldPosition.X, worldPosition.Y, height, ref voxels);
         }
 
         protected virtual void OptimizeRegion()

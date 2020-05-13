@@ -20,7 +20,7 @@ namespace VoxelValley.Client.Game
             BiomeManager.LoadBiomes();
 
             World world = new World("World");
-            new Player("Player", world.gameObject, new Vector3(0, CommonConstants.World.chunkSize.Y, 0));
+            new Player("Player", world.gameObject, new Vector3(0, 150, 0));
         }
     }
 }
