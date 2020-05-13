@@ -44,5 +44,13 @@ namespace VoxelValley.Client.Game.Enviroment
             meshRenderer.OnMeshChanged += renderBuffer.OnMeshChanged;
             meshRenderer.Mesh = mesh;
         }
+
+        public static bool InChunk(int x, int y, int z)
+        {
+            return (x > 0 && y > 0 && z > 0 &&
+                x < CommonConstants.World.chunkSize.X &&
+                y < CommonConstants.World.chunkSize.Y &&
+                z < CommonConstants.World.chunkSize.Z);
+        }
     }
 }
