@@ -2,7 +2,6 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.Generation;
 using VoxelValley.Client.Game.Enviroment.RegionManagement.Regions;
 using VoxelValley.Common;
-using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 {
@@ -18,10 +17,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
                     int worldX = worldBaseX + localX;
                     int worldZ = worldBaseZ + localZ;
 
-                    Region region = GetRegion(worldX, worldZ);
-                    region.Generate();
-
-                    ushort[] voxelColumn = region.GetVoxelColumn();
+                    ushort[] voxelColumn = GetRegion(worldX, worldZ).Generate(new Vector2i(worldX, worldZ));
 
                     for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
                         voxels[localX, y, localZ] = voxelColumn[y];
@@ -32,12 +28,10 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
         static Region GetRegion(int worldX, int worldZ)
         {
-            Vector2i posInWorld = new Vector2i(worldX, worldZ);
-
             if (GenerationUtilities.FBMCellular(worldX, worldZ, 1, 0.6f, 1.4f) > 0.5f)
-                return new Greenlands(posInWorld);
+                return RegionReferences.Greenlands;
             else
-                return new Desert(posInWorld);
+                return RegionReferences.Desert;
         }
     }
 }

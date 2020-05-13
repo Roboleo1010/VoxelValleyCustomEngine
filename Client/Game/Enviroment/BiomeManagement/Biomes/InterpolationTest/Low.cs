@@ -10,12 +10,12 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
 
         public override byte BiomeId => 10;
 
-        public override short GetHeight(int x, int z)
+        public override ushort GetHeight(int x, int z)
         {
             return 5;
         }
 
-        internal override ushort GetVoxel(int x, int y, int z, int height)
+        internal override ushort GetVoxel(int x, int y, int z, ushort height)
         {
             if (y < height)
                 return VoxelManager.GetVoxel("debug_blue").Id;
@@ -23,7 +23,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
                 return VoxelManager.AirVoxel;
         }
 
-        internal override void GetFinishers(int worldX, int worldZ, int height, ref ushort[] voxels)
+        internal override void GetFinishers(int worldX, int worldZ, ushort height, ref ushort[] voxels)
         {
 
         }

@@ -7,84 +7,43 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 {
     public abstract class Region
     {
-        //Must have Properties for every Reagion Type
+        //Must have Properties for every Region Type
         public abstract string Name { get; }
         public abstract Color Color { get; }
 
-        protected Vector2i worldPosition;
-
-        //Region Data
-        protected Biome biome;
-        protected short height;
-        protected ushort[] voxels;
-
-
-        public Region(Vector2i positionInWorldSpace)
+        public virtual ushort[] Generate(Vector2i positionInWorldSpace)
         {
-            this.worldPosition = positionInWorldSpace;
+            Biome biome = SetBiomeType(positionInWorldSpace);
+            ushort height = SetBiomeHeights(positionInWorldSpace, biome);
+            ushort[] voxels = GenerateTerrainComposition(positionInWorldSpace, biome, height);
+
+            return voxels;
         }
-
-        public virtual void Generate()
-        {
-            voxels = new ushort[CommonConstants.World.chunkSize.Y];
-
-            SetBiomeType();
-            SetBiomeHeights();
-            InterpolateBiomes();
-            InterpolateRegions();
-            GenerateTerrainComposition();
-            GenerateFinishers();
-            OptimizeRegion();
-        }
-        #region  abstract Region Functions
-
-        protected abstract Biome GetBiome(int x, int z);
-
-        #endregion
 
         #region Generation Pipeline
 
-        protected virtual void SetBiomeType()
+        protected virtual Biome SetBiomeType(Vector2i positionInWorldSpace)
         {
-            biome = GetBiome(worldPosition.X, worldPosition.Y);
+            return GetBiome(positionInWorldSpace.X, positionInWorldSpace.Y);
         }
 
-        protected virtual void SetBiomeHeights()
+        protected virtual ushort SetBiomeHeights(Vector2i positionInWorldSpace, Biome biome)
         {
-            height = biome.GetHeight(worldPosition.X, worldPosition.Y);
+            return biome.GetHeight(positionInWorldSpace.X, positionInWorldSpace.Y);
         }
 
-        protected virtual void InterpolateBiomes()
+        protected virtual ushort[] GenerateTerrainComposition(Vector2i positionInWorldSpace, Biome biome, ushort height)
         {
+            ushort[] voxels = new ushort[CommonConstants.World.chunkSize.Y];
 
-        }
-
-        protected virtual void InterpolateRegions()
-        {
-
-        }
-
-        protected virtual void GenerateTerrainComposition()
-        {
             for (int y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                voxels[y] = biome.GetVoxel(worldPosition.X, y, worldPosition.Y, height);
-        }
+                voxels[y] = biome.GetVoxel(positionInWorldSpace.X, y, positionInWorldSpace.Y, height);
 
-        protected virtual void GenerateFinishers()
-        {
-            biome.GetFinishers(worldPosition.X, worldPosition.Y, height, ref voxels);
-        }
-
-        protected virtual void OptimizeRegion()
-        {
-
+            return voxels;
         }
 
         #endregion
 
-        internal ushort[] GetVoxelColumn()
-        {
-            return voxels;
-        }
+        protected abstract Biome GetBiome(int x, int z);
     }
 }

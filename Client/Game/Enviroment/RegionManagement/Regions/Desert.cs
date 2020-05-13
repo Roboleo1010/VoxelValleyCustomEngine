@@ -1,5 +1,4 @@
 using System.Drawing;
-using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
 using VoxelValley.Client.Game.Enviroment.Generation.Maps;
 
@@ -9,11 +8,6 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
     {
         public override string Name => "Desert";
         public override Color Color => Color.Yellow;
-
-        public Desert(Vector2i positionInWorldSpace) : base(positionInWorldSpace)
-        {
-
-        }
 
         protected override Biome GetBiome(int x, int z)
         {

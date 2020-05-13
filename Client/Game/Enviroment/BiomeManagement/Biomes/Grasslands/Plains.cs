@@ -9,12 +9,12 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
         public override Color Color { get => Color.Lime; }
         public override byte BiomeId { get => 4; }
 
-        public override short GetHeight(int x, int z)
+        public override ushort GetHeight(int x, int z)
         {
             return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 1, 0.15f));
         }
 
-        internal override ushort GetVoxel(int x, int y, int z, int height)
+        internal override ushort GetVoxel(int x, int y, int z, ushort height)
         {
             if (y > height)
                 return VoxelManager.AirVoxel;
@@ -26,7 +26,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
                 return VoxelManager.GetVoxel("stone").Id;
         }
 
-        internal override void GetFinishers(int worldX, int worldZ, int height, ref ushort[] voxels)
+        internal override void GetFinishers(int worldX, int worldZ, ushort height, ref ushort[] voxels)
         {
 
         }
