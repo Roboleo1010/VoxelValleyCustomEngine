@@ -9,6 +9,6 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
         public abstract byte BiomeId { get; } //TODO: Namespaced
         public abstract ushort GetHeight(int x, int z);
         internal abstract ushort GetVoxel(int x, int y, int z, ushort height);
-        internal abstract void GetFinishers(int worldX, int worldZ, ushort height, ref ushort[] voxels);
+        internal abstract void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, ushort height, ref ushort[,,] voxels);
     }
 }

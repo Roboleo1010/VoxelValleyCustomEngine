@@ -6,7 +6,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
     public static class BiomeManager
     {
         static Type type = typeof(BiomeManager);
-        static Dictionary<byte, Biome> biomes = new Dictionary<byte, Biome>();
+        static Dictionary<byte, Biome> biomes = new Dictionary<byte, Biome>(); //TODO: Use array and indx with biomeId
 
         public static void LoadBiomes() //TODO: Load Biomes dynamicly :https://stackoverflow.com/questions/79693/getting-all-types-in-a-namespace-via-reflection
         {

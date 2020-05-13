@@ -27,7 +27,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
                 return VoxelManager.GetVoxel("stone").Id;
         }
 
-        internal override void GetFinishers(int worldX, int worldZ, ushort height, ref ushort[] voxels)
+        internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, ushort height, ref ushort[,,] voxels)
         {
             Random r = new Random();
 
@@ -35,10 +35,10 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
             {
                 ushort cactusId = VoxelManager.GetVoxel("cactus").Id;
 
-                voxels[height + 1] = cactusId;
-                voxels[height + 2] = cactusId;
-                voxels[height + 3] = cactusId;
-                voxels[height + 4] = cactusId;
+                voxels[chunkX, height + 1, chunkZ] = cactusId;
+                voxels[chunkX, height + 2, chunkZ] = cactusId;
+                voxels[chunkX, height + 3, chunkZ] = cactusId;
+                voxels[chunkX, height + 4, chunkZ] = cactusId;
             }
         }
     }
