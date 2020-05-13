@@ -4,7 +4,6 @@ using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Game.Enviroment;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
-using VoxelValley.Client.Game.Enviroment.RegionManagement;
 using VoxelValley.Common;
 
 

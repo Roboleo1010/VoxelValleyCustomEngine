@@ -17,6 +17,7 @@ namespace VoxelValley.Common.SaveManagement
 
         public virtual void Save()
         {
+            //TODO: replace 0 with &nbsp so 0,0,0,1,0 0> ,,,1,, to save disk space
             FileHelper.WriteToFileJson(directory, fileName, extension, this);
         }
 

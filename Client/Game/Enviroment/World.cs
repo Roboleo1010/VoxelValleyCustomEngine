@@ -5,7 +5,6 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Game.Entities;
-using VoxelValley.Client.Game.Enviroment.RegionManagement;
 using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Game.Enviroment
@@ -30,15 +29,11 @@ namespace VoxelValley.Client.Game.Enviroment
                             (int)Player.Transform.Position.Y,
                             (int)Player.Transform.Position.Z));
 
-            if (chunks.Count > 0 && chunks.ElementAt(0).Value.IsFinished)
-                CreateAround(palyerPosInChukSpace);
+            CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace)
         {
-            if (RegionManager.CurrentlyGenerating)
-                return null;
-
             Chunk chunk = GetChunk(positionInChunkSpace);
             if (chunk == null)
             {

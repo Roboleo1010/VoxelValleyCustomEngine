@@ -18,12 +18,11 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(Chunk);
         Vector3i positionInWorldSpace;
 
-        public ushort[,,] voxels = new ushort[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z]; //TODO Use short? instead of reference. Short = 2 byte ref = 8 byte
+        public ushort[,,] voxels;
 
         public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {
             positionInWorldSpace = CoordinateHelper.ConvertFromChunkSpaceToWorldSpace(positionInChunkSpace);
-
             Transform.Position = positionInWorldSpace.ToVector3();
 
             ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { IsFinished = true; }, $"Chunk_{positionInChunkSpace}", ThreadPriority.Normal);
@@ -31,15 +30,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
         void Generate()
         {
-            for (int localX = 0; localX < CommonConstants.World.chunkSize.X; localX++)
-                for (int localZ = 0; localZ < CommonConstants.World.chunkSize.Z; localZ++)
-                {
-                    int worldX = positionInWorldSpace.X + localX;
-                    int worldZ = positionInWorldSpace.Z + localZ;
-
-                    for (int localY = 0; localY < CommonConstants.World.chunkSize.Y; localY++)
-                        voxels[localX, localY, localZ] = RegionManager.GetRegion(worldX, worldZ).GetVoxel(worldX, localY, worldZ);
-                }
+            voxels = RegionManager.GetChunk(positionInWorldSpace.X, positionInWorldSpace.Z);
         }
 
         void CreateMesh()

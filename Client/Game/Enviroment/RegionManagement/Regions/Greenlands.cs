@@ -10,7 +10,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
         public override string Name => "Greenlands";
         public override Color Color => Color.Green;
 
-        public Greenlands(Vector2i posInWorld, bool[,] regionCover) : base(posInWorld, regionCover)
+        public Greenlands(Vector2i positionInWorldSpace) : base(positionInWorldSpace)
         {
 
         }
