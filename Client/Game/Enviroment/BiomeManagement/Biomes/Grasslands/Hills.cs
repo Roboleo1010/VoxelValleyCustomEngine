@@ -2,7 +2,7 @@
 using System.Drawing;
 using VoxelValley.Client.Game.Enviroment.Generation;
 
-namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
+namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
 {
     public class Hills : Biome
     {

@@ -8,7 +8,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
         static Type type = typeof(BiomeManager);
         static Dictionary<byte, Biome> biomes = new Dictionary<byte, Biome>();
 
-        public static void LoadBiomes()
+        public static void LoadBiomes() //TODO: Load Biomes dynamicly :https://stackoverflow.com/questions/79693/getting-all-types-in-a-namespace-via-reflection
         {
             AddBiome(BiomeReferences.Empty);
             AddBiome(BiomeReferences.Grasslands.Forest);
@@ -17,6 +17,9 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
             AddBiome(BiomeReferences.Grasslands.Plains);
             AddBiome(BiomeReferences.InterpolationTest.High);
             AddBiome(BiomeReferences.InterpolationTest.Low);
+            AddBiome(BiomeReferences.Desert.Oasis);
+            AddBiome(BiomeReferences.Desert.FlatDesert);
+            AddBiome(BiomeReferences.Desert.Dunes);
         }
 
         static void AddBiome(Biome biome)

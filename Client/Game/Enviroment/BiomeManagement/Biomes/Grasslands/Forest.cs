@@ -3,7 +3,7 @@ using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.Generation;
 
-namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
+namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
 {
     public class Forest : Biome
     {

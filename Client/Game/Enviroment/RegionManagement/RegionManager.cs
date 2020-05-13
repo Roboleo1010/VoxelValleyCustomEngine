@@ -1,6 +1,8 @@
 using OpenToolkit.Mathematics;
+using VoxelValley.Client.Game.Enviroment.Generation;
 using VoxelValley.Client.Game.Enviroment.RegionManagement.Regions;
 using VoxelValley.Common;
+using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 {
@@ -30,8 +32,12 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
         static Region GetRegion(int worldX, int worldZ)
         {
-           // return new Greenlands(new Vector2i(worldX, worldZ));
-            return new InterpolationTest(new Vector2i(worldX, worldZ));
+            Vector2i posInWorld = new Vector2i(worldX, worldZ);
+
+            if (GenerationUtilities.FBMCellular(worldX, worldZ, 1, 0.6f, 1.4f) > 0.5f)
+                return new Greenlands(posInWorld);
+            else
+                return new Desert(posInWorld);
         }
     }
 }

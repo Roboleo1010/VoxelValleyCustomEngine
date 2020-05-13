@@ -1,13 +1,13 @@
 using System.Drawing;
 using VoxelValley.Client.Game.Enviroment.Generation;
 
-namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
+namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
 {
-    public class Plains : Biome
+    public class FlatDesert : Biome
     {
-        public override string Name { get => "Plains"; }
-        public override Color Color { get => Color.Lime; }
-        public override byte BiomeId { get => 4; }
+        public override string Name { get => "Flat Desert"; }
+        public override Color Color { get => Color.Yellow; }
+        public override byte BiomeId { get => 52; }
 
         public override short GetHeight(int x, int z)
         {
@@ -19,9 +19,9 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
             if (y > height)
                 return VoxelManager.AirVoxel;
             else if (y == height)
-                return VoxelManager.GetVoxel("grass").Id;
+                return VoxelManager.GetVoxel("sand").Id;
             else if (y > height - 4)
-                return VoxelManager.GetVoxel("dirt").Id;
+                return VoxelManager.GetVoxel("sand").Id;
             else
                 return VoxelManager.GetVoxel("stone").Id;
         }
