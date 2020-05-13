@@ -31,14 +31,14 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
         {
             Random r = new Random();
 
-            if (r.NextDouble() > 0.995f)
+            if (r.NextDouble() > 0.998f)
             {
-                ushort cactusId = VoxelManager.GetVoxel("cactus").Id;
+                ushort cactus = VoxelManager.GetVoxel("cactus").Id;
 
-                voxels[chunkX, height + 1, chunkZ] = cactusId;
-                voxels[chunkX, height + 2, chunkZ] = cactusId;
-                voxels[chunkX, height + 3, chunkZ] = cactusId;
-                voxels[chunkX, height + 4, chunkZ] = cactusId;
+                voxels[chunkX, height + 1, chunkZ] = cactus;
+                voxels[chunkX, height + 2, chunkZ] = cactus;
+                voxels[chunkX, height + 3, chunkZ] = cactus;
+                voxels[chunkX, height + 4, chunkZ] = cactus;
             }
         }
     }

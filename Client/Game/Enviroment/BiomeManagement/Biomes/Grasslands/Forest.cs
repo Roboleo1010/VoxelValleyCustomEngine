@@ -24,7 +24,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
                 return VoxelManager.AirVoxel;
             else if (y == height)
             {
-                if (r.NextDouble() > 0.5f)
+                if (r.NextDouble() > 0.1f)
                     return VoxelManager.GetVoxel("grass").Id;
                 else
                     return VoxelManager.GetVoxel("dirt").Id;
@@ -37,7 +37,69 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
 
         internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, ushort height, ref ushort[,,] voxels)
         {
+            Random r = new Random();
 
+            if (r.NextDouble() > 0.998f)
+            {
+                ushort log = VoxelManager.GetVoxel("log").Id;
+                ushort leaf = VoxelManager.GetVoxel("leaf").Id;
+
+                try
+                {
+
+                    //center
+                    voxels[chunkX, height + 1, chunkZ] = log;
+                    voxels[chunkX, height + 2, chunkZ] = log;
+                    voxels[chunkX, height + 3, chunkZ] = log;
+                    voxels[chunkX, height + 4, chunkZ] = log;
+                    voxels[chunkX, height + 5, chunkZ] = log;
+                    voxels[chunkX, height + 6, chunkZ] = log;
+                    voxels[chunkX, height + 7, chunkZ] = leaf;
+                    voxels[chunkX, height + 8, chunkZ] = leaf;
+
+                    //left
+                    voxels[chunkX - 1, height + 6, chunkZ] = leaf;
+                    voxels[chunkX - 1, height + 7, chunkZ] = leaf;
+                    voxels[chunkX - 2, height + 6, chunkZ] = leaf;
+                    voxels[chunkX - 2, height + 7, chunkZ] = leaf;
+
+                    //right
+                    voxels[chunkX + 1, height + 6, chunkZ] = leaf;
+                    voxels[chunkX + 1, height + 7, chunkZ] = leaf;
+                    voxels[chunkX + 2, height + 6, chunkZ] = leaf;
+                    voxels[chunkX + 2, height + 7, chunkZ] = leaf;
+
+                    //top
+                    voxels[chunkX, height + 6, chunkZ - 1] = leaf;
+                    voxels[chunkX, height + 7, chunkZ - 1] = leaf;
+                    voxels[chunkX, height + 6, chunkZ - 2] = leaf;
+                    voxels[chunkX, height + 7, chunkZ - 2] = leaf;
+
+                    //bottom
+                    voxels[chunkX, height + 6, chunkZ + 1] = leaf;
+                    voxels[chunkX, height + 7, chunkZ + 1] = leaf;
+                    voxels[chunkX, height + 6, chunkZ + 2] = leaf;
+                    voxels[chunkX, height + 7, chunkZ + 2] = leaf;
+
+                    //top-left
+                    voxels[chunkX - 1, height + 6, chunkZ + 1] = leaf;
+                    voxels[chunkX - 1, height + 7, chunkZ + 1] = leaf;
+
+                    //top-right
+                    voxels[chunkX + 1, height + 6, chunkZ + 1] = leaf;
+                    voxels[chunkX + 1, height + 7, chunkZ + 1] = leaf;
+
+                    //bottom-left
+                    voxels[chunkX - 1, height + 6, chunkZ - 1] = leaf;
+                    voxels[chunkX - 1, height + 7, chunkZ - 1] = leaf;
+
+                    //bottom-right
+                    voxels[chunkX + 1, height + 6, chunkZ - 1] = leaf;
+                    voxels[chunkX + 1, height + 7, chunkZ - 1] = leaf;
+                }
+
+                catch (Exception ex) { }
+            }
         }
     }
 }
