@@ -1,6 +1,7 @@
 using VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands;
+using VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.InterpolationTest;
 
 namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
 {

@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes
+namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.InterpolationTest
 {
     public class Low : Biome
     {
