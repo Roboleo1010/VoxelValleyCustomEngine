@@ -1,12 +1,15 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using VoxelValley.Client.Game.Enviroment.Generation;
+using VoxelValley.Client.Game.Enviroment.Structures;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
 {
     public class FlatDesert : Biome
     {
-        public override string Name { get => "Flat Desert"; }
+        public override string Name { get => "FlatDesert"; }
         public override Color Color { get => Color.Yellow; }
         public override byte BiomeId { get => 52; }
 
@@ -27,16 +30,17 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
                 return VoxelManager.GetVoxel("stone").Id;
         }
 
-        internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, ushort height, ref ushort[,,] voxels)
+        internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, int height, ref ushort[,,] voxels)
         {
+            Structure structure = StructureManager.GetStructures(Name).ElementAt(0);
+
             if (GenerationUtilities.Random.NextDouble() > 0.998f)
             {
-                ushort cactus = VoxelManager.GetVoxel("cactus").Id;
-
-                voxels[chunkX, height + 1, chunkZ] = cactus;
-                voxels[chunkX, height + 2, chunkZ] = cactus;
-                voxels[chunkX, height + 3, chunkZ] = cactus;
-                voxels[chunkX, height + 4, chunkZ] = cactus;
+                for (ushort x = 0; x < structure.Dimension.X; x++)
+                    for (ushort y = 0; y < structure.Dimension.Y; y++)
+                        for (ushort z = 0; z < structure.Dimension.Z; z++)
+                            if (structure.Voxels[x, y, z] != 0 && Chunk.InChunk(chunkX + x + structure.Origin.X, height + y + structure.Origin.Y, chunkZ + z + structure.Origin.Z))
+                                voxels[chunkX + x + structure.Origin.X, height + y + structure.Origin.Y, chunkZ + z + structure.Origin.Z] = structure.Voxels[x, y, z];
             }
         }
     }

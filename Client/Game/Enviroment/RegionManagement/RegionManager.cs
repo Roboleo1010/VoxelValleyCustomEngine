@@ -34,7 +34,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
             //Generate finishers
             for (ushort x = 0; x < CommonConstants.World.chunkSize.X; x++)
                 for (ushort z = 0; z < CommonConstants.World.chunkSize.Z; z++)
-                    biomes[x, z].GetFinishers(worldBaseX + x, worldBaseZ + z, x, z, heights[x, z], ref voxels);
+                    biomes[x, z].GetFinishers(worldBaseX + x, worldBaseZ + z, x, z, heights[x, z] + 1, ref voxels);
 
             return voxels;
         }

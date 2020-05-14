@@ -51,8 +51,6 @@ namespace VoxelValley.Client.Game.Enviroment
 
                 voxelIndex++;
             }
-
-            Log.Info(type, $"Loaded {VoxelManager.voxels.Count} voxels.");
         }
 
         public static Voxel GetVoxel(string name)

@@ -23,8 +23,6 @@ namespace VoxelValley.Client.Engine.Input
 
             foreach (string path in paths)
                 LoadContext(path);
-
-            Log.Info(type, $"Loaded {contexts.Count} Input Contexts.");
         }
 
         static void LoadContext(string path)
