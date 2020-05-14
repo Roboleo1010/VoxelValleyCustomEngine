@@ -64,6 +64,9 @@ namespace VoxelValley.Client.Engine
             InputManager.HandleInput();
             EngineManager.OnTick((float)e.Time);
 
+            foreach (RenderBuffer buffer in RenderBufferManager.GetBuffers())
+                buffer.OnUpdate();
+
             base.OnUpdateFrame(e);
         }
 

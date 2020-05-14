@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Graphics.OpenGL4;
+using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Shading;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
@@ -9,8 +10,16 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     {
         Type type = typeof(RenderBuffer);
 
+        //Buffer indices
         internal int elementBufferObject = -1;
         internal int vertexArrayObject = -1;
+
+        //Current Positions in Buffers
+        internal int vertexOffsetInBytes = 0;
+        internal int vertexOffset = 0;
+        internal int indiceOffsetInBytes = 0;
+        internal int indiceOffset = 0;
+
         internal Shader shader;
         internal List<Mesh> meshes = new List<Mesh>();
 
@@ -28,14 +37,24 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             shader.EnableVertexAttribArrays();
         }
 
-        public abstract void SendMeshData();
-
         public abstract void Render();
+        public virtual void OnUpdate() { }
 
         public void Remove()
         {
             GL.DeleteBuffer(elementBufferObject);
             GL.DeleteBuffer(vertexArrayObject);
+        }
+
+        internal virtual void CalculateLighting()
+        {
+            GL.Uniform3(shader.GetUniform("directionalLight.direction"), new Vector3(-0.2f, -1.0f, -0.3f));
+            GL.Uniform3(shader.GetUniform("directionalLight.ambient"), new Vector3(0.8f, 0.8f, 0.8f));
+            GL.Uniform3(shader.GetUniform("directionalLight.diffuse"), new Vector3(0.4f, 0.4f, 0.4f));
+            GL.Uniform3(shader.GetUniform("directionalLight.specular"), new Vector3(0.05f, 0.05f, 0.05f));
+
+            GL.Uniform1(shader.GetUniform("numPointLights"), 0);
+            GL.Uniform1(shader.GetUniform("numSpotLights"), 0);
         }
 
         internal void UnbindCurrentBuffer()

@@ -26,7 +26,10 @@ namespace VoxelValley.Client.Game.Enviroment
             positionInWorldSpace = CoordinateHelper.ConvertFromChunkSpaceToWorldSpace(positionInChunkSpace);
             Transform.Position = positionInWorldSpace.ToVector3();
 
-            ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { IsFinished = true; }, $"Chunk_{positionInChunkSpace}", ThreadPriority.AboveNormal);
+            //ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { IsFinished = true; }, $"Chunk_{positionInChunkSpace}", ThreadPriority.AboveNormal);
+
+            Generate();
+            CreateMesh();
         }
 
         void Generate()
@@ -39,11 +42,15 @@ namespace VoxelValley.Client.Game.Enviroment
             ChunkMesh mesh = new ChunkMesh(this);
             mesh.Create();
 
-            MeshRenderBuffer renderBuffer = (MeshRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL);
+            VoxelRenderBuffer renderBuffer = (VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL);
 
-            MeshRenderer meshRenderer = AddComponent<MeshRenderer>();
-            meshRenderer.OnMeshChanged += renderBuffer.OnMeshChanged;
-            meshRenderer.Mesh = mesh;
+            // MeshRenderer meshRenderer = AddComponent<MeshRenderer>();
+            // meshRenderer.OnMeshChanged += renderBuffer.OnMeshChanged;
+            // meshRenderer.Mesh = mesh;
+
+            renderBuffer.meshes.Add(mesh);
+            renderBuffer.AddMesh(mesh);
+
         }
 
         public static bool InChunk(int x, int y, int z)

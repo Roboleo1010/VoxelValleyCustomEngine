@@ -19,6 +19,7 @@ namespace VoxelValley.Client.Game.Enviroment
         {
             chunks = new Dictionary<Vector3i, Chunk>();
             CreateChunk(new Vector3i(0, 0, 0));
+            CreateChunk(new Vector3i(1, 0, 0));
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -28,7 +29,7 @@ namespace VoxelValley.Client.Game.Enviroment
                             (int)Player.Transform.Position.Y,
                             (int)Player.Transform.Position.Z));
 
-            CreateAround(palyerPosInChukSpace);
+            // CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace)
