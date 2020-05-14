@@ -11,8 +11,6 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
         public override Color Color { get => Color.Olive; }
         public override byte BiomeId { get => 1; }
 
-        Random r = new Random(); //TODO: Noise
-
         public override ushort GetHeight(int x, int z)
         {
             return GenerationUtilities.MapToWorldByte(GenerationUtilities.FBMPerlin(x, z, 5, 0.3f, 0.1f));
@@ -24,7 +22,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
                 return VoxelManager.AirVoxel;
             else if (y == height)
             {
-                if (r.NextDouble() > 0.1f)
+                if (GenerationUtilities.Random.NextDouble() > 0.1f)
                     return VoxelManager.GetVoxel("grass").Id;
                 else
                     return VoxelManager.GetVoxel("dirt").Id;
@@ -37,9 +35,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Grasslands
 
         internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, ushort height, ref ushort[,,] voxels)
         {
-            Random r = new Random();
-
-            if (r.NextDouble() > 0.99f &&
+            if (GenerationUtilities.Random.NextDouble() > 0.99f &&
             Chunk.InChunk(chunkX - 2, height, chunkZ - 2) && Chunk.InChunk(chunkX + 2, height + 8, chunkZ + 2))//TODO: Check if free
             {
                 ushort log = VoxelManager.GetVoxel("log").Id;

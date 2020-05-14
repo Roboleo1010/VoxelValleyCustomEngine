@@ -1,3 +1,4 @@
+using System;
 using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment.Generation
@@ -5,6 +6,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
     public static class GenerationUtilities
     {
         public static FastNoise.FastNoise Noise;
+        public static Random Random = new Random();
 
         static GenerationUtilities()
         {

@@ -29,9 +29,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
 
         internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, ushort height, ref ushort[,,] voxels)
         {
-            Random r = new Random();
-
-            if (r.NextDouble() > 0.998f)
+            if (GenerationUtilities.Random.NextDouble() > 0.998f)
             {
                 ushort cactus = VoxelManager.GetVoxel("cactus").Id;
 
