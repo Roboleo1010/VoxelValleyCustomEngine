@@ -22,7 +22,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         int vertexCount = 0;
 
-        public MeshRenderBuffer(Shader shader) : base(shader) { }
+        public MeshRenderBuffer(ShaderManager.ShaderType shaderType) : base(shaderType) { }
 
         public void OnMeshChanged(MeshRenderer meshRenderer, Mesh oldMesh, Mesh newMesh)
         {

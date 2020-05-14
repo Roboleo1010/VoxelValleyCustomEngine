@@ -8,6 +8,7 @@ using VoxelValley.Client.Engine.Threading;
 using VoxelValley.Common;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Game.Enviroment.RegionManagement;
+using VoxelValley.Client.Engine.Graphics.Shading;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -38,7 +39,7 @@ namespace VoxelValley.Client.Game.Enviroment
             ChunkMesh mesh = new ChunkMesh(this);
             mesh.Create();
 
-            MeshRenderBuffer renderBuffer = RenderBufferManager.GetBufferMeshRenderBuffer(RenderBufferManager.MeshRenderBufferType.VOXEL);
+            MeshRenderBuffer renderBuffer = (MeshRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL);
 
             MeshRenderer meshRenderer = AddComponent<MeshRenderer>();
             meshRenderer.OnMeshChanged += renderBuffer.OnMeshChanged;

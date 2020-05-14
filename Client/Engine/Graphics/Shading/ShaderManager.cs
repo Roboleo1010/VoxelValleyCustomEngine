@@ -1,32 +1,37 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using VoxelValley.Common.Diagnostics;
-using static VoxelValley.Client.Engine.Graphics.Rendering.RenderBufferManager;
 
 namespace VoxelValley.Client.Engine.Graphics.Shading
 {
     public static class ShaderManager
     {
         static Type type = typeof(ShaderManager);
-        static Dictionary<MeshRenderBufferType, Shader> shaders = new Dictionary<MeshRenderBufferType, Shader>();
+        static Dictionary<ShaderType, Shader> shaders = new Dictionary<ShaderType, Shader>();
+
+        public enum ShaderType
+        {
+            VOXEL
+        }
 
         public static void LoadShaders()
         {
-            foreach (string name in Enum.GetNames(typeof(MeshRenderBufferType)))
+            foreach (string name in Enum.GetNames(typeof(ShaderType)))
             {
-                Enum.TryParse(typeof(MeshRenderBufferType), name, out object type); //FIXME: Besser machen
-                LoadShader($"Client/Assets/Shaders/{name}", (MeshRenderBufferType)type);
+                Enum.TryParse(typeof(ShaderType), name, out object type); //FIXME: Besser machen
+                LoadShader($"Client/Assets/Shaders/{name}", (ShaderType)type);
             }
 
             Log.Info(type, $"Loaded {shaders.Count} sahders.");
         }
 
-        public static void LoadShader(string path, MeshRenderBufferType type)
+        public static void LoadShader(string path, ShaderType type)
         {
             shaders.Add(type, new Shader($"{path}/shader.vert", $"{path}/shader.frag"));
         }
 
-        public static Shader GetShader(MeshRenderBufferType type)
+        public static Shader GetShader(ShaderType type)
         {
             if (shaders.TryGetValue(type, out Shader shader))
                 return shader;
@@ -37,7 +42,11 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
 
         public static void RemoveAllShaders()
         {
-            // throw new NotImplementedException(); TODO Shader Clanup
+            while (shaders.Count > 0)
+            {
+                shaders.Values.ElementAt(0).Remove();
+                shaders.Remove(shaders.Keys.ElementAt(0));
+            }
         }
     }
 }

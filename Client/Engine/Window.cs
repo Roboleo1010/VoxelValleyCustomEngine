@@ -42,7 +42,7 @@ namespace VoxelValley.Client.Engine
             VSync = VSyncMode.On;
 
             ShaderManager.LoadShaders();
-            RenderBufferManager.CreateMeshRenderBuffers();
+            RenderBufferManager.CreateRenderBuffers();
             InputManager.LoadContexts();
 
             base.OnLoad();

@@ -126,6 +126,12 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
             GL.UseProgram(programID);
         }
 
+        public void Remove()
+        {
+            foreach (int index in Buffers.Values)
+                GL.DeleteBuffer(index);
+        }
+
         #region Get Locations
 
         public int GetAttibute(string name)

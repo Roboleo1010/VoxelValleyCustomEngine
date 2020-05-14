@@ -14,9 +14,9 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         internal Shader shader;
         internal List<Mesh> meshes = new List<Mesh>();
 
-        public RenderBuffer(Shader shader)
+        public RenderBuffer(ShaderManager.ShaderType shaderType)
         {
-            this.shader = shader;
+            this.shader = ShaderManager.GetShader(shaderType);
 
             elementBufferObject = GL.GenBuffer();
             vertexArrayObject = GL.GenVertexArray();
@@ -40,7 +40,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         internal void UnbindCurrentBuffer()
         {
-             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
     }
 }
