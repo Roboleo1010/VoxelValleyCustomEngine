@@ -17,7 +17,6 @@ namespace VoxelValley.Client.Engine.Graphics
         public virtual int IndiceCount { get; set; }
         public virtual int ColorCount { get; set; }
         public virtual int NormalCount { get; set; }
-        // public virtual MeshType meshType { get; set; }
 
         public abstract Vector3[] GetVertices();
 
