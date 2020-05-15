@@ -3,6 +3,5 @@
         "**/bin": true,
         "**/obj": true,
         "**/.vs": true,
-        "**/.vscode": true
     }
 }

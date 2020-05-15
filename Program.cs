@@ -2,6 +2,7 @@
 using VoxelValley.Client.Engine;
 using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
+using VoxelValley.Tools.Gox2Json;
 
 namespace VoxelValley
 {
@@ -11,9 +12,16 @@ namespace VoxelValley
 
         static void Main(string[] args)
         {
-            Log.Info(type, $"Starting Voxel Valley {CommonConstants.Version}");
-
-            StartClient();
+            if (args.Length == 0)
+            {
+                Log.Info(type, $"Starting Voxel Valley {CommonConstants.Version}");
+                StartClient();
+            }
+            else if (args[0] == "Gox2Json")
+            {
+                Log.Info(type, $"Starting Gox2Json");
+                Gox2Json converter = new Gox2Json();
+            }
         }
 
         static void StartClient()
