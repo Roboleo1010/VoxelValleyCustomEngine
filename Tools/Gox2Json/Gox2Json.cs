@@ -8,8 +8,7 @@ namespace VoxelValley.Tools.Gox2Json
 {
     public class Gox2Json
     {
-        string goxPath;
-        string jsonPath;
+        string path;
 
         Dictionary<string, string> voxelLookup;
         string[] goxVoxels;
@@ -24,11 +23,8 @@ namespace VoxelValley.Tools.Gox2Json
 
             Console.WriteLine("Welcome to Gox2Json.");
 
-            Console.WriteLine("Please specify .txt path:");
-            goxPath = Console.ReadLine();
-
-            Console.WriteLine("Please specify output path:");
-            jsonPath = Console.ReadLine();
+            Console.WriteLine("Please specify path (no extention):");
+            path = Console.ReadLine();
 
             Console.WriteLine("Please specify model name:");
             modelName = Console.ReadLine().ToLower();
@@ -50,7 +46,7 @@ namespace VoxelValley.Tools.Gox2Json
         {
             Console.WriteLine("Loading gox data...");
 
-            string[] goxData = File.ReadAllLines(goxPath);
+            string[] goxData = File.ReadAllLines(path + ".txt");
 
             string[] cleanedGoxData = new string[goxData.Length - 3];
 
@@ -73,7 +69,7 @@ namespace VoxelValley.Tools.Gox2Json
             {
                 string[] data = goxVoxels[i].Split(" ");
 
-                voxels[i] = new Voxel(data[3], new int[] { int.Parse(data[0]), int.Parse(data[1]), int.Parse(data[2]) });
+                voxels[i] = new Voxel(data[3], new int[] { int.Parse(data[0]), int.Parse(data[2]), int.Parse(data[1]) });
             }
 
             Console.WriteLine($"Loaded {voxels.Length} voxels");
@@ -107,7 +103,7 @@ namespace VoxelValley.Tools.Gox2Json
         {
             Structure structure = new Structure(modelName, voxels, spawns);
 
-            using (StreamWriter writer = new StreamWriter(jsonPath))
+            using (StreamWriter writer = new StreamWriter(path + ".json"))
             {
                 writer.Write(JsonConvert.SerializeObject(structure));
             }
