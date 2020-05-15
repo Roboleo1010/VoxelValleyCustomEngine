@@ -58,38 +58,6 @@
                 5,
                 0
             ]
-        },
-        {
-            "voxel": "cactus",
-            "position": [
-                1,
-                5,
-                0
-            ]
-        },
-        {
-            "voxel": "cactus",
-            "position": [
-                -1,
-                5,
-                0
-            ]
-        },
-        {
-            "voxel": "cactus",
-            "position": [
-                0,
-                5,
-                1
-            ]
-        },
-        {
-            "voxel": "cactus",
-            "position": [
-                0,
-                5,
-                -1
-            ]
         }
     ]
 }

@@ -1,0 +1,167 @@
+{
+    "name": "tree",
+    "spawns": [
+        {
+            "biome": "Plains",
+            "chance": 0.0005
+        },
+        {
+            "biome": "Forest",
+            "chance": 0.001
+        }
+    ],
+    "voxels": [
+        {
+            "voxel": "log",
+            "position": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "voxel": "log",
+            "position": [
+                0,
+                1,
+                0
+            ]
+        },
+        {
+            "voxel": "log",
+            "position": [
+                0,
+                2,
+                0
+            ]
+        },
+        {
+            "voxel": "log",
+            "position": [
+                0,
+                3,
+                0
+            ]
+        },
+        {
+            "voxel": "log",
+            "position": [
+                0,
+                4,
+                0
+            ]
+        },
+        {
+            "voxel": "log",
+            "position": [
+                0,
+                5,
+                0
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                0,
+                6,
+                0
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                1,
+                6,
+                0
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                2,
+                6,
+                0
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                -1,
+                6,
+                0
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                -2,
+                6,
+                0
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                0,
+                6,
+                -1
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                0,
+                6,
+                -2
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                0,
+                6,
+                1
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                0,
+                6,
+                2
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                1,
+                6,
+                1
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                1,
+                6,
+                -1
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                -1,
+                6,
+                -1
+            ]
+        },
+        {
+            "voxel": "leaf",
+            "position": [
+                -1,
+                6,
+                1
+            ]
+        }
+    ]
+}

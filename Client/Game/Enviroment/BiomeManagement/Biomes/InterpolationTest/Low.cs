@@ -22,10 +22,5 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Interpolatio
             else
                 return VoxelManager.AirVoxel;
         }
-
-        internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, int height, ref ushort[,,] voxels)
-        {
-
-        }
     }
 }

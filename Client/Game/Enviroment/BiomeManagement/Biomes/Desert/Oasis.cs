@@ -25,10 +25,5 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement.Biomes.Desert
             else
                 return VoxelManager.GetVoxel("stone").Id;
         }
-
-        internal override void GetFinishers(int worldX, int worldZ, ushort chunkX, ushort chunkZ, int height, ref ushort[,,] voxels)
-        {
-
-        }
     }
 }
