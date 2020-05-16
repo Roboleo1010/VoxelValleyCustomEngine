@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Newtonsoft.Json;
 using VoxelValley.Tools.Gox2Json.Model;
+using ColorConsole = Colorful.Console;
 
 namespace VoxelValley.Tools.Gox2Json
 {
@@ -39,7 +41,7 @@ namespace VoxelValley.Tools.Gox2Json
             WriteJson();
 
             Console.WriteLine("Press any key to Exit..");
-            Console.ReadLine();
+            Console.Read();
         }
 
         string[] GetGoxVoxels()
@@ -83,10 +85,8 @@ namespace VoxelValley.Tools.Gox2Json
             {
                 if (!voxelLookup.TryGetValue(voxel.voxel, out string voxelName))
                 {
-                    Console.WriteLine($"Specify Voxel for {voxel.voxel}");
-
+                    ColorConsole.WriteLine($"Specify Voxel for {voxel.voxel}", ColorTranslator.FromHtml("#" + voxel.voxel.ToUpper()));
                     voxelName = Console.ReadLine();
-
                     voxelLookup.Add(voxel.voxel, voxelName);
                 }
 
@@ -96,7 +96,27 @@ namespace VoxelValley.Tools.Gox2Json
 
         private void GetSpawns()
         {
-            spawns = new Spawn[] { };
+            List<Spawn> spawnList = new List<Spawn>();
+
+            bool addAnother = false;
+
+            do
+            {
+                Console.WriteLine($"Which Biome spawns {modelName}?");
+                string biome = Console.ReadLine();
+
+                Console.WriteLine($"Whats the spawn chance? eg. 0.005");
+                float chance = float.Parse(Console.ReadLine());
+
+                spawnList.Add(new Spawn(biome, chance));
+
+                Console.WriteLine("Add another Spawn (Y/N): ");
+                addAnother = Console.ReadLine().ToLower() == "y";
+
+            }
+            while (addAnother);
+
+            spawns = spawnList.ToArray();
         }
 
         private void WriteJson()
@@ -108,7 +128,7 @@ namespace VoxelValley.Tools.Gox2Json
                 writer.Write(JsonConvert.SerializeObject(structure));
             }
 
-            Console.WriteLine("Sucsessfully created json Structure!");
+            Console.WriteLine("Sucsessfully created json file!");
         }
     }
 }
