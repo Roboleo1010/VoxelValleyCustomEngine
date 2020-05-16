@@ -7,6 +7,11 @@ namespace VoxelValley.Common.Helper
             return (value - origmin) / (origmax - origmin) * (newmax - newmin) + newmin;
         }
 
+        public static int Map(int newmin, int newmax, int origmin, int origmax, int value)
+        {
+            return (value - origmin) / (origmax - origmin) * (newmax - newmin) + newmin;
+        }
+
         /// <summary>
         /// Interpolates linerally between values first and second
         /// </summary>

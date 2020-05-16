@@ -11,11 +11,11 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
     {
         static Type type = typeof(StructureManager);
 
-        static Dictionary<string, List<Structure>> structures;
+        static Dictionary<string, List<StructureSpawn>> structures;
 
         static StructureManager()
         {
-            structures = new Dictionary<string, List<Structure>>();
+            structures = new Dictionary<string, List<StructureSpawn>>();
         }
 
         public static void LoadStructures()
@@ -24,6 +24,8 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
 
             foreach (string path in paths)
                 LoadStructure(path);
+
+            //TODO: Sort structures
         }
 
         static void LoadStructure(string path)
@@ -37,23 +39,23 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
 
             foreach (Spawn spawn in structure.Spawns)
             {
-                if (structures.TryGetValue(spawn.Biome, out List<Structure> structuresInBiome))
-                    structuresInBiome.Add(structure);
+                if (structures.TryGetValue(spawn.Biome, out List<StructureSpawn> structureSpawnsInBiome))
+                    structureSpawnsInBiome.Add(new StructureSpawn(structure, spawn));
                 else
                 {
-                    structuresInBiome = new List<Structure>();
-                    structuresInBiome.Add(structure);
-                    structures.Add(spawn.Biome, structuresInBiome);
+                    structureSpawnsInBiome = new List<StructureSpawn>();
+                    structureSpawnsInBiome.Add(new StructureSpawn(structure, spawn));
+                    structures.Add(spawn.Biome, structureSpawnsInBiome);
                 }
             }
-
+            
             structure.Spawns = null;
         }
 
-        public static List<Structure> GetStructures(string biomeName)
+        public static List<StructureSpawn> GetStructures(string biomeName)
         {
-            if (structures.TryGetValue(biomeName, out List<Structure> structuresForBiome))
-                return structuresForBiome;
+            if (structures.TryGetValue(biomeName, out List<StructureSpawn> structureSpawnsInBiome))
+                return structureSpawnsInBiome;
 
             return null;
         }

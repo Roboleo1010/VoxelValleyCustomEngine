@@ -2,9 +2,6 @@ using Newtonsoft.Json;
 
 namespace VoxelValley.Client.Game.Enviroment.Structures
 {
-    /// <summary>
-    /// JSON Helper Class
-    /// </summary>
     public class Spawn
     {
         public string Biome { get; private set; }
