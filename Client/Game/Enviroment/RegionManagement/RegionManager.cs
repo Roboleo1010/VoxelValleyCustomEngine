@@ -41,7 +41,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 
         static Region GetRegion(Vector2i posInWorld)
         {
-            if (GenerationUtilities.FBMCellular(posInWorld.X, posInWorld.Y, 1, 0.6f, 1.4f) > 0.5f)
+            if (GenerationUtilities.Cellular(posInWorld.X, posInWorld.Y, 0.6f, 1.4f) > 0.5f)
                 return RegionReferences.Greenlands;
             else
                 return RegionReferences.Desert;

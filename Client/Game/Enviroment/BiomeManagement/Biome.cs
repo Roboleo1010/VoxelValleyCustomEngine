@@ -24,8 +24,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
         {
             if (structureSpawns != null)
                 foreach (StructureSpawn structureSpawn in structureSpawns)
-                {
-                    if (GenerationUtilities.Random.NextDouble() < structureSpawn.Chance)
+                    if (GenerationUtilities.White(worldX, worldZ, 1, 1, structureSpawn.NoiseOffset.X, structureSpawn.NoiseOffset.Y) < structureSpawn.Chance)
                     {
                         for (ushort x = 0; x < structureSpawn.Structure.Dimension.X; x++)
                             for (ushort y = 0; y < structureSpawn.Structure.Dimension.Y; y++)
@@ -33,7 +32,6 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
                                     if (structureSpawn.Structure.Voxels[x, y, z] != 0 && Chunk.InChunk(chunkX + x + structureSpawn.Structure.Origin.X, height + y + structureSpawn.Structure.Origin.Y, chunkZ + z + structureSpawn.Structure.Origin.Z))
                                         voxels[chunkX + x + structureSpawn.Structure.Origin.X, height + y + structureSpawn.Structure.Origin.Y, chunkZ + z + structureSpawn.Structure.Origin.Z] = structureSpawn.Structure.Voxels[x, y, z];
                     }
-                }
         }
     }
 }

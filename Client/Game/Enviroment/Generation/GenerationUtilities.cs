@@ -25,7 +25,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         /// <param name="offsetValue">Gets added to the value before normalization</param>
         /// <param name="z">Z position in world space</param>
         /// <returns></returns>
-        public static float FBMPerlin(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f, float offsetValue = 0)
+        public static float FBMPerlin(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f)
         {
             float total = 0;
 
@@ -36,7 +36,12 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                 amplitude *= persistence;
             }
 
-            return NormalizeNoise(total, offsetValue);
+            return NormalizeNoise(total);
+        }
+
+        public static float Perlin(float x, float z, float frequency, float amplitude, int offsetX = 0, int offsetZ = 0)
+        {
+            return NormalizeNoise(Noise.GetPerlin((x + offsetX) * frequency, (z + offsetZ) * frequency) * amplitude);
         }
 
         /// <summary>
@@ -51,7 +56,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         /// <param name="persistence">Persistence is what makes the amplitude shrink (or not shrink). Each octave the amplitude is multiplied by the gain. I use a gain of 0.65. If it is higher then the amplitude will barely shrink, and maps get crazy. Too low and the details become miniscule, and the map looks washed out. However, most use 1/lacunarity. Since the standard for lacunarity is 2.0, the standard for the gain is 0.5. Noise that has a gain of 0.5 and a lacunarity of 2.0 is referred to as 1/f noise, and is the industry standard.</param>
         /// <param name="offsetValue">Gets added to the value before normalization</param>
         /// <returns></returns>
-        public static float FBMSimplex(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f, float offsetValue = 0)
+        public static float FBMSimplex(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f)
         {
             float total = 0;
 
@@ -62,7 +67,12 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                 amplitude *= persistence;
             }
 
-            return NormalizeNoise(total, offsetValue);
+            return NormalizeNoise(total);
+        }
+
+        public static float Simplex(float x, float z, float frequency, float amplitude, int offsetX = 0, int offsetZ = 0)
+        {
+            return NormalizeNoise(Noise.GetSimplex((x + offsetX) * frequency, (z + offsetZ) * frequency) * amplitude);
         }
 
         /// <summary>
@@ -77,7 +87,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         /// <param name="persistence">Persistence is what makes the amplitude shrink (or not shrink). Each octave the amplitude is multiplied by the gain. I use a gain of 0.65. If it is higher then the amplitude will barely shrink, and maps get crazy. Too low and the details become miniscule, and the map looks washed out. However, most use 1/lacunarity. Since the standard for lacunarity is 2.0, the standard for the gain is 0.5. Noise that has a gain of 0.5 and a lacunarity of 2.0 is referred to as 1/f noise, and is the industry standard.</param>
         /// <param name="offsetValue">Gets added to the value before normalization</param>
         /// <returns></returns>
-        public static float FBMValue(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f, float offsetValue = 0)
+        public static float FBMValue(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f)
         {
             float total = 0;
 
@@ -88,7 +98,12 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                 amplitude *= persistence;
             }
 
-            return NormalizeNoise(total, offsetValue);
+            return NormalizeNoise(total);
+        }
+
+        public static float Value(float x, float z, float frequency, float amplitude, int offsetX = 0, int offsetZ = 0)
+        {
+            return NormalizeNoise(Noise.GetValue((x + offsetX) * frequency, (z + offsetZ) * frequency) * amplitude);
         }
 
         /// <summary>
@@ -103,7 +118,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         /// <param name="persistence">Persistence is what makes the amplitude shrink (or not shrink). Each octave the amplitude is multiplied by the gain. I use a gain of 0.65. If it is higher then the amplitude will barely shrink, and maps get crazy. Too low and the details become miniscule, and the map looks washed out. However, most use 1/lacunarity. Since the standard for lacunarity is 2.0, the standard for the gain is 0.5. Noise that has a gain of 0.5 and a lacunarity of 2.0 is referred to as 1/f noise, and is the industry standard.</param>
         /// <param name="offsetValue">Gets added to the value before normalization</param>
         /// <returns></returns>
-        public static float FBMCellular(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f, float offsetValue = 0)
+        public static float FBMCellular(float x, float z, int octaves, float frequency, float amplitude, float lacunarity = 2, float persistence = 0.5f)
         {
             float total = 0;
 
@@ -114,7 +129,17 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                 amplitude *= persistence;
             }
 
-            return NormalizeNoise(total, offsetValue);
+            return NormalizeNoise(total);
+        }
+
+        public static float Cellular(float x, float z, float frequency, float amplitude, int offsetX = 0, int offsetZ = 0)
+        {
+            return NormalizeNoise(Noise.GetCellular((x + offsetX) * frequency, (z + offsetZ) * frequency) * amplitude);
+        }
+
+        public static float White(float x, float z, float frequency = 1, float amplitude = 1, int offsetX = 0, int offsetZ = 0)
+        {
+            return NormalizeNoise(Noise.GetWhiteNoise((x + offsetX) * frequency, (z + offsetZ) * frequency) * amplitude);
         }
 
         /// <summary>
@@ -123,9 +148,9 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
         /// <param name="value"></param>
         /// <param name="offsetValue">Gets added to the value before normalization</param>
         /// <returns></returns>
-        static float NormalizeNoise(float value, float offsetValue = 0)
+        static float NormalizeNoise(float value)
         {
-            value = (value / 2) + 0.5f + offsetValue;
+            value = (value / 2) + 0.5f;
             if (value < 0)
                 value = 0;
             else if (value > 1)

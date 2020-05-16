@@ -1,5 +1,5 @@
 {
-    "name": "cactus",
+    "name": "white",
     "spawns": [
         {
             "biome": "FlatDesert",
@@ -12,7 +12,7 @@
     ],
     "voxels": [
         {
-            "voxel": "cactus",
+            "voxel": "snow",
             "position": [
                 0,
                 0,
@@ -20,7 +20,7 @@
             ]
         },
         {
-            "voxel": "cactus",
+            "voxel": "snow",
             "position": [
                 0,
                 1,
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "voxel": "cactus",
+            "voxel": "snow",
             "position": [
                 0,
                 2,
@@ -36,7 +36,7 @@
             ]
         },
         {
-            "voxel": "cactus",
+            "voxel": "snow",
             "position": [
                 0,
                 3,
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "voxel": "cactus",
+            "voxel": "snow",
             "position": [
                 0,
                 4,
@@ -52,7 +52,7 @@
             ]
         },
         {
-            "voxel": "cactus",
+            "voxel": "snow",
             "position": [
                 0,
                 5,

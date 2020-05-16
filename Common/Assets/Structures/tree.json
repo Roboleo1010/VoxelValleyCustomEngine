@@ -3,7 +3,7 @@
     "spawns": [
         {
             "biome": "Forest",
-            "chance": 0.001
+            "chance": 0.01
         }
     ],
     "voxels": [

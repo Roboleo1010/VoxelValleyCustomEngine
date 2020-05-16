@@ -11,17 +11,12 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
         public Vector3i Dimension { get; private set; }
         public ushort[,,] Voxels { get; private set; }
         public Spawn[] Spawns { get; set; }
-        public Vector2i NoiseOffset { get; private set; }
+
 
         [JsonConstructor]
         public Structure(string name, Voxel[] voxels, Spawn[] spawns)
         {
             Name = name;
-
-            int nameHashCode = name.GetHashCode();
-
-            NoiseOffset = new Vector2i(Common.Helper.MathHelper.Map(-1000, 1000, int.MinValue / name.Length, int.MaxValue / name.Length, nameHashCode / name.Length),
-                                       Common.Helper.MathHelper.Map(-1000, 1000, int.MinValue / voxels.Length, int.MaxValue / voxels.Length, nameHashCode / voxels.Length));
 
             int minX = int.MaxValue;
             int maxX = int.MinValue;
