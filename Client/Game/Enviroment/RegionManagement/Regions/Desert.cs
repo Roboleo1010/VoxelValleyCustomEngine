@@ -9,7 +9,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
         public override string Name => "Desert";
         public override Color Color => Color.Yellow;
 
-        protected override Biome GetBiome(int x, int z)
+        public override Biome GetBiome(int x, int z)
         {
             HeightMap.HeightType heightType = HeightMap.GetHeightType(x, z);
 

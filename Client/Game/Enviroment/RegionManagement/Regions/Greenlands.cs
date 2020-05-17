@@ -1,5 +1,4 @@
 using System.Drawing;
-using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
 using VoxelValley.Client.Game.Enviroment.Generation.Maps;
 
@@ -10,7 +9,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
         public override string Name => "Greenlands";
         public override Color Color => Color.Green;
 
-        protected override Biome GetBiome(int x, int z)
+        public override Biome GetBiome(int x, int z)
         {
             HeightMap.HeightType heightType = HeightMap.GetHeightType(x, z);
 

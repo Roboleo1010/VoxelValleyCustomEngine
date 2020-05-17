@@ -9,7 +9,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
         public override string Name => "InterpolationTest";
         public override Color Color => Color.Red;
 
-        protected override Biome GetBiome(int x, int z)
+        public override Biome GetBiome(int x, int z)
         {
             if (Math.Abs(x) % 40 > 20 || Math.Abs(z) % 40 > 20)
                 return BiomeReferences.InterpolationTest.Low;
