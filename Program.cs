@@ -17,15 +17,10 @@ namespace VoxelValley
                 Log.Info(type, $"Starting Voxel Valley {CommonConstants.Version}");
                 StartClient();
             }
-            else if (args[0] == "Gox2Json")
+            else if (args[0] == "ConvertModel")
             {
                 Log.Info(type, $"Starting Gox2Json");
-                Gox2Json converter = new Gox2Json();
-            }
-            else if (args[0] == "Magica2Json")
-            {
-                Log.Info(type, $"Starting Magica2Json");
-                Magica2Json converter = new Magica2Json();
+                ModelConverter.Start();
             }
         }
 
