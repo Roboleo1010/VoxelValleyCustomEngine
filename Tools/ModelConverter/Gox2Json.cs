@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using Newtonsoft.Json;
-using VoxelValley.Tools.Gox2Json.Model;
 using ColorConsole = Colorful.Console;
 
-namespace VoxelValley.Tools.Gox2Json
+namespace VoxelValley.Tools.ModelConverter
 {
     public class Gox2Json
     {

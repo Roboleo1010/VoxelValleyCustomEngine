@@ -1,4 +1,4 @@
-namespace VoxelValley.Tools.Gox2Json.Model
+namespace VoxelValley.Tools.ModelConverter
 {
     public class Structure
     {

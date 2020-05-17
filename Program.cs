@@ -2,7 +2,7 @@
 using VoxelValley.Client.Engine;
 using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
-using VoxelValley.Tools.Gox2Json;
+using VoxelValley.Tools.ModelConverter;
 
 namespace VoxelValley
 {
@@ -21,6 +21,11 @@ namespace VoxelValley
             {
                 Log.Info(type, $"Starting Gox2Json");
                 Gox2Json converter = new Gox2Json();
+            }
+            else if (args[0] == "Magica2Json")
+            {
+                Log.Info(type, $"Starting Magica2Json");
+                Magica2Json converter = new Magica2Json();
             }
         }
 

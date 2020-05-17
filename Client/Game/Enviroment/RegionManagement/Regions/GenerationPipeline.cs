@@ -12,7 +12,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
 
             GetBiomes(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
             GetHeights(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
-            InterpolateBiomes(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
+            InterpolateBiomes(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels); 
             GenerateTerrainComposition(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
             GenerateFinishers(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
         }
