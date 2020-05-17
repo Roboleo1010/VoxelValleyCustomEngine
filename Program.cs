@@ -19,7 +19,7 @@ namespace VoxelValley
             }
             else if (args[0] == "ConvertModel")
             {
-                Log.Info(type, $"Starting Gox2Json");
+                Log.Info(type, $"Starting ConvertModel");
                 ModelConverter.Start();
             }
         }

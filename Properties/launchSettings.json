@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VoxelValley": {
+      "commandName": "Project",
+      "commandLineArgs": "ConvertModel"
+    }
+  }
+}

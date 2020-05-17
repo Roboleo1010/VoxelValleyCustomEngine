@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace VoxelValley.Tools.ModelConverter
@@ -11,13 +12,13 @@ namespace VoxelValley.Tools.ModelConverter
 
         public override void Parse()
         {
-            GetGoxVoxels();
+            GetData();
             ConvertToVoxels();
         }
 
-        void GetGoxVoxels()
+        void GetData()
         {
-            Console.WriteLine("Loading Goxel data...");
+            Console.WriteLine("Loading Goxel Data...");
 
             string[] goxData = File.ReadAllLines(InputPath);
 
@@ -31,7 +32,7 @@ namespace VoxelValley.Tools.ModelConverter
             }
         }
 
-        private void ConvertToVoxels()
+        void ConvertToVoxels()
         {
             Voxel[] voxels = new Voxel[goxVoxels.Length];
 
@@ -39,7 +40,7 @@ namespace VoxelValley.Tools.ModelConverter
             {
                 string[] data = goxVoxels[i].Split(" ");
 
-                voxels[i] = new Voxel(data[3], new int[] { int.Parse(data[0]), int.Parse(data[2]), int.Parse(data[1]) });
+                voxels[i] = new Voxel(ColorTranslator.FromHtml("#" + data[3].ToUpper()), new int[] { int.Parse(data[0]), int.Parse(data[2]), int.Parse(data[1]) });
             }
 
             Console.WriteLine($"Loaded {voxels.Length} voxels");

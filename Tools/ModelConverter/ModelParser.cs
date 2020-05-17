@@ -4,6 +4,7 @@ using ColorConsole = Colorful.Console;
 using System.IO;
 using Newtonsoft.Json;
 using System.Drawing;
+using System.Globalization;
 
 namespace VoxelValley.Tools.ModelConverter
 {
@@ -15,7 +16,7 @@ namespace VoxelValley.Tools.ModelConverter
 
         protected Voxel[] Voxels;
         protected Spawn[] Spawns;
-        protected Dictionary<string, string> voxelLookup;
+        protected Dictionary<Color, string> voxelLookup;
 
         public ModelParser(string inputPath, string outputPath, string name)
         {
@@ -23,7 +24,7 @@ namespace VoxelValley.Tools.ModelConverter
             OutputPath = outputPath;
             Name = name;
 
-            voxelLookup = new Dictionary<string, string>();
+            voxelLookup = new Dictionary<Color, string>();
         }
 
         public abstract void Parse();
@@ -40,7 +41,8 @@ namespace VoxelValley.Tools.ModelConverter
                 string biome = Console.ReadLine();
 
                 Console.WriteLine($"Whats the spawn chance? eg. 0.005");
-                float chance = float.Parse(Console.ReadLine());
+
+                float.TryParse(Console.ReadLine(), NumberStyles.Float, CultureInfo.InvariantCulture, out float chance);
 
                 spawnList.Add(new Spawn(biome, chance));
 
@@ -57,11 +59,11 @@ namespace VoxelValley.Tools.ModelConverter
         {
             foreach (Voxel voxel in Voxels)
             {
-                if (!voxelLookup.TryGetValue(voxel.voxel, out string voxelName))
+                if (!voxelLookup.TryGetValue(voxel.color, out string voxelName))
                 {
-                    ColorConsole.WriteLine($"Specify Voxel for {voxel.voxel}", ColorTranslator.FromHtml("#" + voxel.voxel.ToUpper()));
+                    ColorConsole.WriteLine($"Specify Voxel for Color", voxel.color);
                     voxelName = Console.ReadLine();
-                    voxelLookup.Add(voxel.voxel, voxelName);
+                    voxelLookup.Add(voxel.color, voxelName);
                 }
 
                 voxel.voxel = voxelName;

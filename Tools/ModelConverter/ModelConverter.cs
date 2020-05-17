@@ -12,6 +12,10 @@ namespace VoxelValley.Tools.ModelConverter
             string inputPath = Console.ReadLine();
             Console.WriteLine("Please specify output with extention (.json):");
             string outputPath = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(outputPath))
+                outputPath = inputPath.Split(".")[0] + ".json";
+
             Console.WriteLine("Please specify model Name:");
             string name = Console.ReadLine().ToLower();
 
