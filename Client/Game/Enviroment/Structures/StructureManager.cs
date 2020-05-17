@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using VoxelValley.Common.Helper;
@@ -25,7 +26,15 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
             foreach (string path in paths)
                 LoadStructure(path);
 
-            //TODO: Sort structures
+            //Order by Structure Size
+            Dictionary<string, List<StructureSpawn>> sortedDictionary = new Dictionary<string, List<StructureSpawn>>();
+            foreach (KeyValuePair<string, List<StructureSpawn>> kvp in structures)
+            {
+                List<StructureSpawn> sortedList = kvp.Value.OrderByDescending(s => s.Structure.Voxels.GetLength(0) + s.Structure.Voxels.GetLength(2)).ToList();
+                sortedDictionary.Add(kvp.Key, sortedList);
+            }
+
+            structures = sortedDictionary;
         }
 
         static void LoadStructure(string path)
@@ -48,7 +57,7 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
                     structures.Add(spawn.Biome, structureSpawnsInBiome);
                 }
             }
-            
+
             structure.Spawns = null;
         }
 

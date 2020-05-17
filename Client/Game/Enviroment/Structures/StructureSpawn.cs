@@ -1,4 +1,3 @@
-using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Enviroment.Generation;
 
