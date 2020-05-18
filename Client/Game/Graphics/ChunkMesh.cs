@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
     public class ChunkMesh : Mesh
     {
         Vector3[] vertexData;
-        Vector3[] colorData;
+        Vector4b[] colorData;
         Vector3[] normalData;
 
         //Just Temporary
         List<Vector3> vertices;
-        List<Vector3> colors;
+        List<Vector4b> colors;
         List<Vector3> normals;
         List<int> indices;
 
@@ -27,7 +28,7 @@ namespace VoxelValley.Client.Game.Enviroment
         public void Create()
         {
             vertices = new List<Vector3>();
-            colors = new List<Vector3>();
+            colors = new List<Vector4b>();
             normals = new List<Vector3>();
             indices = new List<int>();
 
@@ -144,7 +145,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
             if (addedVertices > 0)
             {
-                Vector3 voxelColor = VoxelManager.GetVoxel(parentChunk.voxels[x, y, z]).Color;
+                Vector4b voxelColor = VoxelManager.GetVoxel(parentChunk.voxels[x, y, z]).Color;
                 for (int i = 0; i < addedVertices; i++)
                     colors.Add(voxelColor);
             }
@@ -164,7 +165,7 @@ namespace VoxelValley.Client.Game.Enviroment
             return vertexData;
         }
 
-        public override Vector3[] GetColors()
+        public override Vector4b[] GetColors()
         {
             return colorData;
         }

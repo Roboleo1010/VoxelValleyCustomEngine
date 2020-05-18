@@ -1,40 +1,45 @@
+using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 
-namespace VoxelValley.Common.Math
+namespace VoxelValley.Common.Mathematics
 {
-    public class Vector3b
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Vector3b
     {
         //Values
-        byte x;
-        byte y;
-        byte z;
+        byte _x;
+        byte _y;
+        byte _z;
 
         //Component shorthands (Coordinates)
-        public byte X { get { return x; } private set { x = value; } }
-        public byte Y { get { return y; } private set { y = value; } }
-        public byte Z { get { return z; } private set { z = value; } }
+        public byte X { get { return _x; } private set { _x = value; } }
+        public byte Y { get { return _y; } private set { _y = value; } }
+        public byte Z { get { return _z; } private set { _z = value; } }
 
         //Component shorthands (Colors)
-        public byte R { get { return x; } private set { x = value; } }
-        public byte G { get { return y; } private set { y = value; } }
-        public byte B { get { return z; } private set { z = value; } }
+        public byte R { get { return _x; } private set { _x = value; } }
+        public byte G { get { return _y; } private set { _y = value; } }
+        public byte B { get { return _z; } private set { _z = value; } }
 
-        public static int SizeInBytes { get { return 3; } }
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vector3b>();
+
         public static Vector3b Zero { get { return new Vector3b(0, 0, 0); } }
         public static Vector3b One { get { return new Vector3b(1, 1, 1); } }
 
         public Vector3b(byte x, byte y, byte z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            _x = x;
+            _y = y;
+            _z = z;
         }
 
         public Vector3b(Color color)
         {
-            this.R = color.R;
-            this.G = color.G;
-            this.B = color.B;
+            _x = color.R;
+            _y = color.G;
+            _z = color.B;
         }
     }
 }

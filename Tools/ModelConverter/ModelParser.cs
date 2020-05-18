@@ -72,11 +72,9 @@ namespace VoxelValley.Tools.ModelConverter
 
         public virtual void WriteFile()
         {
-            Structure structure = new Structure(Name, Voxels, Spawns);
-
             using (StreamWriter writer = new StreamWriter(OutputPath))
             {
-                writer.Write(JsonConvert.SerializeObject(structure));
+                writer.Write(JsonConvert.SerializeObject(new Structure(Name, Voxels, Spawns)));
             }
 
             Console.WriteLine("Sucsessfully created json file!");

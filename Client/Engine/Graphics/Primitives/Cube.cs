@@ -1,24 +1,17 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
+using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Primitives
 {
     public class Cube : Mesh
     {
-        Vector3 color;
-        Vector3[] colors;
-
-        public Cube(Vector3 color)
-        {
-            this.color = color;
-            VertexCount = 24;
-            IndiceCount = 36;
-            ColorCount = 24;
-        }
+        Vector4b color;
+        Vector4b[] colors;
 
         public Cube(Color color)
         {
-            this.color = new Vector3(color.R / 255, color.G / 255, color.B / 255);
+            this.color = new Vector4b(color);
             VertexCount = 24;
             IndiceCount = 36;
             ColorCount = 24;
@@ -84,11 +77,11 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
             return indices;
         }
 
-        public override Vector3[] GetColors()
+        public override Vector4b[] GetColors()
         {
             if (colors == null)
             {
-                colors = new Vector3[ColorCount];
+                colors = new Vector4b[ColorCount];
                 for (int i = 0; i < ColorCount; i++)
                     colors[i] = color;
             }

@@ -1,6 +1,7 @@
 using OpenToolkit.Mathematics;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Client.Engine.SceneGraph;
+using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics
 {
@@ -8,8 +9,6 @@ namespace VoxelValley.Client.Engine.Graphics
     {
         public GameObject ParentGameObject;
         public Matrix4 ModelMatrix = Matrix4.Identity;
-
- 
 
         Vector3[] normalData;
 
@@ -22,7 +21,7 @@ namespace VoxelValley.Client.Engine.Graphics
 
         public abstract int[] GetIndices(int offset = 0);
 
-        public abstract Vector3[] GetColors();
+        public abstract Vector4b[] GetColors();
 
         public virtual void CalculateModelMatrix()
         {

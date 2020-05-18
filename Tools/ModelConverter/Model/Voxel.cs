@@ -5,11 +5,11 @@ namespace VoxelValley.Tools.ModelConverter
 {
     public class Voxel
     {
+        public string voxel { get; set; }
+        public int[] position { get; set; }
+
         [JsonIgnore]
         public Color color { get; set; }
-
-        public string voxel;
-        public int[] position;
 
         public Voxel(Color color, int[] position)
         {

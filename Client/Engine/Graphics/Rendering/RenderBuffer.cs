@@ -14,12 +14,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         internal int elementBufferObject = -1;
         internal int vertexArrayObject = -1;
 
-        //Current Positions in Buffers
-        internal int vertexOffsetInBytes = 0;
-        internal int vertexOffset = 0;
-        internal int indiceOffsetInBytes = 0;
-        internal int indiceOffset = 0;
-
         internal Shader shader;
         internal List<Mesh> meshes = new List<Mesh>();
 

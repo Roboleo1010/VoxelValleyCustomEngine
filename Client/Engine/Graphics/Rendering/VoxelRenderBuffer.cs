@@ -4,12 +4,18 @@ using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Game;
+using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public class VoxelRenderBuffer : RenderBuffer
     {
         Type type = typeof(VoxelRenderBuffer);
+
+        int vPositionOffset;
+        int vNormalOffset;
+        int vColorOffset;
+        int indiceOffset;
 
         public ConcurrentBag<Mesh> MeshesToAdd;
 
@@ -35,33 +41,33 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         public void AddMesh(Mesh mesh)
         {
             SendMeshSubData(mesh.GetVertices(),
-                            mesh.GetIndices(vertexOffset),
+                            mesh.GetIndices(vPositionOffset),
                             mesh.GetNormals(),
                             mesh.GetColors());
         }
 
-        public void SendMeshSubData(Vector3[] vertexData, int[] indiceData, Vector3[] normalData, Vector3[] colorData)
+        public void SendMeshSubData(Vector3[] vertexData, int[] indiceData, Vector3[] normalData, Vector4b[] colorData)
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vPosition"));
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)vertexOffsetInBytes, vertexData.Length * Vector3.SizeInBytes, vertexData);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vPositionOffset * Vector3.SizeInBytes), vertexData.Length * Vector3.SizeInBytes, vertexData);
             GL.VertexAttribPointer(shader.GetAttibute("vPosition"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)vertexOffsetInBytes, normalData.Length * Vector3.SizeInBytes, normalData);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vNormalOffset * Vector3.SizeInBytes), normalData.Length * Vector3.SizeInBytes, normalData);
             GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vColor"));
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)vertexOffsetInBytes, colorData.Length * Vector3.SizeInBytes, colorData);
-            GL.VertexAttribPointer(shader.GetAttibute("vColor"), 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vColorOffset * Vector4b.SizeInBytes), colorData.Length * Vector4b.SizeInBytes, colorData);
+            GL.VertexAttribPointer(shader.GetAttibute("vColor"), 4, VertexAttribPointerType.UnsignedByte, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
-            GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)indiceOffsetInBytes, indiceData.Length * sizeof(int), indiceData);
+            GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)(indiceOffset * sizeof(int)), indiceData.Length * sizeof(int), indiceData);
 
             UnbindCurrentBuffer();
 
-            vertexOffsetInBytes += vertexData.Length * Vector3.SizeInBytes;
-            vertexOffset += vertexData.Length;
-            indiceOffsetInBytes += indiceData.Length * sizeof(int);
+            vPositionOffset += vertexData.Length;
+            vNormalOffset += normalData.Length;
+            vColorOffset += colorData.Length;
             indiceOffset += indiceData.Length;
         }
 
