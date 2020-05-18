@@ -18,6 +18,7 @@ namespace VoxelValley.Client.Engine
     public class Window : GameWindow
     {
         Type type = typeof(Window);
+        bool isWireframe = false;
 
         public Vector2 lastMousePos = new Vector2();
         public Player player;
@@ -37,6 +38,8 @@ namespace VoxelValley.Client.Engine
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
 
+
+
             CursorVisible = true;
             CursorGrabbed = true;
             VSync = VSyncMode.On;
@@ -53,6 +56,7 @@ namespace VoxelValley.Client.Engine
 
             InputManager.GetAction("Debug", "DrawSceneGraph").Callback += () => { GameObjectManager.DrawSceneGraph(); };
             InputManager.GetAction("Menu", "Quit").Callback += () => { Close(); };
+            InputManager.GetAction("Debug", "ToggleWireframe").Callback += () => { isWireframe = !isWireframe; if (isWireframe) GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line); else GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill); };
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)

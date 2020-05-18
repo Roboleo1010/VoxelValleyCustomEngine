@@ -13,6 +13,12 @@
                 "key": "C",
                 "onKeyDown": true,
                 "allowRepeat": false
+            },
+            {
+                "name": "ToggleWireframe",
+                "key": "F1",
+                "onKeyDown": true,
+                "allowRepeat": false
             }
         ]
     }
