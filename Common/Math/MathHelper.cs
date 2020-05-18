@@ -1,4 +1,4 @@
-namespace VoxelValley.Common.Helper
+namespace VoxelValley.Common.Mathematics
 {
     public static class MathHelper
     {
