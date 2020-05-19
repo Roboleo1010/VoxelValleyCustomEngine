@@ -1,33 +1,29 @@
+using System;
 using OpenToolkit.Mathematics;
 
 namespace VoxelValley.Common.Helper
 {
     public static class CoordinateHelper
     {
-        /// <summary>
-        /// Converts from ChunkSpace (0,0,1) to WorldSpace (0,0,1 * ChunkSize)
-        /// </summary>
-        /// <param name="chunkSpacePosition">Position in ChunkSpace</param>
-        /// <returns></returns>
-        public static Vector3i ConvertFromChunkSpaceToWorldSpace(Vector3i chunkSpacePosition)
+        public static Vector3i ConvertFromChunkSpaceToWorldSpace(Vector3i chunkSpacePos)
         {
             return new Vector3i(
-                        chunkSpacePosition.X * CommonConstants.World.chunkSize.X,
-                        chunkSpacePosition.Y * CommonConstants.World.chunkSize.Y,
-                        chunkSpacePosition.Z * CommonConstants.World.chunkSize.Z);
+                        chunkSpacePos.X * CommonConstants.World.chunkSize.X,
+                        chunkSpacePos.Y * CommonConstants.World.chunkSize.Y,
+                        chunkSpacePos.Z * CommonConstants.World.chunkSize.Z);
         }
 
-        /// <summary>
-        /// Converts from WorldSpace (0,0,16) to ChunkSpace (0,0,16 / ChunkSize)
-        /// </summary>
-        /// <param name="worldSpacePosition">Position in WorldSpace</param>
-        /// <returns></returns>
-        public static Vector3i ConvertFromWorldSpaceToChunkSpace(Vector3i worldSpacePosition)
+        public static (Vector3i chunk, Vector3i voxel) ConvertFromWorldSpaceToVoxelSpace(Vector3 worldSpacePos)
         {
-            return new Vector3i(
-                       worldSpacePosition.X / CommonConstants.World.chunkSize.X,
-                       worldSpacePosition.Y / CommonConstants.World.chunkSize.Y,
-                       worldSpacePosition.Z / CommonConstants.World.chunkSize.Z);
+            Vector3i chunk = new Vector3i((int)worldSpacePos.X / CommonConstants.World.chunkSize.X,
+                                          (int)worldSpacePos.Y / CommonConstants.World.chunkSize.Y,
+                                          (int)worldSpacePos.Z / CommonConstants.World.chunkSize.Z);
+
+            Vector3i voxel = new Vector3i(Math.Abs((int)worldSpacePos.X % CommonConstants.World.chunkSize.X),
+                                          Math.Abs((int)worldSpacePos.Y % CommonConstants.World.chunkSize.Y),
+                                          Math.Abs((int)worldSpacePos.Z % CommonConstants.World.chunkSize.Z));
+
+            return (chunk, voxel);
         }
     }
 }

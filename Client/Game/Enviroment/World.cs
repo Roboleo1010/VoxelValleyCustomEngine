@@ -23,20 +23,17 @@ namespace VoxelValley.Client.Game.Enviroment
 
         protected override void OnUpdate(float deltaTime)
         {
-            Vector3i palyerPosInChukSpace = CoordinateHelper.ConvertFromWorldSpaceToChunkSpace(new Vector3i(
-                            (int)Player.Transform.Position.X,
-                            (int)Player.Transform.Position.Y,
-                            (int)Player.Transform.Position.Z));
+            Vector3i palyerPosInChukSpace = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Player.Transform.Position).chunk;
 
             CreateAround(palyerPosInChukSpace);
         }
 
-        private Chunk CreateChunk(Vector3i positionInChunkSpace)
+        private Chunk CreateChunk(Vector3i positionInChunkSpace, bool generateThreaded = true)
         {
             Chunk chunk = GetChunk(positionInChunkSpace);
             if (chunk == null)
             {
-                chunk = new Chunk($"Chunk {positionInChunkSpace.ToString()}", this.gameObject, positionInChunkSpace);
+                chunk = new Chunk($"Chunk {positionInChunkSpace.ToString()}", this.gameObject, positionInChunkSpace, generateThreaded);
                 chunks.Add(positionInChunkSpace, chunk);
             }
             return chunk;
@@ -54,6 +51,18 @@ namespace VoxelValley.Client.Game.Enviroment
             if (chunks.TryGetValue(positionInChunkSpace, out Chunk chunk))
                 return chunk;
             return null;
+        }
+
+        public ushort GetVoxelFromWoldSpace(Vector3 pos)
+        {
+            (Vector3i chunk, Vector3i voxel) convertedPos = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(pos);
+
+            Chunk chunk = GetChunk(convertedPos.chunk);
+
+            if (chunk == null || chunk.voxels == null)
+                return 0;
+
+            return chunk.voxels[convertedPos.voxel.X, convertedPos.voxel.Y, convertedPos.voxel.Z];
         }
 
         void RemoveChunk(Vector3i positionInChunkSpace)

@@ -5,7 +5,9 @@ using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
+using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
+using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Game.Entities
 {
@@ -30,8 +32,6 @@ namespace VoxelValley.Client.Game.Entities
 
             Transform.Position = spawnPosition;
 
-
-
             InputManager.GetState("Movement", "Move_Forward").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, 0.1f)); };
             InputManager.GetState("Movement", "Move_Backwards").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0f, -0.1f)); };
 
@@ -54,12 +54,17 @@ namespace VoxelValley.Client.Game.Entities
 
         protected override void OnTick(float deltaTime)
         {
-            Move(movementDirection.X, movementDirection.Y, movementDirection.Z); //- CommonConstants.World.Gravity
+            Move(movementDirection.X, movementDirection.Y, movementDirection.Z);
+            // (Vector3i chunk, Vector3i voxel) voxelPos = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Transform.Position);
 
-            // int height = WorldGenerator.GetHeight((int)Transform.Position.X, (int)Transform.Position.Z); //TODO Collision
+            // (Vector3i chunk, Vector3i voxel) convertedPos = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Transform.Position);
 
-            // if (Transform.Position.Y < height)
-            //     Transform.Position = new Vector3(Transform.Position.X, height, Transform.Position.Z);
+            // System.Console.WriteLine(convertedPos);
+
+            //  ushort voxel = ((World)Parent).GetVoxelFromWoldSpace(Transform.Position);
+
+            //  if (voxel != 0)
+            //      Transform.Position = new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z);
         }
 
         public void Move(float x, float y, float z)
