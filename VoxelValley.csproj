@@ -24,7 +24,10 @@
     <!-- Included DLLs -->
   <ItemGroup>
     <Reference Include="FastNoise">
-      <HintPath>/Common/Libraries/FastNoise.dll</HintPath>
+      <HintPath>/Common/FastNoise/FastNoise.dll</HintPath>
+    </Reference>
+     <Reference Include="Kaitai">
+      <HintPath>/Common/Kaitai/Kaitai.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

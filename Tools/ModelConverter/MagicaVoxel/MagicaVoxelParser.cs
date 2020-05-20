@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Kaitai;
+using Kaitai.Core.Formats;
 
 namespace VoxelValley.Tools.ModelConverter
 {
@@ -25,8 +25,8 @@ namespace VoxelValley.Tools.ModelConverter
 
             MagicavoxelVox model = MagicavoxelVox.FromFile(InputPath);
 
-            mVoxels = ((Kaitai.MagicavoxelVox.Xyzi)model.Main.ChildrenChunks[1].ChunkContent).Voxels;
-            colors = ((Kaitai.MagicavoxelVox.Rgba)model.Main.ChildrenChunks[14].ChunkContent).Colors;
+            mVoxels = ((MagicavoxelVox.Xyzi)model.Main.ChildrenChunks[1].ChunkContent).Voxels;
+            colors = ((MagicavoxelVox.Rgba)model.Main.ChildrenChunks[14].ChunkContent).Colors;
 
             Console.WriteLine($"Found {mVoxels.Count} voxels and {colors.Count} colors");
         }
