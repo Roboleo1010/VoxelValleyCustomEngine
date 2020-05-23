@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Common.Diagnostics;
 
-namespace VoxelValley.Client.Game.Graphics
+namespace VoxelValley.Client.Engine.Graphics
 {
     public static class CameraManager
     {
         static Type type = typeof(CameraManager);
-        static Dictionary<CamreaType, Camera> cameras = new Dictionary<CamreaType, Camera>();
-        static CamreaType activeCamera;
+        static Dictionary<string, Camera> cameras = new Dictionary<string, Camera>();
+        static string activeCamera;
 
         static float _aspectRatio;
         public static float AspectRatio { get { return _aspectRatio; } set { _aspectRatio = value; foreach (Camera camera in cameras.Values) camera.AspectRatio = _aspectRatio; } }
-
-        public enum CamreaType
-        {
-            PLAYER_FIRST,
-            PLAYER_THIRD,
-            DEBUG
-        }
 
         public static Camera GetActiveCamera()
         {
@@ -30,18 +23,18 @@ namespace VoxelValley.Client.Game.Graphics
             return null;
         }
 
-        public static void AddCamera(CamreaType cameraType, Camera camera)
+        public static void AddCamera(string cameraType, Camera camera)
         {
             if (!cameras.ContainsKey(cameraType))
                 cameras.Add(cameraType, camera);
             else
-                Log.Error(type, $"Camera with Type of {cameraType.ToString()} was already added.");
+                Log.Error(type, $"Camera with Type of {cameraType} was already added.");
         }
 
-        public static void SetActiveCamera(CamreaType cameraType)
+        public static void SetActiveCamera(string cameraType)
         {
             activeCamera = cameraType;
-            Log.Info(type, $"Switched Camera {cameraType.ToString()}.");
+            Log.Info(type, $"Switched Camera {cameraType}.");
         }
     }
 }

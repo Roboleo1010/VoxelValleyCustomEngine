@@ -1,11 +1,11 @@
 using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
+using VoxelValley.Client.Engine.Graphics;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Client.Game.Graphics;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Entities
@@ -28,8 +28,8 @@ namespace VoxelValley.Client.Game.Entities
 
             GameObject cameraContainer = new GameObject("Camera", this, new Vector3(0, 4, 0));
             Camera camera = cameraContainer.AddComponent<Camera>();
-            CameraManager.AddCamera(CameraManager.CamreaType.PLAYER_FIRST, camera);
-            CameraManager.SetActiveCamera(CameraManager.CamreaType.PLAYER_FIRST);
+            CameraManager.AddCamera(ClientConstants.Graphics.CameraType.PlayerFirstPerson, camera);
+            CameraManager.SetActiveCamera(ClientConstants.Graphics.CameraType.PlayerFirstPerson);
 
             Transform.Position = spawnPosition;
 
