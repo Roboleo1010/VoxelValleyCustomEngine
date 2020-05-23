@@ -10,6 +10,7 @@ namespace VoxelValley.Client.Game.Enviroment
 {
     public class World : GameObject
     {
+        public static World Instance;
         Type type = typeof(World);
         Dictionary<Vector3i, Chunk> chunks;
 
@@ -17,15 +18,16 @@ namespace VoxelValley.Client.Game.Enviroment
 
         public World(string name) : base(name)
         {
+            Instance = this;
             chunks = new Dictionary<Vector3i, Chunk>();
-            CreateChunk(new Vector3i(0, 0, 0));
+            CreateChunk(new Vector3i(0, 0, 0), false);
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             Vector3i palyerPosInChukSpace = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Player.Transform.Position).chunk;
 
-            CreateAround(palyerPosInChukSpace);
+            // CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace, bool generateThreaded = true)

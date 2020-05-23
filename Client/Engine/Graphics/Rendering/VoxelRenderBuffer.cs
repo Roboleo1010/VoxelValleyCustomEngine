@@ -17,11 +17,11 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         int vColorOffset;
         int indiceOffset;
 
-        public ConcurrentBag<Mesh> MeshesToAdd;
+        ConcurrentBag<Mesh> meshesToAdd;
 
         public VoxelRenderBuffer(ShaderManager.ShaderType shaderType) : base(shaderType)
         {
-            MeshesToAdd = new ConcurrentBag<Mesh>();
+            meshesToAdd = new ConcurrentBag<Mesh>();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vPosition"));
             GL.BufferData(BufferTarget.ArrayBuffer, 1000000000, IntPtr.Zero, BufferUsageHint.StaticDraw); //1GB
@@ -38,15 +38,22 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             UnbindCurrentBuffer();
         }
 
-        public void AddMesh(Mesh mesh)
+        public override void Add(Mesh mesh)
         {
+            meshesToAdd.Add(mesh);
+        }
+
+        void AddMeshToBuffer(Mesh mesh)
+        {
+            meshes.Add(mesh);
+
             SendMeshSubData(mesh.GetVertices(),
                             mesh.GetIndices(vPositionOffset),
                             mesh.GetNormals(),
                             mesh.GetColors());
         }
 
-        public void SendMeshSubData(Vector3[] vertexData, int[] indiceData, Vector3[] normalData, Vector4b[] colorData)
+        void SendMeshSubData(Vector3[] vertexData, int[] indiceData, Vector3[] normalData, Vector4b[] colorData)
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vPosition"));
             GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vPositionOffset * Vector3.SizeInBytes), vertexData.Length * Vector3.SizeInBytes, vertexData);
@@ -73,11 +80,8 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         public override void Render()
         {
-            if (MeshesToAdd.Count > 0 && MeshesToAdd.TryTake(out Mesh mesh))
-            {
-                AddMesh(mesh);
-                meshes.Add(mesh);
-            }
+            if (meshesToAdd.Count > 0 && meshesToAdd.TryTake(out Mesh mesh))
+                AddMeshToBuffer(mesh);
 
             if (meshes.Count == 0)
                 return;

@@ -12,7 +12,8 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
 
         public enum ShaderType
         {
-            VOXEL
+            VOXEL,
+            DEBUG
         }
 
         public static void LoadShaders()

@@ -12,7 +12,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         public static void CreateRenderBuffers()
         {
-            renderBuffers.Add(ShaderType.VOXEL, new VoxelRenderBuffer(ShaderType.VOXEL));
+            renderBuffers.Add(ShaderType.VOXEL, new VoxelRenderBuffer(ShaderType.VOXEL)); //For rendering voxel world
         }
 
         public static RenderBuffer[] GetBuffers()

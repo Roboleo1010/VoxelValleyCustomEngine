@@ -12,6 +12,7 @@ using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Game;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Engine.SceneGraph;
+using VoxelValley.Client.Engine.Graphics.Primitives;
 
 namespace VoxelValley.Client.Engine
 {
@@ -37,8 +38,6 @@ namespace VoxelValley.Client.Engine
 
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
-
-
 
             CursorVisible = true;
             CursorGrabbed = true;
@@ -67,9 +66,6 @@ namespace VoxelValley.Client.Engine
 
             InputManager.HandleInput();
             EngineManager.OnTick((float)e.Time);
-
-            foreach (RenderBuffer buffer in RenderBufferManager.GetBuffers())
-                buffer.OnUpdate();
 
             base.OnUpdateFrame(e);
         }

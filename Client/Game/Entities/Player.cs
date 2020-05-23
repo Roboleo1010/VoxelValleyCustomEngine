@@ -1,13 +1,15 @@
 using System;
+using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
+using VoxelValley.Client.Engine.Graphics.Primitives;
+using VoxelValley.Client.Engine.Graphics.Rendering;
+using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
-using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Game.Entities
 {
@@ -15,15 +17,16 @@ namespace VoxelValley.Client.Game.Entities
     {
         Type type = typeof(Player);
 
-        float moveSpeed = 0.9f;
+        float moveSpeed = 0.3f;
 
         float mouseSensitivity = 0.0025f;
 
-        Vector3 movementDirection = Vector3.Zero;
+        // Vector3 movementDirection = new Vector3(0, -CommonConstants.World.Gravity, 0);//TODO: Use gravity
+        Vector3 movementDirection = new Vector3(0, 0, 0);
 
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
-            ((World)Parent).Player = this;
+            World.Instance.Player = this;
             EngineManager.Window.player = this;
 
             GameObject cameraContainer = new GameObject("Camera", this, new Vector3(0, 4, 0));
@@ -54,20 +57,42 @@ namespace VoxelValley.Client.Game.Entities
 
         protected override void OnTick(float deltaTime)
         {
-            Move(movementDirection.X, movementDirection.Y, movementDirection.Z);
-            // (Vector3i chunk, Vector3i voxel) voxelPos = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Transform.Position);
+            Vector3 modifiedMoveDirection = movementDirection;
 
-            // (Vector3i chunk, Vector3i voxel) convertedPos = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Transform.Position);
+            // //Check Y
+            // if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y, Transform.Position.Z)) != 0)
+            //     if (modifiedMoveDirection.Y < 0)
+            //         modifiedMoveDirection.Y = 0;
 
-            // System.Console.WriteLine(convertedPos);
+            // //Check X
+            // if (modifiedMoveDirection.X > 0)
+            // {
+            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X + 1, Transform.Position.Y + 1, Transform.Position.Z)) != 0)
+            //         modifiedMoveDirection.X = 0;
+            // }
+            // else
+            // {
+            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X - 1, Transform.Position.Y + 1, Transform.Position.Z)) != 0)
+            //         modifiedMoveDirection.X = 0;
+            // }
 
-            //  ushort voxel = ((World)Parent).GetVoxelFromWoldSpace(Transform.Position);
+            // //Check Z
+            // if (modifiedMoveDirection.Z > 0)
+            // {
+            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z + 1)) != 0)
+            //         modifiedMoveDirection.Z = 0;
+            // }
+            // else
+            // {
+            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z - 1)) != 0)
+            //         modifiedMoveDirection.Z = 0;
+            // }
 
-            //  if (voxel != 0)
-            //      Transform.Position = new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z);
+
+            Move(modifiedMoveDirection.X, modifiedMoveDirection.Y, modifiedMoveDirection.Z);
         }
 
-        public void Move(float x, float y, float z)
+        void Move(float x, float y, float z)
         {
             Vector3 offset = new Vector3();
 

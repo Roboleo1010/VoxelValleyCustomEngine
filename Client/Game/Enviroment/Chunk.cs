@@ -42,10 +42,10 @@ namespace VoxelValley.Client.Game.Enviroment
 
         void CreateMesh()
         {
-            ChunkMesh mesh = new ChunkMesh(this);
-            mesh.Create();
+            ChunkMesh chunkMesh = new ChunkMesh(this);
+            chunkMesh.Create();
 
-            ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).MeshesToAdd.Add(mesh);
+            ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).Add(chunkMesh);
         }
 
         public static bool InChunk(int x, int y, int z)

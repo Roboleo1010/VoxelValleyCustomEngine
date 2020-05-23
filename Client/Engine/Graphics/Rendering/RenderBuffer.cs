@@ -31,8 +31,9 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             shader.EnableVertexAttribArrays();
         }
 
+        public abstract void Add(Mesh mesh);
+
         public abstract void Render();
-        public virtual void OnUpdate() { }
 
         public void Remove()
         {
