@@ -1,6 +1,5 @@
 using VoxelValley.Client.Game.Enviroment.Generation;
 using VoxelValley.Client.Game.Enviroment.RegionManagement.Regions;
-using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment.RegionManagement
 {
@@ -8,7 +7,7 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement
     {
         public static ushort[,,] GetChunk(int worldBaseX, int worldBaseZ)
         {
-            ushort[,,] voxels = new ushort[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Y, CommonConstants.World.chunkSize.Z];
+            ushort[,,] voxels = new ushort[ClientConstants.World.ChunkSize.X, ClientConstants.World.ChunkSize.Y, ClientConstants.World.ChunkSize.Z];
 
             GenerationPipeline.Generate(worldBaseX, worldBaseZ, ref voxels);
 

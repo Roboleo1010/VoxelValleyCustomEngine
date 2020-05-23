@@ -1,4 +1,4 @@
-using VoxelValley.Common.Mathematics;
+using VoxelValley.Engine.Mathematics;
 
 namespace VoxelValley.Client.Game.Enviroment
 {

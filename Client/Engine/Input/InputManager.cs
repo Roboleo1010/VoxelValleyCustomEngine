@@ -6,7 +6,7 @@ using System.Text;
 using Newtonsoft.Json;
 using OpenToolkit.Windowing.Common;
 using VoxelValley.Common.Diagnostics;
-using VoxelValley.Common.Helper;
+using VoxelValley.Engine.Helper;
 
 namespace VoxelValley.Client.Engine.Input
 {

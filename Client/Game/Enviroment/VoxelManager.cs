@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
-using VoxelValley.Common.Diagnostics;
-using VoxelValley.Common.Helper;
+using VoxelValley.Engine.Helper;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -27,7 +26,7 @@ namespace VoxelValley.Client.Game.Enviroment
             voxelLookUp.Add("air", airVoxel);
             voxelIndex = 1;
 
-            string[] paths = FileHelper.GetAllFilesOfType("Common/Assets/VoxelTypes/", "*.json");
+            string[] paths = FileHelper.GetAllFilesOfType("Client/Assets/VoxelTypes/", "*.json");
 
             foreach (string path in paths)
                 LoadVoxelJson(path);

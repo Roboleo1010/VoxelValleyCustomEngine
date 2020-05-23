@@ -4,7 +4,7 @@ using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.SceneGraph.Components;
-using VoxelValley.Common.Mathematics;
+using VoxelValley.Engine.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {

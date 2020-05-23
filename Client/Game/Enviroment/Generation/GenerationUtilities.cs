@@ -161,12 +161,12 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
         public static int MapToWorld(float noiseValue)
         {
-            return (int)(noiseValue * CommonConstants.World.chunkSize.Y);
+            return (int)(noiseValue *ClientConstants.World.ChunkSize.Y);
         }
 
         public static byte MapToWorldByte(float noiseValue)
         {
-            return (byte)(noiseValue * CommonConstants.World.chunkSize.Y);
+            return (byte)(noiseValue *ClientConstants.World.ChunkSize.Y);
         }
     }
 }

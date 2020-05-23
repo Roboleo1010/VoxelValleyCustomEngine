@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
-using VoxelValley.Common.Helper;
+using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Engine.Input
 {
@@ -16,6 +17,8 @@ namespace VoxelValley.Client.Engine.Input
         public Dictionary<Key, Action> Actions;
         public Dictionary<Key, State> States;
 
+        Type type = typeof(Context);
+
         [JsonConstructor]
         public Context(int priority, bool isActive, List<Action> actions, List<State> states)
         {
@@ -26,11 +29,11 @@ namespace VoxelValley.Client.Engine.Input
 
             if (actions != null)
                 foreach (Action action in actions)
-                    Actions.Add(InputHelper.GetKeyFromString(action.KeyName), action);
+                    Actions.Add(GetKeyFromString(action.KeyName), action);
 
             if (states != null)
                 foreach (State state in states)
-                    States.Add(InputHelper.GetKeyFromString(state.KeyName), state);                    
+                    States.Add(GetKeyFromString(state.KeyName), state);
         }
 
         public void HandleInputs(ref List<KeyboardKeyEventArgs> keyDownSinceLastUpdate, ref List<KeyboardKeyEventArgs> keyUpSinceLastUpdate)
@@ -88,6 +91,15 @@ namespace VoxelValley.Client.Engine.Input
             }
 
             keyUpSinceLastUpdate = keyUpSinceLastUpdateCopy;
+        }
+
+        Key GetKeyFromString(string keyName)
+        {
+            if (Enum.TryParse(typeof(Key), keyName, true, out object result))
+                return (Key)result;
+
+            Log.Warn(type, $"Can't parse Key '{keyName}' to Key enum.");
+            return Key.Unknown;
         }
     }
 }

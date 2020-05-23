@@ -1,7 +1,5 @@
-using System;
 using VoxelValley.Client.Game.Enviroment.BiomeManagement;
-using VoxelValley.Common;
-using VoxelValley.Common.Mathematics;
+using VoxelValley.Engine.Mathematics;
 
 namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
 {
@@ -9,8 +7,8 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
     {
         public static void Generate(int worldBaseX, int worldBaseZ, ref ushort[,,] voxels)
         {
-            Biome[,] biomes = new Biome[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Z];
-            ushort[,] heights = new ushort[CommonConstants.World.chunkSize.X, CommonConstants.World.chunkSize.Z];
+            Biome[,] biomes = new Biome[ClientConstants.World.ChunkSize.X, ClientConstants.World.ChunkSize.Z];
+            ushort[,] heights = new ushort[ClientConstants.World.ChunkSize.X, ClientConstants.World.ChunkSize.Z];
 
             GetBiomes(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
             GetHeights(worldBaseX, worldBaseZ, ref biomes, ref heights, ref voxels);
@@ -21,15 +19,15 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
 
         static void GetBiomes(int worldBaseX, int worldBaseZ, ref Biome[,] biomes, ref ushort[,] heights, ref ushort[,,] voxels)
         {
-            for (ushort x = 0; x < CommonConstants.World.chunkSize.X; x++)
-                for (ushort z = 0; z < CommonConstants.World.chunkSize.Z; z++)
+            for (ushort x = 0; x < ClientConstants.World.ChunkSize.X; x++)
+                for (ushort z = 0; z < ClientConstants.World.ChunkSize.Z; z++)
                     biomes[x, z] = RegionManager.GetRegion(worldBaseX + x, worldBaseZ + z).GetBiome(worldBaseX + x, worldBaseZ + z);
         }
 
         static void GetHeights(int worldBaseX, int worldBaseZ, ref Biome[,] biomes, ref ushort[,] heights, ref ushort[,,] voxels)
         {
-            for (ushort x = 0; x < CommonConstants.World.chunkSize.X; x++)
-                for (ushort z = 0; z < CommonConstants.World.chunkSize.Z; z++)
+            for (ushort x = 0; x < ClientConstants.World.ChunkSize.X; x++)
+                for (ushort z = 0; z < ClientConstants.World.ChunkSize.Z; z++)
                     heights[x, z] = biomes[x, z].GetHeight(worldBaseX + x, worldBaseZ + z);
         }
 
@@ -38,10 +36,10 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
             byte interpolationLength = 6;
             byte interpolationLengthHalfed = (byte)(interpolationLength / 2);
 
-            for (ushort x = 0; x < CommonConstants.World.chunkSize.X; x++)
-                for (ushort z = 0; z < CommonConstants.World.chunkSize.Z; z++)
-                    if (x - interpolationLengthHalfed > 0 && x + interpolationLengthHalfed < CommonConstants.World.chunkSize.X &&
-                        z - interpolationLengthHalfed > 0 && z + interpolationLengthHalfed < CommonConstants.World.chunkSize.Z &&
+            for (ushort x = 0; x < ClientConstants.World.ChunkSize.X; x++)
+                for (ushort z = 0; z < ClientConstants.World.ChunkSize.Z; z++)
+                    if (x - interpolationLengthHalfed > 0 && x + interpolationLengthHalfed < ClientConstants.World.ChunkSize.X &&
+                        z - interpolationLengthHalfed > 0 && z + interpolationLengthHalfed < ClientConstants.World.ChunkSize.Z &&
                         (biomes[x, z] != biomes[x - 1, z] || biomes[x, z] != biomes[x, z - 1]))
                     {
                         ushort heightBL = heights[x - interpolationLengthHalfed, z - interpolationLengthHalfed];
@@ -65,16 +63,16 @@ namespace VoxelValley.Client.Game.Enviroment.RegionManagement.Regions
 
         static void GenerateTerrainComposition(int worldBaseX, int worldBaseZ, ref Biome[,] biomes, ref ushort[,] heights, ref ushort[,,] voxels)
         {
-            for (ushort x = 0; x < CommonConstants.World.chunkSize.X; x++)
-                for (ushort y = 0; y < CommonConstants.World.chunkSize.Y; y++)
-                    for (ushort z = 0; z < CommonConstants.World.chunkSize.Z; z++)
+            for (ushort x = 0; x < ClientConstants.World.ChunkSize.X; x++)
+                for (ushort y = 0; y < ClientConstants.World.ChunkSize.Y; y++)
+                    for (ushort z = 0; z < ClientConstants.World.ChunkSize.Z; z++)
                         voxels[x, y, z] = biomes[x, z].GetVoxel(worldBaseX + x, y, worldBaseZ + z, heights[x, z]);
         }
 
         static void GenerateFinishers(int worldBaseX, int worldBaseZ, ref Biome[,] biomes, ref ushort[,] heights, ref ushort[,,] voxels)
         {
-            for (ushort x = 0; x < CommonConstants.World.chunkSize.X; x++)
-                for (ushort z = 0; z < CommonConstants.World.chunkSize.Z; z++)
+            for (ushort x = 0; x < ClientConstants.World.ChunkSize.X; x++)
+                for (ushort z = 0; z < ClientConstants.World.ChunkSize.Z; z++)
                     biomes[x, z].GetFinishers(worldBaseX + x, worldBaseZ + z, x, z, heights[x, z] + 1, ref voxels);
         }
     }

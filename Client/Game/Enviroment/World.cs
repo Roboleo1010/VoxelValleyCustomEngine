@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
-using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Game.Entities;
-using VoxelValley.Common.Helper;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -25,9 +23,9 @@ namespace VoxelValley.Client.Game.Enviroment
 
         protected override void OnUpdate(float deltaTime)
         {
-            Vector3i palyerPosInChukSpace = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Player.Transform.Position).chunk;
+            Vector3i palyerPosInChukSpace = World.ConvertFromWorldSpaceToVoxelSpace(Player.Transform.Position).chunk;
 
-             CreateAround(palyerPosInChukSpace);
+            CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace, bool generateThreaded = true)
@@ -43,8 +41,8 @@ namespace VoxelValley.Client.Game.Enviroment
 
         private void CreateAround(Vector3i position)
         {
-            for (int x = -ClientConstants.Graphics.RenderDistance; x < ClientConstants.Graphics.RenderDistance; x++)
-                for (int z = -ClientConstants.Graphics.RenderDistance; z < ClientConstants.Graphics.RenderDistance; z++)
+            for (int x = -ClientConstants.World.RenderDistance; x < ClientConstants.World.RenderDistance; x++)
+                for (int z = -ClientConstants.World.RenderDistance; z < ClientConstants.World.RenderDistance; z++)
                     CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
         }
 
@@ -57,7 +55,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
         public ushort GetVoxelFromWoldSpace(Vector3 pos)
         {
-            (Vector3i chunk, Vector3i voxel) convertedPos = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(pos);
+            (Vector3i chunk, Vector3i voxel) convertedPos = World.ConvertFromWorldSpaceToVoxelSpace(pos);
 
             Chunk chunk = GetChunk(convertedPos.chunk);
 
@@ -76,6 +74,27 @@ namespace VoxelValley.Client.Game.Enviroment
                 chunk.Destroy();
                 chunks.Remove(positionInChunkSpace);
             }
+        }
+
+        public static Vector3i ConvertFromChunkSpaceToWorldSpace(Vector3i chunkSpacePos)
+        {
+            return new Vector3i(
+                        chunkSpacePos.X * ClientConstants.World.ChunkSize.X,
+                        chunkSpacePos.Y * ClientConstants.World.ChunkSize.Y,
+                        chunkSpacePos.Z * ClientConstants.World.ChunkSize.Z);
+        }
+
+        public static (Vector3i chunk, Vector3i voxel) ConvertFromWorldSpaceToVoxelSpace(Vector3 worldSpacePos)
+        {
+            Vector3i chunk = new Vector3i((int)worldSpacePos.X / ClientConstants.World.ChunkSize.X,
+                                          (int)worldSpacePos.Y / ClientConstants.World.ChunkSize.Y,
+                                          (int)worldSpacePos.Z / ClientConstants.World.ChunkSize.Z);
+
+            Vector3i voxel = new Vector3i(Math.Abs((int)worldSpacePos.X % ClientConstants.World.ChunkSize.X),
+                                          Math.Abs((int)worldSpacePos.Y % ClientConstants.World.ChunkSize.Y),
+                                          Math.Abs((int)worldSpacePos.Z % ClientConstants.World.ChunkSize.Z));
+
+            return (chunk, voxel);
         }
     }
 }

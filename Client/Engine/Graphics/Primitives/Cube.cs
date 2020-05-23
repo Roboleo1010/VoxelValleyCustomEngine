@@ -1,6 +1,6 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
-using VoxelValley.Common.Mathematics;
+using VoxelValley.Engine.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Primitives
 {

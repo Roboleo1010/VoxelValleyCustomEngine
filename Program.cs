@@ -1,6 +1,5 @@
 ﻿using System;
 using VoxelValley.Client.Engine;
-using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Tools.ModelConverter;
 
@@ -14,7 +13,7 @@ namespace VoxelValley
         {
             if (args.Length == 0)
             {
-                Log.Info(type, $"Starting Voxel Valley {CommonConstants.Version}");
+                Log.Info(type, $"Starting Voxel Valley");
                 StartClient();
             }
             else if (args[0] == "ConvertModel")

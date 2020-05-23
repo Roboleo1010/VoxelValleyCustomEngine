@@ -14,7 +14,7 @@ namespace VoxelValley.Client.Engine
             NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = ClientConstants.Graphics.Size,
-                Title = CommonConstants.Version
+                Title = "Voxel Valley"
             };
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings()

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using VoxelValley.Common.Helper;
+using VoxelValley.Engine.Helper;
 
 namespace VoxelValley.Client.Game.Enviroment.Structures
 {
@@ -21,7 +21,7 @@ namespace VoxelValley.Client.Game.Enviroment.Structures
 
         public static void LoadStructures()
         {
-            string[] paths = FileHelper.GetAllFilesOfType("Common/Assets/Structures/", "*.json");
+            string[] paths = FileHelper.GetAllFilesOfType("Client/Assets/Structures/", "*.json");
 
             foreach (string path in paths)
                 LoadStructure(path);
