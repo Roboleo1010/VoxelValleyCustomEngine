@@ -20,14 +20,14 @@ namespace VoxelValley.Client.Game.Enviroment
         {
             Instance = this;
             chunks = new Dictionary<Vector3i, Chunk>();
-            CreateChunk(new Vector3i(0, 0, 0), false);
+            CreateChunk(new Vector3i(0, 0, 0), true);
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             Vector3i palyerPosInChukSpace = CoordinateHelper.ConvertFromWorldSpaceToVoxelSpace(Player.Transform.Position).chunk;
 
-            // CreateAround(palyerPosInChukSpace);
+             CreateAround(palyerPosInChukSpace);
         }
 
         private Chunk CreateChunk(Vector3i positionInChunkSpace, bool generateThreaded = true)

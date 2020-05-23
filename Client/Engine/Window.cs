@@ -13,6 +13,7 @@ using VoxelValley.Client.Game;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.Graphics.Primitives;
+using VoxelValley.Client.Game.Graphics;
 
 namespace VoxelValley.Client.Engine
 {
@@ -51,7 +52,7 @@ namespace VoxelValley.Client.Engine
 
             GameManager.Start();
 
-            GameManager.ActiveCamera.AspectRatio = ClientSize.X / (float)ClientSize.Y;
+            CameraManager.AspectRatio = ClientSize.X / (float)ClientSize.Y;
 
             InputManager.GetAction("Debug", "DrawSceneGraph").Callback += () => { GameObjectManager.DrawSceneGraph(); };
             InputManager.GetAction("Menu", "Quit").Callback += () => { Close(); };
@@ -100,7 +101,8 @@ namespace VoxelValley.Client.Engine
         protected override void OnResize(ResizeEventArgs e)
         {
             GL.Viewport(0, 0, e.Width, e.Height);
-            GameManager.ActiveCamera.AspectRatio = ClientSize.X / (float)ClientSize.Y;
+
+            CameraManager.AspectRatio = ClientSize.X / (float)ClientSize.Y;
 
             base.OnResize(e);
         }

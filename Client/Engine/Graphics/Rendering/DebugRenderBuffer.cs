@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game;
+using VoxelValley.Client.Game.Graphics;
 using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
@@ -76,9 +78,10 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             shader.Use();
             GL.BindVertexArray(vertexArrayObject);
 
-            //TODO: Move out
-            Matrix4 viewMatrix = GameManager.ActiveCamera.GetViewMatrix();
-            Matrix4 projectionMatrix = GameManager.ActiveCamera.GetProjectionMatrix();
+            Camera activeCamera = CameraManager.GetActiveCamera();
+
+            Matrix4 viewMatrix = activeCamera.GetViewMatrix();
+            Matrix4 projectionMatrix = activeCamera.GetProjectionMatrix();
 
             foreach (Mesh m in meshes)
             {

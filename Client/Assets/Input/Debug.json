@@ -19,6 +19,44 @@
                 "key": "F1",
                 "onKeyDown": true,
                 "allowRepeat": false
+            },
+            {
+                "name": "ToggleDebugCamera",
+                "key": "F6",
+                "onKeyDown": true,
+                "allowRepeat": false
+            }
+        ],
+        "states": [
+            {
+                "name": "Move_Forward",
+                "key": "Up",
+                "onKeyDown": true
+            },
+            {
+                "name": "Move_Left",
+                "key": "Left",
+                "onKeyDown": true
+            },
+            {
+                "name": "Move_Backwards",
+                "key": "Down",
+                "onKeyDown": true
+            },
+            {
+                "name": "Move_Right",
+                "key": "Right",
+                "onKeyDown": true
+            },
+            {
+                "name": "Move_Up",
+                "key": "PageUp",
+                "onKeyDown": true
+            },
+            {
+                "name": "Move_Down",
+                "key": "PageDown",
+                "onKeyDown": true
             }
         ]
     }

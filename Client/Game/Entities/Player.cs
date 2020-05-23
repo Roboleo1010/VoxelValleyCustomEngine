@@ -1,14 +1,11 @@
 using System;
-using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine;
-using VoxelValley.Client.Engine.Graphics.Primitives;
-using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
+using VoxelValley.Client.Game.Graphics;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Entities
@@ -31,7 +28,8 @@ namespace VoxelValley.Client.Game.Entities
 
             GameObject cameraContainer = new GameObject("Camera", this, new Vector3(0, 4, 0));
             Camera camera = cameraContainer.AddComponent<Camera>();
-            GameManager.ActiveCamera = camera;
+            CameraManager.AddCamera(CameraManager.CamreaType.PLAYER_FIRST, camera);
+            CameraManager.SetActiveCamera(CameraManager.CamreaType.PLAYER_FIRST);
 
             Transform.Position = spawnPosition;
 
@@ -44,7 +42,7 @@ namespace VoxelValley.Client.Game.Entities
             InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.2f, 0f)); };
             InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.2f, 0f)); };
 
-            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Coordinates: {Transform.Position.ToString()}, Rotation: {Transform.Rotation.ToString()}"); };
+            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Player Coordinates: {Transform.Position.ToString()}, Rotation: {Transform.Rotation.ToString()}"); };
         }
 
         void SetMovement(bool newState, Vector3 movement)
