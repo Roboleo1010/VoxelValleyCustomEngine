@@ -9,32 +9,36 @@ namespace VoxelValley.Client.Engine.Graphics
     {
         static Type type = typeof(CameraManager);
         static Dictionary<string, Camera> cameras = new Dictionary<string, Camera>();
-        static string activeCamera;
+        static string activeCameraName;
 
         static float _aspectRatio;
         public static float AspectRatio { get { return _aspectRatio; } set { _aspectRatio = value; foreach (Camera camera in cameras.Values) camera.AspectRatio = _aspectRatio; } }
 
         public static Camera GetActiveCamera()
         {
-            if (cameras.TryGetValue(activeCamera, out Camera camera))
+            if (cameras.TryGetValue(activeCameraName, out Camera camera))
                 return camera;
 
             Log.Error(type, "No active Camera found.");
             return null;
         }
 
-        public static void AddCamera(string cameraType, Camera camera)
+        public static void Add(string name, Camera camera)
         {
-            if (!cameras.ContainsKey(cameraType))
-                cameras.Add(cameraType, camera);
+            if (!cameras.ContainsKey(name))
+                cameras.Add(name, camera);
             else
-                Log.Error(type, $"Camera with Type of {cameraType} was already added.");
+                Log.Error(type, $"Camera with Type of {name} was already added.");
+        }
+        public static void Remove(string name)
+        {
+            cameras.Remove(name);
         }
 
-        public static void SetActiveCamera(string cameraType)
+        public static void SetActiveCamera(string name)
         {
-            activeCamera = cameraType;
-            Log.Info(type, $"Switched Camera {cameraType}.");
+            activeCameraName = name;
+            Log.Info(type, $"Switched Camera {name}.");
         }
     }
 }

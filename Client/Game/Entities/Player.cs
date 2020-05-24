@@ -26,9 +26,8 @@ namespace VoxelValley.Client.Game.Entities
             World.Instance.Player = this;
             EngineManager.Window.player = this;
 
-            GameObject cameraContainer = new GameObject("Camera", this, new Vector3(0, 4, 0));
+            GameObject cameraContainer = new GameObject(ClientConstants.Graphics.CameraType.PlayerFirstPerson, this, new Vector3(0, 4, 0));
             Camera camera = cameraContainer.AddComponent<Camera>();
-            CameraManager.AddCamera(ClientConstants.Graphics.CameraType.PlayerFirstPerson, camera);
             CameraManager.SetActiveCamera(ClientConstants.Graphics.CameraType.PlayerFirstPerson);
 
             Transform.Position = spawnPosition;

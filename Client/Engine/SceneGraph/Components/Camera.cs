@@ -1,5 +1,6 @@
 using System;
 using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine.Graphics;
 
 namespace VoxelValley.Client.Engine.SceneGraph.Components
 {
@@ -24,6 +25,16 @@ namespace VoxelValley.Client.Engine.SceneGraph.Components
         public Matrix4 GetProjectionMatrix()
         {
             return Matrix4.CreatePerspectiveFieldOfView(FOV, AspectRatio, NearClippingPane, FarClippingPane);
+        }
+
+        internal override void OnAdd()
+        {
+            CameraManager.Add(ParentGameObject.Name, this);
+        }
+
+        internal override void OnRemove()
+        {
+            CameraManager.Remove(ParentGameObject.Name);
         }
     }
 }
