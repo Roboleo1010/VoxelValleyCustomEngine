@@ -56,12 +56,8 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
                     int baseX = ((cellSize / 2) + (x * cellSize));
                     int baseY = ((cellSize / 2) + (y * cellSize));
 
-                    int jitterX = 0;
-                    int jitterY = 0;
-
-                    // int jitterX = random.Next((int)-jitterFactor, (int)jitterFactor); //TODO Generate seeded
-                    // int jitterY = random.Next((int)-jitterFactor, (int)jitterFactor); //TODO Generate seeded
-                    //int jitter = (int)((GenerationUtilities.FBMPerlin(worldPos.X + x, worldPos.Y + y, 1, 2, 10) * 2 - 1) * jitterFactor);
+                    int jitterX = random.Next((int)-jitterFactor, (int)jitterFactor);
+                    int jitterY = random.Next((int)-jitterFactor, (int)jitterFactor);
 
                     Seeds[x, y] = new Vector2i(baseX + jitterX, baseY + jitterY);
                     Regions[x, y] = regionIndex++;

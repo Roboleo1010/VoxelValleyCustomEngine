@@ -49,7 +49,7 @@ namespace VoxelValley.Client.Engine.Input
 
         public static void HandleInput()
         {
-            List<Context> activeContexts = contexts.Values.Where(c => c.IsActive).OrderByDescending(c => c.Priority).ToList(); //TODO Cache list
+            List<Context> activeContexts = contexts.Values.Where(c => c.IsActive).OrderByDescending(c => c.Priority).ToList();
 
             foreach (Context context in activeContexts)
                 context.HandleInputs(ref keyDownSinceLastUpdate, ref keyUpSinceLastUpdate);

@@ -39,7 +39,7 @@ namespace VoxelValley
         {
             try
             {
-                throw new NotImplementedException(); //TODO
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {

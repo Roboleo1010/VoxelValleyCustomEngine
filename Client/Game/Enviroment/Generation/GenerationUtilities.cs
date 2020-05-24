@@ -1,5 +1,4 @@
 using System;
-using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment.Generation
 {
@@ -10,7 +9,7 @@ namespace VoxelValley.Client.Game.Enviroment.Generation
 
         static GenerationUtilities()
         {
-            Noise = new FastNoise.FastNoise(); //TODO: Seed here
+            Noise = new FastNoise.FastNoise();
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace VoxelValley.Client.Game.Enviroment.BiomeManagement
     {
         public abstract string Name { get; }
         public abstract Color Color { get; }
-        public abstract byte BiomeId { get; } //TODO: Namespaced
+        public abstract byte BiomeId { get; }
 
         protected List<StructureSpawn> structureSpawns;
 

@@ -44,7 +44,6 @@ namespace VoxelValley.Client.Game.Enviroment.Generation.Maps
 
              float combinedValue = ((baseValue * 1.2f) + (detailValue * 1)) / 2;
 
-            //TODO: Use Height Data?
             // if (height > 0.6f) 
             //     combinedValue -= 0.1f * height;
             // if (height > 0.7f)
