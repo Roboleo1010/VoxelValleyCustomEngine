@@ -1,55 +1,66 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
+using VoxelValley.Client.Engine.Graphics.Rendering;
+using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Engine.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Primitives
 {
     public class Cube : Mesh
     {
-        Vector4b color;
         Vector4b[] colors;
+        Vector3 scale;
 
-        public Cube(Color color)
+        public Cube(Color color, Vector3 scale, GameObject parent)
         {
-            this.color = new Vector4b(color);
             VertexCount = 24;
             IndiceCount = 36;
             ColorCount = 24;
+
+            colors = new Vector4b[ColorCount];
+            for (int i = 0; i < ColorCount; i++)
+                colors[i] = new Vector4b(color);
+
+            this.scale = scale;
+            ParentGameObject = parent;
+
+            ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).Add(this);
         }
 
         public override Vector3[] GetVertices()
         {
             return new Vector3[] {
                 //left
-                new Vector3(0, 0, 0),
-                new Vector3(1, 1, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(0, 1, 0), 
+                new Vector3(0 * scale.X, 0 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 1 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 0 * scale.Y, 0 * scale.Z),
+                new Vector3(0 * scale.X, 1 * scale.Y, 0 * scale.Z), 
                 //back
-                new Vector3(1, 0, 0),
-                new Vector3(1, 1, 0),
-                new Vector3(1, 1, 1),
-                new Vector3(1, 0, 1), 
+                new Vector3(1 * scale.X, 0 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 1 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 1 * scale.Y, 1 * scale.Z),
+                new Vector3(1 * scale.X, 0 * scale.Y, 1 * scale.Z), 
                 //right
-                new Vector3(0, 0, 1),
-                new Vector3(1, 0, 1),
-                new Vector3(1, 1, 1),
-                new Vector3(0, 1, 1), 
+                new Vector3(0 * scale.X, 0 * scale.Y, 1 * scale.Z),
+                new Vector3(1 * scale.X, 0 * scale.Y, 1 * scale.Z),
+                new Vector3(1 * scale.X, 1 * scale.Y, 1 * scale.Z),
+                new Vector3(0 * scale.X, 1 * scale.Y, 1 * scale.Z), 
                 //top
-                new Vector3(1, 1, 0),
-                new Vector3(0, 1, 0),
-                new Vector3(1, 1, 1),
-                new Vector3(0, 1, 1), 
+                new Vector3(1 * scale.X, 1 * scale.Y, 0 * scale.Z),
+                new Vector3(0 * scale.X, 1 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 1 * scale.Y, 1 * scale.Z),
+                new Vector3(0 * scale.X, 1 * scale.Y, 1 * scale.Z), 
                 //front
-                new Vector3(0, 0, 0),
-                new Vector3(0, 1, 1),
-                new Vector3(0, 1, 0),
-                new Vector3(0, 0, 1), 
+                new Vector3(0 * scale.X, 0 * scale.Y, 0 * scale.Z),
+                new Vector3(0 * scale.X, 1 * scale.Y, 1 * scale.Z),
+                new Vector3(0 * scale.X, 1 * scale.Y, 0 * scale.Z),
+                new Vector3(0 * scale.X, 0 * scale.Y, 1 * scale.Z), 
                 //bottom
-                new Vector3(0, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 1),
-                new Vector3(0, 0, 1)
+                new Vector3(0 * scale.X, 0 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 0 * scale.Y, 0 * scale.Z),
+                new Vector3(1 * scale.X, 0 * scale.Y, 1 * scale.Z),
+                new Vector3(0 * scale.X, 0 * scale.Y, 1 * scale.Z)
                 };
         }
 
@@ -79,13 +90,6 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
 
         public override Vector4b[] GetColors()
         {
-            if (colors == null)
-            {
-                colors = new Vector4b[ColorCount];
-                for (int i = 0; i < ColorCount; i++)
-                    colors[i] = color;
-            }
-
             return colors;
         }
     }
