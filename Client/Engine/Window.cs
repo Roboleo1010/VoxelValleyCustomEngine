@@ -22,7 +22,6 @@ namespace VoxelValley.Client.Engine
         bool isWireframe = false;
 
         public Vector2 lastMousePos = new Vector2();
-        public Player player;
 
         //for fps
         public double time = 0;
@@ -60,9 +59,11 @@ namespace VoxelValley.Client.Engine
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y); //TODO Move into game
+            //TODO Move into game
+            Vector2 delta = lastMousePos - new Vector2(MouseState.X, MouseState.Y);
             lastMousePos = new Vector2(MouseState.X, MouseState.Y);
-            player.AddRotation(delta.X, delta.Y);
+            Player.Instance.AddRotation(delta.X, delta.Y);
+            DebugCamera.Instance.AddRotation(delta.X, delta.Y);
 
             InputManager.HandleInput();
             EngineManager.OnTick((float)e.Time);

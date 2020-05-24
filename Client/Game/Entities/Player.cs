@@ -12,10 +12,9 @@ namespace VoxelValley.Client.Game.Entities
 {
     public class Player : GameObject
     {
+        public static Player Instance;
         Type type = typeof(Player);
-
         float moveSpeed = 0.3f;
-
         float mouseSensitivity = 0.0025f;
 
         // Vector3 movementDirection = new Vector3(0, -CommonConstants.World.Gravity, 0);//TODO: Use gravity
@@ -23,12 +22,11 @@ namespace VoxelValley.Client.Game.Entities
 
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
-            World.Instance.Player = this;
-            EngineManager.Window.player = this;
-
-            GameObject cameraContainer = new GameObject(ClientConstants.Graphics.CameraType.PlayerFirstPerson, this, new Vector3(0, 4, 0));
+            Instance = this;
+            
+            GameObject cameraContainer = new GameObject(ClientConstants.Graphics.Cameras.PlayerFirstPerson, this, new Vector3(0, 4, 0));
             Camera camera = cameraContainer.AddComponent<Camera>();
-            CameraManager.SetActiveCamera(ClientConstants.Graphics.CameraType.PlayerFirstPerson);
+            CameraManager.SetActiveCamera(ClientConstants.Graphics.Cameras.PlayerFirstPerson);
 
             Transform.Position = spawnPosition;
 

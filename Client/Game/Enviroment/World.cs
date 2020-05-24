@@ -12,8 +12,6 @@ namespace VoxelValley.Client.Game.Enviroment
         Type type = typeof(World);
         Dictionary<Vector3i, Chunk> chunks;
 
-        public Player Player;
-
         public World(string name) : base(name)
         {
             Instance = this;
@@ -23,7 +21,7 @@ namespace VoxelValley.Client.Game.Enviroment
 
         protected override void OnUpdate(float deltaTime)
         {
-            Vector3i palyerPosInChukSpace = World.ConvertFromWorldSpaceToVoxelSpace(Player.Transform.Position).chunk;
+            Vector3i palyerPosInChukSpace = World.ConvertFromWorldSpaceToVoxelSpace(Player.Instance.Transform.Position).chunk;
 
             CreateAround(palyerPosInChukSpace);
         }

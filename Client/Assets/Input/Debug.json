@@ -21,7 +21,7 @@
                 "allowRepeat": false
             },
             {
-                "name": "ToggleDebugCamera",
+                "name": "CycleCamera",
                 "key": "F6",
                 "onKeyDown": true,
                 "allowRepeat": false
