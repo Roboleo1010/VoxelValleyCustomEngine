@@ -1,7 +1,7 @@
 using OpenToolkit.Windowing.Desktop;
-using VoxelValley.Common;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.Threading;
+using OpenToolkit.Mathematics;
 
 namespace VoxelValley.Client.Engine
 {
@@ -14,7 +14,8 @@ namespace VoxelValley.Client.Engine
             NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = ClientConstants.Graphics.Size,
-                Title = "Voxel Valley"
+                Title = "Voxel Valley",
+                Location = new Vector2i(60, 60)
             };
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings()

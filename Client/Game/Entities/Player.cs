@@ -1,6 +1,8 @@
 using System;
+using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Client.Engine.Graphics.Primitives;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
@@ -29,7 +31,7 @@ namespace VoxelValley.Client.Game.Entities
             camera = cameraGameObject.AddComponent<Camera>();
             CameraManager.SetActiveCamera(ClientConstants.Graphics.Cameras.PlayerFirstPerson);
 
-            //new Cube(Color.Red, new Vector3(1, 2, 1), gameObject);
+            // new Cube(Color.Red, new Vector3(1, 2, 1), gameObject);
 
             Transform.Position = spawnPosition;
 
@@ -57,55 +59,61 @@ namespace VoxelValley.Client.Game.Entities
         protected override void OnTick(float deltaTime)
         {
             Vector3 modifiedMoveDirection = movementDirection;
+            Vector3 newPosition = Move(Transform.Position, cameraGameObject.Transform.Rotation, modifiedMoveDirection);
 
             //Check Y
-            if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y, Transform.Position.Z)) != 0)
+            if (World.Instance.GetVoxelFromWoldSpace(new Vector3(newPosition.X, newPosition.Y, newPosition.Z)) != 0)
                 if (modifiedMoveDirection.Y < 0)
                     modifiedMoveDirection.Y = 0;
 
-            // //Check X
-            // if (modifiedMoveDirection.X > 0)
-            // {
-            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X + 1, Transform.Position.Y + 1, Transform.Position.Z)) != 0)
-            //         modifiedMoveDirection.X = 0;
-            // }
-            // else
-            // {
-            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X - 1, Transform.Position.Y + 1, Transform.Position.Z)) != 0)
-            //         modifiedMoveDirection.X = 0;
-            // }
+            //Check X
+            if (modifiedMoveDirection.X > 0)
+            {
+                if (World.Instance.GetVoxelFromWoldSpace(new Vector3(newPosition.X + 1, newPosition.Y + 1, newPosition.Z)) != 0)
+                    modifiedMoveDirection.X = 0;
+            }
+            else
+            {
+                if (World.Instance.GetVoxelFromWoldSpace(new Vector3(newPosition.X - 1, newPosition.Y + 1, newPosition.Z)) != 0)
+                    modifiedMoveDirection.X = 0;
+            }
 
-            // //Check Z
-            // if (modifiedMoveDirection.Z > 0)
-            // {
-            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z + 1)) != 0)
-            //         modifiedMoveDirection.Z = 0;
-            // }
-            // else
-            // {
-            //     if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z - 1)) != 0)
-            //         modifiedMoveDirection.Z = 0;
-            // }
+            //Check Z
+            if (modifiedMoveDirection.Z > 0)
+            {
+                if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z + 1)) != 0)
+                    modifiedMoveDirection.Z = 0;
+            }
+            else
+            {
+                if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y + 1, Transform.Position.Z - 1)) != 0)
+                    modifiedMoveDirection.Z = 0;
+            }
 
-
-            Move(modifiedMoveDirection.X, modifiedMoveDirection.Y, modifiedMoveDirection.Z);
+            Transform.Position = Move(Transform.Position, cameraGameObject.Transform.Rotation, modifiedMoveDirection);
         }
 
-        void Move(float x, float y, float z)
+        //TODO: Move to entity
+        /// <summary>
+        /// Returns the new position
+        /// </summary>
+        Vector3 Move(Vector3 position, Vector3 rotation, Vector3 movement)
         {
             Vector3 offset = new Vector3();
 
-            Vector3 forward = new Vector3((float)Math.Sin((float)cameraGameObject.Transform.Rotation.X), 0, (float)Math.Cos((float)cameraGameObject.Transform.Rotation.X));
+            Vector3 forward = new Vector3((float)Math.Sin((float)rotation.X), 0, (float)Math.Cos((float)rotation.X));
             Vector3 right = new Vector3(-forward.Z, 0, forward.X);
 
-            offset += x * right;
-            offset += z * forward;
-            offset.Y += y;
+            offset += movement.X * right;
+            offset += movement.Z * forward;
+            offset.Y += movement.Y;
 
             offset.NormalizeFast();
             offset = Vector3.Multiply(offset, moveSpeed);
 
-            Transform.Position += offset;
+            position += offset;
+
+            return position;
         }
 
         public void AddRotation(float x, float y)
