@@ -33,7 +33,7 @@ namespace VoxelValley.Client.Game.Entities
             InputManager.GetState("Debug", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.2f, 0f)); };
             InputManager.GetState("Debug", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.2f, 0f)); };
 
-            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Debug Coordinates: {Transform.Position.ToString()}, Rotation: {Transform.Rotation.ToString()}"); };
+            // InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Debug Coordinates: {Transform.Position.ToString()}, Rotation: {Transform.Rotation.ToString()}"); };
         }
 
         void SetMovement(bool newState, Vector3 movement)

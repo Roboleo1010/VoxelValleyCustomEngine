@@ -80,6 +80,16 @@ void main() {
     result +=
         CalculateSpotLight(spotLights[i], norm, fragPosInWorld, viewDirection);
 
+  // Fog
+  // vec3 fogColor = vec3(0.5294117, 0.80784, 0.98039);
+  // float density = 0.0035;
+  // float gradient = 1.5;
+
+  // float distance = length(viewPos - fragPosInWorld);
+  // float visibillity = exp(-pow((distance * density), gradient));
+  // visibillity = clamp(visibillity, 0.0, 1.0);
+
+  // FragColor = vec4(mix(vec4(fogColor,1),vec4( result,1), visibillity));
   FragColor = vec4(result, 1.0);
 }
 

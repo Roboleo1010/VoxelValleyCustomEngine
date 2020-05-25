@@ -1,12 +1,10 @@
 using System;
-using System.Drawing;
 using OpenToolkit.Mathematics;
-using VoxelValley.Client.Engine;
 using VoxelValley.Client.Engine.Graphics;
-using VoxelValley.Client.Engine.Graphics.Primitives;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
+using VoxelValley.Client.Game.Enviroment;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Entities
@@ -15,14 +13,13 @@ namespace VoxelValley.Client.Game.Entities
     {
         public static Player Instance;
         Type type = typeof(Player);
-        float moveSpeed = 0.3f;
+        float moveSpeed = 0.2f;
         float mouseSensitivity = 0.0025f;
 
         GameObject cameraGameObject;
         Camera camera;
 
-        // Vector3 movementDirection = new Vector3(0, -CommonConstants.World.Gravity, 0);//TODO: Use gravity
-        Vector3 movementDirection = new Vector3(0, 0, 0);
+        Vector3 movementDirection = new Vector3(0, -ClientConstants.World.Gravity, 0);
 
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {
@@ -32,8 +29,7 @@ namespace VoxelValley.Client.Game.Entities
             camera = cameraGameObject.AddComponent<Camera>();
             CameraManager.SetActiveCamera(ClientConstants.Graphics.Cameras.PlayerFirstPerson);
 
-            Cube cubeMesh = new Cube(Color.Red, new Vector3(1, 2, 1), gameObject);
-
+            //new Cube(Color.Red, new Vector3(1, 2, 1), gameObject);
 
             Transform.Position = spawnPosition;
 
@@ -46,7 +42,8 @@ namespace VoxelValley.Client.Game.Entities
             InputManager.GetState("Movement", "Move_Up").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, 0.2f, 0f)); };
             InputManager.GetState("Movement", "Move_Down").Callback += (bool newState) => { SetMovement(newState, new Vector3(0f, -0.2f, 0f)); };
 
-            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Player Coordinates: {Transform.Position.ToString()}, Rotation: {Transform.Rotation.ToString()}"); };
+            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Player Coordinates: {Transform.Position.ToString()}, Rotation: {cameraGameObject.Transform.Rotation.ToString()}"); };
+            InputManager.GetAction("Debug", "LogCoordinates").Callback += () => { Log.Debug(type, $"Voxel Coordinate: {World.ConvertFromWorldSpaceToVoxelSpace(Transform.Position)}"); };
         }
 
         void SetMovement(bool newState, Vector3 movement)
@@ -61,10 +58,10 @@ namespace VoxelValley.Client.Game.Entities
         {
             Vector3 modifiedMoveDirection = movementDirection;
 
-            // //Check Y
-            // if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y, Transform.Position.Z)) != 0)
-            //     if (modifiedMoveDirection.Y < 0)
-            //         modifiedMoveDirection.Y = 0;
+            //Check Y
+            if (World.Instance.GetVoxelFromWoldSpace(new Vector3(Transform.Position.X, Transform.Position.Y, Transform.Position.Z)) != 0)
+                if (modifiedMoveDirection.Y < 0)
+                    modifiedMoveDirection.Y = 0;
 
             // //Check X
             // if (modifiedMoveDirection.X > 0)
