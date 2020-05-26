@@ -58,6 +58,11 @@ namespace VoxelValley.Client.Game.Entities
 
         protected override void OnTick(float deltaTime)
         {
+            CheckCollisionAndMove();
+        }
+
+        void CheckCollisionAndMove()
+        {
             Vector3 modifiedMoveDirection = movementDirection;
             Vector3 newPosition = Move(Transform.Position, cameraGameObject.Transform.Rotation, modifiedMoveDirection);
 
