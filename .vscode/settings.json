@@ -3,6 +3,6 @@
         "**/bin": true,
         "**/obj": true,
         "**/.vs": true,
-        "**/README.md": true,
+        "**/README.md": true
     }
 }

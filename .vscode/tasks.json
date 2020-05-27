@@ -2,37 +2,77 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "Build All",
+            "dependsOn": [
+                "buildCommon",
+                "buildClient",
+                "buildServer",
+                "buildTools"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build Client",
+            "dependsOn": [
+                "buildCommon",
+                "buildClient"
+            ]
+        },
+        {
+            "label": "Build Server",
+            "dependsOn": [
+                "buildCommon",
+                "buildServer"
+            ]
+        },
+        {
+            "label": "buildCommon",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/VoxelValley.csproj",
+                "${workspaceFolder}/VoxelValley.Common/VoxelValley.Common.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "buildClient",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "publish",
-                "${workspaceFolder}/VoxelValley.csproj",
+                "build",
+                "${workspaceFolder}/VoxelValley.Client/VoxelValley.Client.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "buildServer",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/VoxelValley.csproj",
+                "build",
+                "${workspaceFolder}/VoxelValley.Server/VoxelValley.Server.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildTools",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/VoxelValley.Tools/VoxelValley.Tools.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
