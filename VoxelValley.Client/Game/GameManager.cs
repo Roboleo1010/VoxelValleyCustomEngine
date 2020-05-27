@@ -2,7 +2,8 @@ using System;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Game.Entities;
 using VoxelValley.Client.Game.Enviroment;
-using VoxelValley.Client.Game.Enviroment.Structures;
+using VoxelValley.Common.Enviroment;
+using VoxelValley.Common.Enviroment.Structures;
 
 namespace VoxelValley.Client.Game
 {

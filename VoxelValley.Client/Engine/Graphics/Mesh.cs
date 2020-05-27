@@ -1,7 +1,7 @@
 using OpenToolkit.Mathematics;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Client.Engine.SceneGraph;
-using VoxelValley.Engine.Mathematics;
+using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics
 {

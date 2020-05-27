@@ -5,6 +5,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <!-- Included NuGet packages -->
+  <ItemGroup>
+    <PackageReference Include="Colorful.Console" Version="1.2.10" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="..\VoxelValley.Common\VoxelValley.Common.csproj" />
+  </ItemGroup>
+
   <!-- Included DLLs -->
   <ItemGroup>
     <Reference Include="Kaitai">
@@ -12,5 +22,7 @@
       <Private>true</Private>
     </Reference>
   </ItemGroup>
+
+  <!-- Copy to output directory -->
 
 </Project>

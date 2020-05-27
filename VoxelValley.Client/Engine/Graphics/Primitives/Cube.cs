@@ -3,7 +3,7 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.SceneGraph;
-using VoxelValley.Engine.Mathematics;
+using VoxelValley.Common.Mathematics;
 
 namespace VoxelValley.Client.Engine.Graphics.Primitives
 {

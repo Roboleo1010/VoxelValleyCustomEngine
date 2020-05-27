@@ -3,11 +3,10 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
-using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Entities
 {
-    public class DebugCamera : GameObject
+    public class DebugCamera : GameObject //TODO: No Entity
     {
         public static DebugCamera Instance;
         Type type = typeof(DebugCamera);

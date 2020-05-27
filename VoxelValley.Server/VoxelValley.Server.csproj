@@ -5,13 +5,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <!-- Included NuGet packages -->
+
+  <!-- Project References -->
   <ItemGroup>
     <ProjectReference Include="..\VoxelValley.Common\VoxelValley.Common.csproj" />
   </ItemGroup>
 
-  <!-- Included NuGet packages -->
-
-  <!-- Included DLLs -->
+  <!-- Included DLLs --> 
 
   <!-- Copy to output directory -->
   <ItemGroup>

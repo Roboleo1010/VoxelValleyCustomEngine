@@ -5,8 +5,9 @@ using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Engine.Threading;
 using VoxelValley.Client.Engine.Graphics.Rendering;
-using VoxelValley.Client.Game.Enviroment.RegionManagement;
+using VoxelValley.Common.Enviroment.RegionManagement;
 using VoxelValley.Client.Engine.Graphics.Shading;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -44,14 +45,6 @@ namespace VoxelValley.Client.Game.Enviroment
             chunkMesh.Create();
 
             ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).Add(chunkMesh);
-        }
-
-        public static bool InChunk(int x, int y, int z)
-        {
-            return (x > 0 && y > 0 && z > 0 &&
-                x < ClientConstants.World.ChunkSize.X &&
-                y < ClientConstants.World.ChunkSize.Y &&
-                z < ClientConstants.World.ChunkSize.Z);
         }
     }
 }

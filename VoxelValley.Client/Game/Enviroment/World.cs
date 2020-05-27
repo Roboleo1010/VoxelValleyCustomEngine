@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Game.Entities;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -38,8 +39,8 @@ namespace VoxelValley.Client.Game.Enviroment
 
         private void CreateAround(Vector3i position)
         {
-            for (int x = -ClientConstants.World.RenderDistance; x < ClientConstants.World.RenderDistance; x++)
-                for (int z = -ClientConstants.World.RenderDistance; z < ClientConstants.World.RenderDistance; z++)
+            for (int x = -CommonConstants.World.DrawDistance; x < CommonConstants.World.DrawDistance; x++)
+                for (int z = -CommonConstants.World.DrawDistance; z < CommonConstants.World.DrawDistance; z++)
                     CreateChunk(new Vector3i(position.X + x, 0, position.Z + z));
         }
 
@@ -76,9 +77,9 @@ namespace VoxelValley.Client.Game.Enviroment
         public static Vector3i ConvertFromChunkSpaceToWorldSpace(Vector3i chunkSpacePos)
         {
             return new Vector3i(
-                        chunkSpacePos.X * ClientConstants.World.ChunkSize.X,
-                        chunkSpacePos.Y * ClientConstants.World.ChunkSize.Y,
-                        chunkSpacePos.Z * ClientConstants.World.ChunkSize.Z);
+                        chunkSpacePos.X * CommonConstants.World.ChunkSize.X,
+                        chunkSpacePos.Y * CommonConstants.World.ChunkSize.Y,
+                        chunkSpacePos.Z * CommonConstants.World.ChunkSize.Z);
         }
 
         public static (Vector3i chunk, Vector3i voxel) ConvertFromWorldSpaceToVoxelSpace(Vector3 worldSpacePos)
@@ -88,24 +89,24 @@ namespace VoxelValley.Client.Game.Enviroment
 
             if (worldSpacePos.X < 0)
             {
-                chunk.X = (int)Math.Floor(worldSpacePos.X / ClientConstants.World.ChunkSize.X);
-                voxel.X = (ClientConstants.World.ChunkSize.X - 1) - (((int)worldSpacePos.X % ClientConstants.World.ChunkSize.X) * -1);
+                chunk.X = (int)Math.Floor(worldSpacePos.X / CommonConstants.World.ChunkSize.X);
+                voxel.X = (CommonConstants.World.ChunkSize.X - 1) - (((int)worldSpacePos.X % CommonConstants.World.ChunkSize.X) * -1);
             }
             else
             {
-                chunk.X = (int)worldSpacePos.X / ClientConstants.World.ChunkSize.X;
-                voxel.X = ((int)worldSpacePos.X % ClientConstants.World.ChunkSize.X);
+                chunk.X = (int)worldSpacePos.X / CommonConstants.World.ChunkSize.X;
+                voxel.X = ((int)worldSpacePos.X % CommonConstants.World.ChunkSize.X);
             }
 
             if (worldSpacePos.Z < 0)
             {
-                chunk.Z = (int)Math.Floor(worldSpacePos.Z / ClientConstants.World.ChunkSize.Z);
-                voxel.Z = (ClientConstants.World.ChunkSize.Z - 1) - ((int)worldSpacePos.Z % ClientConstants.World.ChunkSize.Z * -1);
+                chunk.Z = (int)Math.Floor(worldSpacePos.Z / CommonConstants.World.ChunkSize.Z);
+                voxel.Z = (CommonConstants.World.ChunkSize.Z - 1) - ((int)worldSpacePos.Z % CommonConstants.World.ChunkSize.Z * -1);
             }
             else
             {
-                chunk.Z = (int)worldSpacePos.Z / ClientConstants.World.ChunkSize.Z;
-                voxel.Z = (int)worldSpacePos.Z % ClientConstants.World.ChunkSize.Z;
+                chunk.Z = (int)worldSpacePos.Z / CommonConstants.World.ChunkSize.Z;
+                voxel.Z = (int)worldSpacePos.Z % CommonConstants.World.ChunkSize.Z;
             }
 
             return (chunk, voxel);

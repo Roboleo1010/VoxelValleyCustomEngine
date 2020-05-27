@@ -1,17 +1,16 @@
 using System;
-using System.Drawing;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
-using VoxelValley.Client.Engine.Graphics.Primitives;
 using VoxelValley.Client.Engine.Input;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Game.Enviroment;
+using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Game.Entities
 {
-    public class Player : GameObject
+    public class Player : GameObject //TODO: Entity Base Class
     {
         public static Player Instance;
         Type type = typeof(Player);
@@ -21,7 +20,7 @@ namespace VoxelValley.Client.Game.Entities
         GameObject cameraGameObject;
         Camera camera;
 
-        Vector3 movementDirection = new Vector3(0, -ClientConstants.World.Gravity, 0);
+        Vector3 movementDirection = new Vector3(0, -CommonConstants.World.Gravity, 0);
 
         public Player(string name, GameObject parent, Vector3 spawnPosition) : base(name, parent)
         {

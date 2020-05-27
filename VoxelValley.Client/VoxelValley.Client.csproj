@@ -10,20 +10,17 @@
     <PackageReference Include="OpenTK" Version="4.0.0-pre9.1" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0-preview.2.20160.6" />
   </ItemGroup>
+
+  <!-- Project References -->
   <ItemGroup>
     <ProjectReference Include="..\VoxelValley.Common\VoxelValley.Common.csproj" />
   </ItemGroup>
 
   <!-- Included DLLs -->
-  <ItemGroup>
-    <Reference Include="FastNoise">
-      <HintPath>Libraries\FastNoise\FastNoise.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
-  </ItemGroup>
   
   <!-- Copy to output directory -->
   <ItemGroup>
     <None Include="Assets\**" CopyToOutputDirectory="Always" />
   </ItemGroup>
+  
 </Project>
