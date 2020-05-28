@@ -2,6 +2,7 @@ using OpenToolkit.Windowing.Desktop;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.Threading;
 using OpenToolkit.Mathematics;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Engine
 {
@@ -21,7 +22,7 @@ namespace VoxelValley.Client.Engine
             GameWindowSettings gameWindowSettings = new GameWindowSettings()
             {
                 RenderFrequency = ClientConstants.Graphics.RenderFrequency,
-                UpdateFrequency = 30
+                UpdateFrequency = CommonConstants.Simulation.TicksPerSecond
             };
 
             using (Window window = new Window(gameWindowSettings, nativeWindowSettings))

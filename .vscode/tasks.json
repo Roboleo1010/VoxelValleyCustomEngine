@@ -21,7 +21,9 @@
             "dependsOn": [
                 "buildCommon",
                 "buildClient"
-            ]
+            ],
+            "group": "build"
+         
         },
         {
             "label": "Build Server",
@@ -29,6 +31,8 @@
                 "buildCommon",
                 "buildServer"
             ]
+            ,
+            "group": "build"
         },
         {
             "label": "buildCommon",
