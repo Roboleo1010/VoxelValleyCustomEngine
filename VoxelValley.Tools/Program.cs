@@ -1,4 +1,4 @@
-﻿using System;
+﻿using VoxelValley.Tools.ModelConverter;
 
 namespace VoxelValley.ToolsTools
 {
@@ -6,7 +6,14 @@ namespace VoxelValley.ToolsTools
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length == 0)
+            {
+                System.Console.WriteLine("Please specify a valid Tool. Tools are: Model Converter");
+                return;
+            }
+
+            if (args[0].ToLower() == "modelconverter")
+                ModelConverter.Start();
         }
     }
 }
