@@ -5,7 +5,7 @@ using VoxelValley.Client.Engine.Input;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Common.Network;
 
-namespace VoxelValley.Client.Engine.Network
+namespace VoxelValley.Client.Game.Network
 {
     public class Client
     {

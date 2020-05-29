@@ -15,7 +15,7 @@ namespace VoxelValley.Client.Game
     {
         public static GameManager Instance;
         Type type = typeof(GameManager);
-        Engine.Network.Client client;
+        Network.Client client;
 
         public GameManager()
         {
@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Game
 
         void StartNetwork()
         {
-            client = new Engine.Network.Client(IPAddress.Parse("161.35.210.170"));
+            client = new Network.Client(IPAddress.Parse("161.35.210.170"));
             client.Start();
 
             client.SendMessage(new Debug("Hello Server").Serialize());
