@@ -15,8 +15,6 @@ namespace VoxelValley.Common.Network
             {
                 UdpClient client = new UdpClient(NetworkConstants.PortSender);
 
-                // Log.Info(type, "Send to: " + new IPEndPoint(address, NetworkConstants.PortListener).ToString());
-
                 client.Connect(new IPEndPoint(address, NetworkConstants.PortListener));
                 client.Send(data, data.Length);
 

@@ -10,17 +10,14 @@ namespace VoxelValley.Client
 
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                Log.Info(type, $"Starting Voxel Valley");
-                StartClient();
-            }
+            StartClient();
         }
 
         static void StartClient()
         {
             try
             {
+                Log.Info(type, $"Starting Voxel Valley");
                 EngineManager.OpenWindow();
             }
             catch (Exception ex)

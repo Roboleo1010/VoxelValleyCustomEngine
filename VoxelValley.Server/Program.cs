@@ -6,7 +6,7 @@ namespace VoxelValley.Server
     {
         static void Main(string[] args)
         {
-            ServerManager.StartServer();
+            new Network.Server().Start();
         }
     }
 }
