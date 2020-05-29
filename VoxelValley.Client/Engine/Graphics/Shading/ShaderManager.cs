@@ -24,7 +24,7 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
                 LoadShader($"Assets/Shaders/{name}", (ShaderType)type);
             }
 
-            Log.Info(type, $"Loaded {shaders.Count} sahders.");
+            Log.Info(type, $"Loaded {shaders.Count} shaders.");
         }
 
         public static void LoadShader(string path, ShaderType type)
