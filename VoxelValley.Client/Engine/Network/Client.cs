@@ -1,9 +1,9 @@
 using System;
 using System.Net;
 using System.Threading;
+using VoxelValley.Client.Engine.Input;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Common.Network;
-
 
 namespace VoxelValley.Client.Engine.Network
 {
@@ -19,6 +19,8 @@ namespace VoxelValley.Client.Engine.Network
         {
             Instance = this;
             this.serverIP = serverIP;
+
+            InputManager.GetAction("Menu", "Quit").Callback += () => { Stop(); };
         }
 
         public void Start()

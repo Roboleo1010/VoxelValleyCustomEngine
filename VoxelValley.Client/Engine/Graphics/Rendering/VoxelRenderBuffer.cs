@@ -6,19 +6,13 @@ using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Common.Mathematics;
 using VoxelValley.Common.Diagnostics;
+using VoxelValley.Common;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public class VoxelRenderBuffer : RenderBuffer
     {
         Type type = typeof(VoxelRenderBuffer);
-
-        int vertexBufferObject = -1;
-        int vertexArrayObject = -1;
-        int elementBufferObject = -1;
-
-        int vertexOffset = 0;
-        int indiceOffset = 0;
 
         ConcurrentBag<Mesh> meshesToAdd;
 
@@ -27,9 +21,8 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             meshesToAdd = new ConcurrentBag<Mesh>();
 
             //Calculate Space reuqirements
-
             int averageVerticesPerMesh = 500000;
-            int meshCount = 49;
+            int meshCount = (int)Math.Pow((CommonConstants.World.DrawDistance * 2 + 1), 2);
             int vertexBufferSize = averageVerticesPerMesh * Vertex.SizeInBytes * meshCount;
             int elementBufferSize = averageVerticesPerMesh * 3 * sizeof(int) * meshCount;
 
@@ -126,11 +119,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             }
 
             UnbindCurrentBuffer();
-        }
-
-        public override void Remove()
-        {
-            GL.DeleteBuffers(3, new int[] { vertexArrayObject, vertexBufferObject, elementBufferObject });
         }
     }
 }

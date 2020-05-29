@@ -10,6 +10,13 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     {
         Type type = typeof(RenderBuffer);
 
+        internal int vertexBufferObject = -1;
+        internal int vertexArrayObject = -1;
+        internal int elementBufferObject = -1;
+
+        internal int vertexOffset = 0;
+        internal int indiceOffset = 0;
+
         internal Shader shader;
         internal List<Mesh> meshes = new List<Mesh>();
 
@@ -21,7 +28,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         public abstract void Add(Mesh mesh);
 
         public abstract void Render();
-        public abstract void Remove();
 
         internal virtual void CalculateLighting()
         {
@@ -37,6 +43,11 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         internal void UnbindCurrentBuffer()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+        }
+
+        public virtual void Remove()
+        {
+            GL.DeleteBuffers(3, new int[] { vertexArrayObject, vertexBufferObject, elementBufferObject });
         }
     }
 }
