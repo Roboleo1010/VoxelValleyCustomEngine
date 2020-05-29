@@ -48,7 +48,7 @@ namespace VoxelValley.Client.Engine
 
             base.OnLoad();
 
-            GameManager.Start();
+            new GameManager();
 
             CameraManager.AspectRatio = ClientSize.X / (float)ClientSize.Y;
 

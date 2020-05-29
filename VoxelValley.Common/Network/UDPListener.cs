@@ -23,7 +23,6 @@ namespace VoxelValley.Common.Network
         {
             Log.Info(type, "Starting Listener..");
 
-
             UdpClient listener = new UdpClient(NetworkConstants.PortListener);
 
             while (IsActive)

@@ -1,4 +1,5 @@
 ﻿using System;
+using VoxelValley.Server.Game;
 
 namespace VoxelValley.Server
 {
@@ -6,7 +7,7 @@ namespace VoxelValley.Server
     {
         static void Main(string[] args)
         {
-            new Network.Server().Start();
+            new GameManager();
         }
     }
 }

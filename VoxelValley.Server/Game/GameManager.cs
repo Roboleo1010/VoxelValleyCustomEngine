@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using VoxelValley.Common;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Common.Network.PacketManagement;
 
@@ -8,10 +10,75 @@ namespace VoxelValley.Server.Game
     {
         Type type = typeof(GameManager);
         public static GameManager Instance;
+        Network.Server server;
+
+        Thread gameThread;
+        bool isGameRunning = true;
 
         public GameManager()
         {
             Instance = this;
+
+            Start();
+        }
+
+        #region  Start/ Stop
+
+        public void Start()
+        {
+            StartServer();
+            StartGameLoop();
+        }
+
+        void StartServer()
+        {
+            server = new Network.Server();
+            server.Start();
+        }
+
+        void StartGameLoop()
+        {
+            Log.Info(type, "Starting Game loop..");
+
+            gameThread = new Thread(new ThreadStart(GameLogicThread));
+            gameThread.Start();
+        }
+
+        public void Stop()
+        {
+            StopServer();
+            StopGameLoop();
+        }
+
+        void StopGameLoop()
+        {
+            Log.Info(type, "Stopping Game loop..");
+
+            isGameRunning = false;
+        }
+
+        void StopServer()
+        {
+            server.Stop();
+        }
+
+        #endregion
+
+        void GameLogicThread()
+        {
+            Log.Info(type, "Game thread started. Running at " + CommonConstants.Simulation.TicksPerSecond + " ticks per second");
+
+            DateTime nextUpdate = DateTime.Now;
+
+            while (isGameRunning)
+            {
+                nextUpdate = DateTime.Now.AddMilliseconds(CommonConstants.Simulation.MsPerTick);
+
+                GameManager.Instance.OnTick();
+
+                if (nextUpdate > DateTime.Now)
+                    Thread.Sleep(nextUpdate - DateTime.Now);
+            }
         }
 
         public void OnTick()
@@ -27,11 +94,9 @@ namespace VoxelValley.Server.Game
 
             switch (packet.Type)
             {
-                case PacketManager.PacketType.CONNECTED:
-                case PacketManager.PacketType.CONNECTION_REQUEST:
-                case PacketManager.PacketType.DISCONECTED:
-                case PacketManager.PacketType.DISCONNECTION_REQUEST:
-                case PacketManager.PacketType.IM_STILL_ALIVE:
+                case PacketManager.PacketType.DEBUG_TEXT:
+                    Log.Info(type, ((Common.Network.PacketManagement.Packets.Debug)packet.Deserialize(data)).Text);
+                    break;
                 default:
                     break;
             }

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using VoxelValley.Common.Network.PacketManagement.Packets;
 
 namespace VoxelValley.Common.Network.PacketManagement
 {
@@ -15,7 +13,8 @@ namespace VoxelValley.Common.Network.PacketManagement
             CONNECTED,
             IM_STILL_ALIVE,
             DISCONNECTION_REQUEST,
-            DISCONECTED
+            DISCONECTED,
+            DEBUG_TEXT
         }
 
         public static Dictionary<PacketType, Packet> packets = new Dictionary<PacketType, Packet>();
@@ -47,7 +46,11 @@ namespace VoxelValley.Common.Network.PacketManagement
 
         public static Packet ConvertToPacket(byte[] data)
         {
-            return GetPacket((PacketType)data[0]).Deserialize(data);
+            Packet packet = GetPacket((PacketType)data[0]).Deserialize(data);
+            if (packet != null)
+                return packet;
+
+            return new Packets.Debug().Deserialize(data);
         }
     }
 }
