@@ -2,6 +2,7 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Common.Diagnostics;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Common.Mathematics;
+using VoxelValley.Client.Engine.Graphics.Rendering;
 
 namespace VoxelValley.Client.Engine.Graphics
 {
@@ -12,16 +13,38 @@ namespace VoxelValley.Client.Engine.Graphics
 
         Vector3[] normalData;
 
-        public virtual int VertexCount { get; set; }
+        public virtual int PositionCount { get; set; }
         public virtual int IndiceCount { get; set; }
         public virtual int ColorCount { get; set; }
         public virtual int NormalCount { get; set; }
 
-        public abstract Vector3[] GetVertices();
-
-        public abstract int[] GetIndices(int offset = 0);
+        public abstract Vector3[] GetPositions();
 
         public abstract Vector4b[] GetColors();
+
+        public virtual Vector3[] GetNormals()
+        {
+            if (normalData == null)
+                CalculateNormals();
+
+            return normalData;
+        }
+
+        public virtual Vertex[] GetVertices()
+        {
+            Vertex[] vertices = new Vertex[PositionCount];
+
+            Vector3[] positions = GetPositions();
+            Vector4b[] colors = GetColors();
+            Vector3[] normals = GetNormals();
+
+            for (int i = 0; i < PositionCount; i++)
+                vertices[i] = new Vertex(positions[i], colors[i], normals[i]);
+
+            return vertices;
+        }
+
+        public abstract int[] GetIndices(int offset = 0);
 
         public virtual void CalculateModelMatrix()
         {
@@ -38,18 +61,12 @@ namespace VoxelValley.Client.Engine.Graphics
                               Matrix4.CreateTranslation(ParentGameObject.Transform.Position);
         }
 
-        public virtual Vector3[] GetNormals()
-        {
-            if (normalData == null)
-                CalculateNormals();
 
-            return normalData;
-        }
 
         public void CalculateNormals()
         {
-            Vector3[] normals = new Vector3[VertexCount];
-            Vector3[] vertices = GetVertices();
+            Vector3[] normals = new Vector3[PositionCount];
+            Vector3[] vertices = GetPositions();
             int[] indices = GetIndices();
 
             //Calculate normals for each Face

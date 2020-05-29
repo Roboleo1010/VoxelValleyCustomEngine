@@ -14,7 +14,7 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
 
         public Cube(Color color, Vector3 scale, GameObject parent)
         {
-            VertexCount = 24;
+            PositionCount = 24;
             IndiceCount = 36;
             ColorCount = 24;
 
@@ -28,7 +28,7 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
             ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).Add(this);
         }
 
-        public override Vector3[] GetVertices()
+        public override Vector3[] GetPositions()
         {
             return new Vector3[] {
                 //left

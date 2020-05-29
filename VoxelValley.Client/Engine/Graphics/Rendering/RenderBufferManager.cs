@@ -30,11 +30,8 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
 
         public static void RemoveAllBuffers()
         {
-            while (renderBuffers.Count > 0)
-            {
-                renderBuffers.Values.ElementAt(0).Remove();
-                renderBuffers.Remove(renderBuffers.Keys.ElementAt(0));
-            }
+            foreach (RenderBuffer buffer in renderBuffers.Values)
+                buffer.Remove();
         }
     }
 }

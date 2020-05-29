@@ -40,7 +40,7 @@ namespace VoxelValley.Client.Game.Enviroment
                             GetMeshData(x, y, z);
 
             vertexData = vertices.ToArray();
-            VertexCount = vertices.Count;
+            PositionCount = vertices.Count;
             vertices = null;
 
             colorData = colors.ToArray();
@@ -161,7 +161,7 @@ namespace VoxelValley.Client.Game.Enviroment
             return parentChunk.voxels[x, y, z] == VoxelManager.AirVoxel;
         }
 
-        public override Vector3[] GetVertices()
+        public override Vector3[] GetPositions()
         {
             return vertexData;
         }

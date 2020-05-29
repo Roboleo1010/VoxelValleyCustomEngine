@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using OpenToolkit.Graphics.OpenGL4;
 
@@ -15,9 +14,8 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
         int attributeCount = 0;
         int uniformCount = 0;
 
-        Dictionary<string, AttributeInfo> Attributes = new Dictionary<string, AttributeInfo>();
-        Dictionary<string, UniformInfo> Uniforms = new Dictionary<string, UniformInfo>();
-        Dictionary<string, int> Buffers = new Dictionary<string, int>();
+        Dictionary<string, AttributeInfo> attributes = new Dictionary<string, AttributeInfo>();
+        Dictionary<string, UniformInfo> uniforms = new Dictionary<string, UniformInfo>();
 
         public Shader()
         {
@@ -40,7 +38,6 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
             }
 
             Link();
-            GenBuffers();
         }
 
         #region  Loading
@@ -83,7 +80,7 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
             GL.GetProgram(programID, GetProgramParameterName.ActiveAttributes, out attributeCount);
             GL.GetProgram(programID, GetProgramParameterName.ActiveUniforms, out uniformCount);
 
-            //Gather Attribute (in) Metatdata
+            //Gather Attribute Metatdata
             for (int i = 0; i < attributeCount; i++)
             {
                 AttributeInfo info = new AttributeInfo();
@@ -91,7 +88,7 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
                 GL.GetActiveAttrib(programID, i, 256, out int length, out info.size, out info.type, out info.name);
                 info.address = GL.GetAttribLocation(programID, info.name);
 
-                Attributes.Add(info.name, info);
+                attributes.Add(info.name, info);
             }
 
             //Gather Uniform Metatdata
@@ -102,7 +99,7 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
                 GL.GetActiveUniform(programID, i, 256, out int length, out info.size, out info.type, out info.name);
                 info.address = GL.GetUniformLocation(programID, info.name);
 
-                Uniforms.Add(info.name, info);
+                uniforms.Add(info.name, info);
             }
 
             GL.DetachShader(programID, vertShaderID);
@@ -112,64 +109,28 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
             GL.DeleteShader(fragShaderID);
         }
 
-        void GenBuffers()
-        {
-            for (int i = 0; i < Attributes.Count; i++)
-                Buffers.Add(Attributes.Values.ElementAt(i).name, GL.GenBuffer());
-
-            for (int i = 0; i < Uniforms.Count; i++)
-                Buffers.Add(Uniforms.Values.ElementAt(i).name, GL.GenBuffer());
-        }
-
         public void Use()
         {
             GL.UseProgram(programID);
         }
 
-        public void Remove()
-        {
-            foreach (int index in Buffers.Values)
-                GL.DeleteBuffer(index);
-        }
 
         #region Get Locations
 
         public int GetAttibute(string name)
         {
-            if (Attributes.ContainsKey(name))
-                return Attributes[name].address;
+            if (attributes.ContainsKey(name))
+                return attributes[name].address;
             else
                 return -1;
         }
 
         public int GetUniform(string name)
         {
-            if (Uniforms.ContainsKey(name))
-                return Uniforms[name].address;
+            if (uniforms.ContainsKey(name))
+                return uniforms[name].address;
             else
                 return -1;
-        }
-
-        public int GetBuffer(string name)
-        {
-            if (Buffers.ContainsKey(name))
-                return Buffers[name];
-            else
-                return -1;
-        }
-        #endregion
-
-        #region  Enable/ Disable VertexAttribArrays
-        public void EnableVertexAttribArrays()
-        {
-            foreach (AttributeInfo info in Attributes.Values)
-                GL.EnableVertexAttribArray(info.address);
-        }
-
-        public void DisableVertexAttribArrays()
-        {
-            foreach (AttributeInfo info in Attributes.Values)
-                GL.DisableVertexAttribArray(info.address);
         }
         #endregion
 
@@ -187,6 +148,11 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
             if (!string.IsNullOrEmpty(shaderCompileInfo))
                 Console.WriteLine(shaderCompileInfo);
         }
+        #endregion
+
+        public void Remove()
+        {
+            GL.DeleteProgram(programID);
+        }
     }
-    #endregion
 }

@@ -5,6 +5,7 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Common.Mathematics;
+using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
@@ -12,10 +13,12 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     {
         Type type = typeof(VoxelRenderBuffer);
 
-        int vPositionOffset;
-        int vNormalOffset;
-        int vColorOffset;
-        int indiceOffset;
+        int vertexBufferObject = -1;
+        int vertexArrayObject = -1;
+        int elementBufferObject = -1;
+
+        int vertexOffset = 0;
+        int indiceOffset = 0;
 
         ConcurrentBag<Mesh> meshesToAdd;
 
@@ -23,17 +26,41 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         {
             meshesToAdd = new ConcurrentBag<Mesh>();
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vPosition"));
-            GL.BufferData(BufferTarget.ArrayBuffer, 1000000000, IntPtr.Zero, BufferUsageHint.StaticDraw); //1GB
+            //Calculate Space reuqirements
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
-            GL.BufferData(BufferTarget.ArrayBuffer, 1000000000, IntPtr.Zero, BufferUsageHint.StaticDraw);
+            int averageVerticesPerMesh = 500000;
+            int meshCount = 49;
+            int vertexBufferSize = averageVerticesPerMesh * Vertex.SizeInBytes * meshCount;
+            int elementBufferSize = averageVerticesPerMesh * 3 * sizeof(int) * meshCount;
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vColor"));
-            GL.BufferData(BufferTarget.ArrayBuffer, 1000000000, IntPtr.Zero, BufferUsageHint.StaticDraw);
+            Log.Info(type, $"Set VoxelRB VertexBuffer to { vertexBufferSize / 996113 } MB");
+            Log.Info(type, $"Set VoxelRB ElementBuffer to { elementBufferSize / 996113 } MB");
 
+            //vertexBufferObject
+            vertexBufferObject = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, IntPtr.Zero, BufferUsageHint.StaticDraw);
+
+            //elementBufferObject
+            elementBufferObject = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, 1000000000, IntPtr.Zero, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, elementBufferSize, IntPtr.Zero, BufferUsageHint.StaticDraw);
+
+            //vertexArrayObject
+            vertexArrayObject = GL.GenVertexArray();
+            GL.BindVertexArray(vertexArrayObject);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexArrayObject);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
+
+            GL.EnableVertexAttribArray(shader.GetAttibute("vPosition"));
+            GL.VertexAttribPointer(shader.GetAttibute("vPosition"), 3, VertexAttribPointerType.Float, false, Vertex.SizeInBytes, 0);
+
+            GL.EnableVertexAttribArray(shader.GetAttibute("vColor"));
+            GL.VertexAttribPointer(shader.GetAttibute("vColor"), 4, VertexAttribPointerType.UnsignedByte, false, Vertex.SizeInBytes, Vector3.SizeInBytes);
+
+            GL.EnableVertexAttribArray(shader.GetAttibute("vNormal"));
+            GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, Vertex.SizeInBytes, Vector3.SizeInBytes + Vector4b.SizeInBytes);
 
             UnbindCurrentBuffer();
         }
@@ -47,35 +74,20 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         {
             meshes.Add(mesh);
 
-            SendMeshSubData(mesh.GetVertices(),
-                            mesh.GetIndices(vPositionOffset),
-                            mesh.GetNormals(),
-                            mesh.GetColors());
+            SendMeshSubData(mesh.GetVertices(), mesh.GetIndices(vertexOffset));
         }
 
-        void SendMeshSubData(Vector3[] vertexData, int[] indiceData, Vector3[] normalData, Vector4b[] colorData)
+        void SendMeshSubData(Vertex[] vertices, int[] indices)
         {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vPosition"));
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vPositionOffset * Vector3.SizeInBytes), vertexData.Length * Vector3.SizeInBytes, vertexData);
-            GL.VertexAttribPointer(shader.GetAttibute("vPosition"), 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vNormal"));
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vNormalOffset * Vector3.SizeInBytes), normalData.Length * Vector3.SizeInBytes, normalData);
-            GL.VertexAttribPointer(shader.GetAttibute("vNormal"), 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, shader.GetBuffer("vColor"));
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vColorOffset * Vector4b.SizeInBytes), colorData.Length * Vector4b.SizeInBytes, colorData);
-            GL.VertexAttribPointer(shader.GetAttibute("vColor"), 4, VertexAttribPointerType.UnsignedByte, false, 0, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)(vertexOffset * Vertex.SizeInBytes), vertices.Length * Vertex.SizeInBytes, vertices);
+            vertexOffset += vertices.Length;
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
-            GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)(indiceOffset * sizeof(int)), indiceData.Length * sizeof(int), indiceData);
+            GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)(indiceOffset * sizeof(int)), indices.Length * sizeof(int), indices);
+            indiceOffset += indices.Length;
 
             UnbindCurrentBuffer();
-
-            vPositionOffset += vertexData.Length;
-            vNormalOffset += normalData.Length;
-            vColorOffset += colorData.Length;
-            indiceOffset += indiceData.Length;
         }
 
         public override void Render()
@@ -89,6 +101,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             int indiceAt = 0;
 
             shader.Use();
+
             GL.BindVertexArray(vertexArrayObject);
 
             Camera activeCamera = CameraManager.GetActiveCamera();
@@ -96,7 +109,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             Matrix4 viewMatrix = activeCamera.GetViewMatrix();
             Matrix4 projectionMatrix = activeCamera.GetProjectionMatrix();
 
-           CalculateLighting();
+            CalculateLighting();
 
             foreach (Mesh m in meshes)
             {
@@ -113,6 +126,11 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             }
 
             UnbindCurrentBuffer();
+        }
+
+        public override void Remove()
+        {
+            GL.DeleteBuffers(3, new int[] { vertexArrayObject, vertexBufferObject, elementBufferObject });
         }
     }
 }
