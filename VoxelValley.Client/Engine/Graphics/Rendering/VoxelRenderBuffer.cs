@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Concurrent;
 using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Shading;
@@ -14,12 +13,8 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
     {
         Type type = typeof(VoxelRenderBuffer);
 
-        ConcurrentBag<Mesh> meshesToAdd;
-
         public VoxelRenderBuffer(ShaderManager.ShaderType shaderType) : base(shaderType)
-        {
-            meshesToAdd = new ConcurrentBag<Mesh>();
-
+        {      
             //Calculate Space reuqirements
             int averageVerticesPerMesh = 500000;
             int meshCount = (int)Math.Pow((CommonConstants.World.DrawDistance * 2 + 1), 2);
@@ -58,18 +53,6 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             UnbindCurrentBuffer();
         }
 
-        public override void Add(Mesh mesh)
-        {
-            meshesToAdd.Add(mesh);
-        }
-
-        void AddMeshToBuffer(Mesh mesh)
-        {
-            meshes.Add(mesh);
-
-            SendMeshSubData(mesh.GetVertices(), mesh.GetIndices(vertexOffset));
-        }
-
         void SendMeshSubData(Vertex[] vertices, int[] indices)
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
@@ -86,7 +69,10 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         public override void Render()
         {
             if (meshesToAdd.Count > 0 && meshesToAdd.TryTake(out Mesh mesh))
-                AddMeshToBuffer(mesh);
+            {
+                meshes.Add(mesh);
+                SendMeshSubData(mesh.GetVertices(), mesh.GetIndices(vertexOffset));
+            }
 
             if (meshes.Count == 0)
                 return;

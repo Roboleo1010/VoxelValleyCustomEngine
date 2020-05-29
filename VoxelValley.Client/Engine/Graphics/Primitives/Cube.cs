@@ -9,6 +9,8 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
 {
     public class Cube : Mesh
     {
+        public override ShaderManager.ShaderType ShaderType => ShaderManager.ShaderType.VOXEL;
+
         Vector4b[] colors;
         Vector3 scale;
 
@@ -24,8 +26,6 @@ namespace VoxelValley.Client.Engine.Graphics.Primitives
 
             this.scale = scale;
             ParentGameObject = parent;
-
-            ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).Add(this);
         }
 
         public override Vector3[] GetPositions()

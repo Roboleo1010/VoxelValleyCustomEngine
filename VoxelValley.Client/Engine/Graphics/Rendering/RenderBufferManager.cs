@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static VoxelValley.Client.Engine.Graphics.Shading.ShaderManager;
+using VoxelValley.Client.Engine.Graphics.Shading;
 
 namespace VoxelValley.Client.Engine.Graphics.Rendering
 {
     public static class RenderBufferManager
     {
         static Type type = typeof(RenderBufferManager);
-        static Dictionary<ShaderType, RenderBuffer> renderBuffers = new Dictionary<ShaderType, RenderBuffer>();
+        static Dictionary<ShaderManager.ShaderType, RenderBuffer> renderBuffers = new Dictionary<ShaderManager.ShaderType, RenderBuffer>();
 
         public static void CreateRenderBuffers()
         {
-            renderBuffers.Add(ShaderType.VOXEL, new VoxelRenderBuffer(ShaderType.VOXEL)); //For rendering voxel world
+            renderBuffers.Add(ShaderManager.ShaderType.VOXEL, new VoxelRenderBuffer(ShaderManager.ShaderType.VOXEL));
         }
 
         public static RenderBuffer[] GetBuffers()
@@ -20,7 +20,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
             return renderBuffers.Values.ToArray();
         }
 
-        public static RenderBuffer GetBuffer(ShaderType type)
+        public static RenderBuffer GetBuffer(ShaderManager.ShaderType type)
         {
             if (renderBuffers.TryGetValue(type, out RenderBuffer buffer))
                 return buffer;

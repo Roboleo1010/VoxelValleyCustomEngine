@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Common.Enviroment;
 using VoxelValley.Common.Mathematics;
 
@@ -8,6 +9,8 @@ namespace VoxelValley.Client.Game.Enviroment
 {
     public class ChunkMesh : Mesh
     {
+        public override ShaderManager.ShaderType ShaderType => ShaderManager.ShaderType.VOXEL;
+
         Vector3[] vertexData;
         Vector4b[] colorData;
         Vector3[] normalData;

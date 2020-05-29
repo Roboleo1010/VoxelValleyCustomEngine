@@ -3,12 +3,14 @@ using VoxelValley.Common.Diagnostics;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Common.Mathematics;
 using VoxelValley.Client.Engine.Graphics.Rendering;
+using VoxelValley.Client.Engine.Graphics.Shading;
 
 namespace VoxelValley.Client.Engine.Graphics
 {
     public abstract class Mesh
     {
         public GameObject ParentGameObject;
+        public abstract ShaderManager.ShaderType ShaderType { get; }
         public Matrix4 ModelMatrix = Matrix4.Identity;
 
         Vector3[] normalData;

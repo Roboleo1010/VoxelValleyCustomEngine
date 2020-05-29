@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
@@ -18,14 +19,28 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         internal int indiceOffset = 0;
 
         internal Shader shader;
+
         internal List<Mesh> meshes = new List<Mesh>();
+        internal ConcurrentBag<Mesh> meshesToAdd;
+        internal ConcurrentBag<Mesh> meshesToRemove;
 
         public RenderBuffer(ShaderManager.ShaderType shaderType)
         {
             this.shader = ShaderManager.GetShader(shaderType);
+            
+            meshesToAdd = new ConcurrentBag<Mesh>();
+            meshesToRemove = new ConcurrentBag<Mesh>();
         }
 
-        public abstract void Add(Mesh mesh);
+        internal void AddMesh(Mesh mesh)
+        {
+            meshesToAdd.Add(mesh);
+        }
+
+        internal void RemoveMesh(Mesh mesh)
+        {
+            meshesToRemove.Add(mesh);
+        }
 
         public abstract void Render();
 

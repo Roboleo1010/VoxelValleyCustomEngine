@@ -4,10 +4,7 @@ using OpenToolkit.Mathematics;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Client.Engine.SceneGraph.Components;
 using VoxelValley.Client.Engine.Threading;
-using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Common.Enviroment.RegionManagement;
-using VoxelValley.Client.Engine.Graphics.Shading;
-using VoxelValley.Common;
 
 namespace VoxelValley.Client.Game.Enviroment
 {
@@ -20,18 +17,12 @@ namespace VoxelValley.Client.Game.Enviroment
 
         public ushort[,,] voxels;
 
-        public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace, bool generateThreaded = true) : base(name, parent)
+        public Chunk(string name, GameObject parent, Vector3i positionInChunkSpace) : base(name, parent)
         {
             positionInWorldSpace = World.ConvertFromChunkSpaceToWorldSpace(positionInChunkSpace);
             Transform.Position = positionInWorldSpace.ToVector3();
 
-            if (generateThreaded)
-                ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { IsFinished = true; }, $"Chunk_{positionInChunkSpace}", ThreadPriority.AboveNormal);
-            else
-            {
-                Generate();
-                CreateMesh();
-            }
+            ThreadManager.CreateThread(() => { Generate(); CreateMesh(); }, () => { IsFinished = true; }, $"Chunk_{positionInChunkSpace}", ThreadPriority.AboveNormal);
         }
 
         void Generate()
@@ -44,7 +35,8 @@ namespace VoxelValley.Client.Game.Enviroment
             ChunkMesh chunkMesh = new ChunkMesh(this);
             chunkMesh.Create();
 
-            ((VoxelRenderBuffer)RenderBufferManager.GetBuffer(ShaderManager.ShaderType.VOXEL)).Add(chunkMesh);
+            MeshRenderer meshRenderer = AddComponent<MeshRenderer>();
+            meshRenderer.Mesh = chunkMesh;
         }
     }
 }

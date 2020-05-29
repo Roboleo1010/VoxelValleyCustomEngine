@@ -17,7 +17,7 @@ namespace VoxelValley.Client.Game.Enviroment
         {
             Instance = this;
             chunks = new Dictionary<Vector3i, Chunk>();
-            CreateChunk(new Vector3i(0, 0, 0), true);
+            CreateChunk(new Vector3i(0, 0, 0));
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -26,12 +26,12 @@ namespace VoxelValley.Client.Game.Enviroment
             CreateAround(palyerPosInChukSpace);
         }
 
-        private Chunk CreateChunk(Vector3i positionInChunkSpace, bool generateThreaded = true)
+        private Chunk CreateChunk(Vector3i positionInChunkSpace)
         {
             Chunk chunk = GetChunk(positionInChunkSpace);
             if (chunk == null)
             {
-                chunk = new Chunk($"Chunk {positionInChunkSpace.ToString()}", this.gameObject, positionInChunkSpace, generateThreaded);
+                chunk = new Chunk($"Chunk {positionInChunkSpace.ToString()}", this.gameObject, positionInChunkSpace);
                 chunks.Add(positionInChunkSpace, chunk);
             }
             return chunk;

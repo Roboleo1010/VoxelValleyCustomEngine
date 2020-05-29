@@ -1,12 +1,11 @@
-using System;
 using VoxelValley.Client.Engine.Graphics;
+using VoxelValley.Client.Engine.Graphics.Rendering;
 
 namespace VoxelValley.Client.Engine.SceneGraph.Components
 {
     public class MeshRenderer : Component
     {
         #region Mesh
-        public event Action<MeshRenderer, Mesh, Mesh> OnMeshChanged;
         Mesh _mesh;
         public Mesh Mesh
         {
@@ -19,8 +18,10 @@ namespace VoxelValley.Client.Engine.SceneGraph.Components
                 Mesh oldValue = _mesh;
                 _mesh = value;
 
-                if (OnMeshChanged != null)
-                    OnMeshChanged(this, oldValue, _mesh);
+                if (oldValue != null)
+                    RenderBufferManager.GetBuffer(oldValue.ShaderType).RemoveMesh(oldValue);
+
+                RenderBufferManager.GetBuffer(_mesh.ShaderType).AddMesh(_mesh);
             }
         }
         #endregion
