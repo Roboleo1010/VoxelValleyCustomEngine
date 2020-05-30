@@ -13,6 +13,7 @@ namespace VoxelValley.Client.Engine.Graphics.Rendering
         public static void CreateRenderBuffers()
         {
             renderBuffers.Add(ShaderManager.ShaderType.VOXEL, new VoxelRenderBuffer(ShaderManager.ShaderType.VOXEL));
+            // renderBuffers.Add(ShaderManager.ShaderType.DEBUG, new DebugRenderBuffer(ShaderManager.ShaderType.DEBUG));
         }
 
         public static RenderBuffer[] GetBuffers()

@@ -1,6 +1,5 @@
 using System.Drawing;
 using OpenToolkit.Mathematics;
-using VoxelValley.Client.Engine.Graphics.Rendering;
 using VoxelValley.Client.Engine.Graphics.Shading;
 using VoxelValley.Client.Engine.SceneGraph;
 using VoxelValley.Common.Mathematics;

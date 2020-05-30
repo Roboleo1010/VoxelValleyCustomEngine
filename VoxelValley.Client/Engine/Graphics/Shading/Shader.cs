@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using OpenToolkit.Graphics.OpenGL4;
+using VoxelValley.Common.Diagnostics;
 
 namespace VoxelValley.Client.Engine.Graphics.Shading
 {
     public class Shader
     {
+        Type type = typeof(Shader);
         int programID = -1;
         int vertShaderID = -1;
         int fragShaderID = -1;
@@ -89,6 +91,9 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
                 info.address = GL.GetAttribLocation(programID, info.name);
 
                 attributes.Add(info.name, info);
+
+                if (info.address == -1)
+                    Log.Error(type, $"Can't find Attribute {info.name}");
             }
 
             //Gather Uniform Metatdata
@@ -100,6 +105,9 @@ namespace VoxelValley.Client.Engine.Graphics.Shading
                 info.address = GL.GetUniformLocation(programID, info.name);
 
                 uniforms.Add(info.name, info);
+
+                if (info.address == -1)
+                    Log.Error(type, $"Can't find Uniform {info.name}");
             }
 
             GL.DetachShader(programID, vertShaderID);
